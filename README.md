@@ -27,7 +27,7 @@ El frontend será una **interfaz de consola avanzada**, y el backend se implemen
 ---
 
 ## 🛠️ Tecnologías utilizadas
-- **Lenguaje:** C# (.NET 8.0)
+- **Lenguaje:** C# (.NET 9.0)
 - **ORM:** Entity Framework Core
 - **Base de datos:** MySQL 8.x
 - **Arquitectura:** Puertos y adaptadores (Hexagonal) + Vertical Slicing
@@ -39,44 +39,75 @@ El frontend será una **interfaz de consola avanzada**, y el backend se implemen
 
 ## 📂 Estructura del proyecto
 ```plaintext
-/src
-  /Modules
-    /Variedades
-      /Domain
-        Variedad.cs
-        AtributosAgronomicos.cs
-        Resistencia.cs
-        IVariedadRepository.cs
-        IVariedadService.cs
-      /Application
-        CreateVariedadCommand.cs
-        UpdateVariedadCommand.cs
-        DeleteVariedadCommand.cs
-        GetVariedadesQuery.cs
-      /Infrastructure
-        VariedadRepository.cs
-        VariedadDbConfig.cs
-      /Presentation
-        MenuVariedades.cs
-        FichaTecnicaPrinter.cs
-    /Usuarios
-      /Domain
-        Usuario.cs
-        IUsuarioRepository.cs
-        IAuthService.cs
-      /Application
-        LoginCommand.cs
-        RegisterCommand.cs
-      /Infrastructure
-        UsuarioRepository.cs
-      /Presentation
-        MenuLogin.cs
-  /Shared
-    /Context
-      AppDbContext.cs
-    /Data
-      IDbFactory.cs
-      MySqlDbFactory.cs
-    /Utils
-      ConsoleUIHelpers.cs
-      PdfGenerator.cs
+<proyecto_cs>/
+├── src/
+│   ├── Modules/
+│   │   ├── Personas/
+│   │   │   ├── Domain/
+│   │   │   │   └── models/
+│   │   │   │       └── Persona.cs
+│   │   │   ├── Application/
+│   │   │   │   ├── Interfaces/
+│   │   │   │   │   ├── IPersonaService.cs
+│   │   │   │   │   ├── IPersonaRepository.cs
+│   │   │   │   ├── Services/
+│   │   │   │   │   └── PersonaService.cs
+│   │   │   ├── Infrastructure/
+│   │   │   │   └── Repository/
+│   │   │   │       └── PersonaRepository.cs
+│   │   │   └── UI/
+│   │   │       └── MenuPersonas.cs
+│   │   ├── Usuarios/
+│   │   │   ├── Domain/
+│   │   │   │   └── models/
+│   │   │   │       └── Usuario.cs
+│   │   │   ├── Application/
+│   │   │   │   ├── Interfaces/
+│   │   │   │   │   ├── IUsuarioService.cs
+│   │   │   │   │   ├── IUsuarioRepository.cs
+│   │   │   │   ├── Services/
+│   │   │   │   │   └── UsuarioService.cs
+│   │   │   ├── Infrastructure/
+│   │   │   │   └── Repository/
+│   │   │   │       └── UsuarioRepository.cs
+│   │   │   └── UI/
+│   │   │       └── MenuUsuarios.cs
+│   │   ├── Variedades/
+│   │   │   ├── Domain/
+│   │   │   │   └── models/
+│   │   │   │       ├── Variedad.cs
+│   │   │   │       ├── AtributosAgronomicos.cs
+│   │   │   │       └── HistoriaGenetica.cs
+│   │   │   ├── Application/
+│   │   │   │   ├── Interfaces/
+│   │   │   │   │   ├── IVariedadService.cs
+│   │   │   │   │   ├── IVariedadRepository.cs
+│   │   │   │   ├── Services/
+│   │   │   │   │   └── VariedadService.cs
+│   │   │   ├── Infrastructure/
+│   │   │   │   └── Repository/
+│   │   │   │       └── VariedadRepository.cs
+│   │   │   └── UI/
+│   │   │       └── MenuVariedades.cs
+│   ├── Shared/
+│   │   ├── Configurations/   # Fluent API para EF Core
+│   │   │   ├── PersonaConfig.cs
+│   │   │   ├── UsuarioConfig.cs
+│   │   │   ├── VariedadConfig.cs
+│   │   │   ├── AtributosAgronomicosConfig.cs
+│   │   │   └── HistoriaGeneticaConfig.cs
+│   │   ├── Context/
+│   │   │   └── AppDbContext.cs
+│   │   ├── Helpers/
+│   │   │   ├── DbContextFactory.cs
+│   │   │   └── MySqlVersionResolver.cs
+│   │   └── Utils/
+│   │       ├── ConsoleUIHelpers.cs
+│   │       └── PdfGenerator.cs
+├── appsettings.json
+├── proyecto_cs.csproj
+├── proyecto_cs.sln
+└── Program.cs
+```
+
+## diagrama 

@@ -17,12 +17,13 @@ CREATE TABLE IF NOT EXISTS usuarios (
     id INT,
     email VARCHAR(150) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    -- aqui se coloca var char para facilitar el 
-    rol ENUM('admin', 'usuario') DEFAULT 'usuario',
+    -- aqui se coloca varchar para facilitar el ingreso de datos pero como tal las opciones son admin/usuario
+    rol VARCHAR(30),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_id_usuarios FOREIGN KEY (id) REFERENCES personas(id) ON DELETE CASCADE
 ) ENGINE=INNODB;
 
-CREATE TABLE variedades (
+CREATE TABLE IF NOT EXISTS variedades (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre_comun VARCHAR(150) NOT NULL,
     nombre_cientifico VARCHAR(200),
@@ -30,68 +31,32 @@ CREATE TABLE variedades (
     descripcion TEXT,
     porte ENUM('Alto', 'Bajo'),
     tamano_grano ENUM('Pequeño', 'Medio', 'Grande'),
-    altitud_optima INT,
+    altitud_optima DECIMAL(6,2),
     potencial_rendimiento ENUM('Muy bajo', 'Bajo', 'Medio', 'Alto', 'Excepcional'),
-    calidad_seg_altitud ENUM('Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5'),
+    calidad_grano_altitud ENUM('Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5'),
     resistencia_roya ENUM('Susceptible', 'Tolerante', 'Resistente'),
     resistencia_antracnosis ENUM('Susceptible', 'Tolerante', 'Resistente'),
     resistencia_nematodos ENUM('Susceptible', 'Tolerante', 'Resistente'),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=INNODB;
 
-CREATE TABLE usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    email VARCHAR(150) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    rol ENUM('admin', 'usuario') DEFAULT 'usuario',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
--- ========================
--- Tabla Variedades
--- ========================
-CREATE TABLE variedades (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_comun VARCHAR(150) NOT NULL,
-    nombre_cientifico VARCHAR(200),
-    imagen_ruta VARCHAR(255),
-    descripcion TEXT,
-    porte ENUM('Alto', 'Bajo'),
-    tamano_grano ENUM('Pequeño', 'Medio', 'Grande'),
-    altitud_optima INT,
-    potencial_rendimiento ENUM('Muy bajo', 'Bajo', 'Medio', 'Alto', 'Excepcional'),
-    calidad_seg_altitud ENUM('Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5'),
-    resistencia_roya ENUM('Susceptible', 'Tolerante', 'Resistente'),
-    resistencia_antracnosis ENUM('Susceptible', 'Tolerante', 'Resistente'),
-    resistencia_nematodos ENUM('Susceptible', 'Tolerante', 'Resistente'),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
--- ========================
--- Tabla Atributos Agronómicos (1:1 con variedades)
--- ========================
-CREATE TABLE atributos_agronomicos (
+-- relacion 1 a uno con variedades
+CREATE TABLE IF NOT EXISTS atributos_agronomicos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     variedad_id INT NOT NULL,
     tiempo_cosecha VARCHAR(100),
     maduracion VARCHAR(100),
     nutricion VARCHAR(255),
     densidad_siembra VARCHAR(100),
-    FOREIGN KEY (variedad_id) REFERENCES variedades(id) ON DELETE CASCADE
-);
+    CONSTRAINT fk_variedad_id_atributos_agronomicos FOREIGN KEY (variedad_id) REFERENCES variedades(id) ON DELETE CASCADE
+) ENGINE=INNODB;
 
--- ========================
--- Tabla Historia Genética (1:1 con variedades)
--- ========================
-CREATE TABLE historia_genetica (
+-- relacion uno a uno con variedades
+CREATE TABLE IF NOT EXISTS historia_genetica (
     id INT AUTO_INCREMENT PRIMARY KEY,
     variedad_id INT NOT NULL,
     obtentor VARCHAR(150),
     familia VARCHAR(150),
     grupo VARCHAR(150),
-    FOREIGN KEY (variedad_id) REFERENCES variedades(id) ON DELETE CASCADE
-);
+    CONSTRAINT fk_variedad_id_historia_genetica FOREIGN KEY (variedad_id) REFERENCES variedades(id) ON DELETE CASCADE
+) ENGINE=INNODB;
