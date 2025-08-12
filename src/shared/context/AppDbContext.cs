@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
     }
     // en esta parte deben de ir los DbSet de cada entidad, este es un ejemplo 
     // public DbSet<User> Users => Set<User>();
+    public DbSet<Persona> Personas => Set<Persona>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
