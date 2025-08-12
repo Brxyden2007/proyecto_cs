@@ -3,6 +3,7 @@ DROP DATABASE IF EXISTS proyecto_cs;
 CREATE DATABASE IF NOT EXISTS proyecto_cs;
 USE proyecto_cs;
 
+-- toda esta parte corresponde a la entidad personas y a sus fk
 CREATE TABLE IF NOT EXISTS personas (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(80),
@@ -13,50 +14,120 @@ CREATE TABLE IF NOT EXISTS personas (
     genero VARCHAR(50)
 ) ENGINE=INNODB;
 
-CREATE TABLE IF NOT EXISTS usuarios (
-    id INT,
+-- la gracia de las tablas de administradores y usuarios es que no haga falta definir un rol en una unica tabla si no que directamente se separan en 2 tipos porque son unicamente 2
+CREATE TABLE IF NOT EXISTS administradores (
+    id_administradores INT,
     email VARCHAR(150) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    -- aqui se coloca varchar para facilitar el ingreso de datos pero como tal las opciones son admin/usuario
-    rol VARCHAR(30),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_id_administradores FOREIGN KEY (id) REFERENCES personas(id) ON DELETE CASCADE
+) ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS usuarios (
+    id_usuario INT,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_id_usuarios FOREIGN KEY (id) REFERENCES personas(id) ON DELETE CASCADE
 ) ENGINE=INNODB;
 
-CREATE TABLE IF NOT EXISTS variedades (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_comun VARCHAR(150) NOT NULL,
-    nombre_cientifico VARCHAR(200),
-    imagen_ruta VARCHAR(255),
+-- esto corresponde a las entidades de catalogos y sus respectivos atibutos
+CREATE TABLE portes (
+    id_porte INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE tamanios_grano (
+    id_tamanio INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE altitudes (
+    id_altitud INT PRIMARY KEY AUTO_INCREMENT,
+    rango VARCHAR(100) UNIQUE NOT NULL
+);
+
+CREATE TABLE rendimientos (
+    id_rendimiento INT PRIMARY KEY AUTO_INCREMENT,
+    nivel VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE calidades_altitud (
+    id_calidad INT PRIMARY KEY AUTO_INCREMENT,
+    nivel VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE resistencias (
+    id_resistencia INT PRIMARY KEY AUTO_INCREMENT,
+    enfermedad VARCHAR(50) UNIQUE NOT NULL,
+    nivel VARCHAR(50) UNIQUE NOT NULL,
+);
+
+-- tabla de variedades, esto se podria considerar la entidad principal
+CREATE TABLE variedades (
+    id_variedad INT PRIMARY KEY AUTO_INCREMENT,
+    nombre_comun VARCHAR(100) NOT NULL,
+    nombre_cientifico VARCHAR(150),
     descripcion TEXT,
-    porte ENUM('Alto', 'Bajo'),
-    tamano_grano ENUM('Pequeño', 'Medio', 'Grande'),
-    altitud_optima DECIMAL(6,2),
-    potencial_rendimiento ENUM('Muy bajo', 'Bajo', 'Medio', 'Alto', 'Excepcional'),
-    calidad_grano_altitud ENUM('Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5'),
-    resistencia_roya ENUM('Susceptible', 'Tolerante', 'Resistente'),
-    resistencia_antracnosis ENUM('Susceptible', 'Tolerante', 'Resistente'),
-    resistencia_nematodos ENUM('Susceptible', 'Tolerante', 'Resistente'),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=INNODB;
+    imagen_url VARCHAR(255),
+    id_porte INT,
+    id_tamano INT,
+    id_altitud INT,
+    id_rendimiento INT,
+    id_calidad INT,
+    FOREIGN KEY (id_porte) REFERENCES portes(id_porte),
+    FOREIGN KEY (id_tamano) REFERENCES tamanos_grano(id_tamano),
+    FOREIGN KEY (id_altitud) REFERENCES altitudes(id_altitud),
+    FOREIGN KEY (id_rendimiento) REFERENCES rendimientos(id_rendimiento),
+    FOREIGN KEY (id_calidad) REFERENCES calidades_altitud(id_calidad)
+);
 
--- relacion 1 a uno con variedades
-CREATE TABLE IF NOT EXISTS atributos_agronomicos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    variedad_id INT NOT NULL,
-    tiempo_cosecha VARCHAR(100),
-    maduracion VARCHAR(100),
-    nutricion VARCHAR(255),
-    densidad_siembra VARCHAR(100),
-    CONSTRAINT fk_variedad_id_atributos_agronomicos FOREIGN KEY (variedad_id) REFERENCES variedades(id) ON DELETE CASCADE
-) ENGINE=INNODB;
+-- Relación de variedades con resistencias (N:M)
+CREATE TABLE variedad_resistencia (
+    id_variedad INT,
+    id_resistencia INT,
+    PRIMARY KEY (id_variedad, id_resistencia),
+    FOREIGN KEY (id_variedad) REFERENCES variedades(id_variedad) ON DELETE CASCADE,
+    FOREIGN KEY (id_resistencia) REFERENCES resistencias(id_resistencia) ON DELETE CASCADE
+);
 
--- relacion uno a uno con variedades
-CREATE TABLE IF NOT EXISTS historia_genetica (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    variedad_id INT NOT NULL,
-    obtentor VARCHAR(150),
-    familia VARCHAR(150),
-    grupo VARCHAR(150),
-    CONSTRAINT fk_variedad_id_historia_genetica FOREIGN KEY (variedad_id) REFERENCES variedades(id) ON DELETE CASCADE
-) ENGINE=INNODB;
+-- Información agronómica complementaria
+CREATE TABLE atributos_agronomicos (
+    id_atributo INT PRIMARY KEY AUTO_INCREMENT,
+    id_variedad INT NOT NULL,
+    tiempo_cosecha VARCHAR(50),
+    maduracion VARCHAR(50),
+    nutricion TEXT,
+    densidad_siembra VARCHAR(50),
+    FOREIGN KEY (id_variedad) REFERENCES variedades(id_variedad) ON DELETE CASCADE
+);
+
+-- Historia y linaje genético
+CREATE TABLE historias_geneticas (
+    id_historia INT PRIMARY KEY AUTO_INCREMENT,
+    id_variedad INT NOT NULL,
+    obtentor VARCHAR(100),
+    familia VARCHAR(100),
+    grupo VARCHAR(100),
+    descripcion TEXT,
+    FOREIGN KEY (id_variedad) REFERENCES variedades(id_variedad) ON DELETE CASCADE
+);
+
+-- esto va relacionado con la creacion de usuarios y administradores
+CREATE TABLE logs_acciones (
+    id_log INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT,
+    accion VARCHAR(255),
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);
+
+-- esto es para la informacion del pdf
+CREATE TABLE pdf_catalogos (
+    id_pdf INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT,
+    filtros_usados TEXT,
+    ruta_pdf VARCHAR(255),
+    fecha_generacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);
