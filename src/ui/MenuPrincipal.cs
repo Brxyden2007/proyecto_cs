@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 namespace proyecto_cs;
 public class MenuPrincipal
 {
-    
+        
 }

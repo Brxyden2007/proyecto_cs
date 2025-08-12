@@ -15,26 +15,60 @@ public class PersonaService
 
     public async Task RegisterPersonaAsync(Persona persona)
     {
+        // Falta fixearlo, no esta del todo claro.
         _repo.Add(persona);
         await _repo.SaveAsync();
+        /*var existingPersona = await _repo.GetByIdAsync(persona.id);
+        if (existingPersona != null && existingPersona.id == persona.id)
+        {
+            throw new InvalidOperationException("Persona with this ID already exists.");
+        }
+        var newPersona = new Persona
+        {
+            id = persona.id,
+            nombre = persona.nombre,
+            apellido = persona.apellido,
+            edad = persona.edad,
+            nacionalidad = persona.nacionalidad,
+            documento_identidad = persona.documento_identidad,
+            genero = persona.genero
+        };*/
     }
 
     public async Task UpdatePersonaAsync(Persona persona)
     {
-        _repo.Update(persona);
+        /*_repo.Update(persona);
+        await _repo.SaveAsync();*/
+        var existingPersona = await _repo.GetByIdAsync(persona.id);
+        if (existingPersona == null)
+        {
+            throw new InvalidOperationException($"Persona {persona} no encontrada.");
+        }
+        existingPersona.nombre = persona.nombre;
+        existingPersona.apellido = persona.apellido;
+        existingPersona.edad = persona.edad;
+        existingPersona.nacionalidad = persona.nacionalidad;
+        existingPersona.documento_identidad = persona.documento_identidad;
+        existingPersona.genero = persona.genero;
+        _repo.Update(existingPersona);
         await _repo.SaveAsync();
     }
-
-    public async Task DeletePersonaAsync(int id)
+    public async Task RemovePersonaAsync(int id)
     {
-        var persona = await _repo.GetByIdAsync(id);
+        /*var persona = await _repo.GetByIdAsync(id);
         if (persona != null)
         {
             _repo.Remove(persona);
             await _repo.SaveAsync();
+        }*/
+        var existingPersona = await _repo.GetByIdAsync(id);
+        if (existingPersona == null)
+        {
+            throw new InvalidOperationException($"Persona con ID {id} no encontrada.");
         }
+        _repo.Remove(existingPersona);
+        await _repo.SaveAsync();
     }
-
     public async Task<Persona?> GetPersonaByIdAsync(int id) =>
         await _repo.GetByIdAsync(id);
 

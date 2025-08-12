@@ -7,6 +7,6 @@ namespace proyecto_cs.src.modules.administradores.UI
 {
     public class MenuAdmin
     {
-        
+        // Se implementaria el MenuAdmin que estaria en Program.cs (Compañera Daniela se encarga de eso.)
     }
 }
