@@ -2,22 +2,34 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using proyecto_cs.src.modules.administradores.Domain.Entities;
 
 namespace proyecto_cs;
 
 public class Persona
 {
-    public int id { get; set; }
-    public string? nombre { get; set; }
-    public string? apellido { get; set; }
-    public int edad { get; set; }
-    public string? nacionalidad { get; set; }
-    public int documento_identidad { get; set; }
-    public string? genero { get; set; }
-    // Deduzco que despues se debera agregar la Foreign Key de Usuario y Admin.
-    // public int usuario_id { get; set; }
-    // public int admin_id { get; set; }
-    // Son posibles ejemplos de FK.
-    // public Usuario? usuario { get; set; }
-    // public Admin? admin { get; set; }
+    public int Id { get; set; }
+    public string? Nombre { get; set; }
+    public string? Apellido { get; set; }
+    public int Edad { get; set; }
+    public string? Nacionalidad { get; set; }
+    public int DocumentoIdentidad { get; set; }
+    public string? Genero { get; set; }
+    // esto se coloca ya que persona forma parte de la relación de usuarios y administradores 
+    public Administrador Administrador { get; set; }  = null!;
+    public Usuario Usuario { get; set; }  = null!;
+    // define el constructor vacio
+    public Persona()
+    {
+    }
+    // define el constructor con parametros
+    public Persona(string nombre, string apellido, int edad, string nacionalidad, int documento_identidad, string genero)
+    {
+        Nombre = nombre;
+        Apellido = apellido;
+        Edad = edad;
+        Nacionalidad = nacionalidad;
+        DocumentoIdentidad = documento_identidad;
+        Genero = genero;
+    }
 }

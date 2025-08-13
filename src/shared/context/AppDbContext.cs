@@ -13,12 +13,11 @@ public class AppDbContext : DbContext
     }
     // en esta parte deben de ir los DbSet de cada entidad, este es un ejemplo 
     // public DbSet<User> Users => Set<User>();
-    public DbSet<Admin> Admins => Set<Admin>();
+    public DbSet<Administrador> Administradors => Set<Administrador>();
     public DbSet<Altitud> Altitudes => Set<Altitud>();
     public DbSet<AtributoAgronomico> AtributosAgronomicos => Set<AtributoAgronomico>();
     public DbSet<CalidadAltitud> CalidadesAltitudes => Set<CalidadAltitud>();
     public DbSet<HistoriaGenetica> HistoriasGeneticas => Set<HistoriaGenetica>();
-    public DbSet<PdfCatalogo> PdfCatalogos => Set<PdfCatalogo>();
     public DbSet<Persona> Personas => Set<Persona>();
     public DbSet<Porte> Portes => Set<Porte>();
     public DbSet<Rendimiento> Rendimientos => Set<Rendimiento>();

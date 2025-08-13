@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace proyecto_cs;
-public interface IPdfCatalogoService
+public class VariedadResistenciaConfig
 {
     
 }
