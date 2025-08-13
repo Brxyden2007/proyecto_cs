@@ -37,8 +37,8 @@ public class AdministradorRepository : IAdministradorRepository
         var existingAdministrador = _context.Administradors.FirstOrDefault(a => a.Id == administrador.Id);
         if (existingAdministrador != null)
         {
-            existingAdministrador.email = administrador.email;
-            existingAdministrador.password_hash = administrador.password_hash;
+            existingAdministrador.Email = administrador.Email;
+            existingAdministrador.PasswordHash = administrador.PasswordHash;  
             // Update other properties as needed
         }
     }
@@ -56,11 +56,11 @@ public class AdministradorRepository : IAdministradorRepository
 
     public Task<Administrador?> GetByEmailAsync(string email)
     {
-        return Task.FromResult(_context.Administradors.FirstOrDefault(a => a.email == email));
+        return Task.FromResult(_context.Administradors.FirstOrDefault(a => a.Email == email));
     }
 
     public Task<Administrador?> GetByEmailAndPasswordAsync(string email, string password_hash)
     {
-        return Task.FromResult(_context.Administradors.FirstOrDefault(a => a.email == email && a.password_hash == password_hash));
+        return Task.FromResult(_context.Administradors.FirstOrDefault(a => a.Email == email && a.PasswordHash == password_hash));
     }    
 }

@@ -9,6 +9,8 @@ public class Resistencia
     public int IdResistencia { get; set; }
     public string Enfermedad { get; set; } = string.Empty;
     public string Nivel { get; set; } = string.Empty;
+    // tiene relacion cona la entidad VariedadResistencia
+    public ICollection<VariedadResistencia> VariedadResistencias { get; set; } = new List<VariedadResistencia>();
     // define el constructor vacio
     public Resistencia()
     {

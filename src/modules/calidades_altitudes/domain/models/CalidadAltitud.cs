@@ -8,6 +8,8 @@ public class CalidadAltitud
 {
     public int IdCalidadAltitud { get; set; }
     public string Nivel { get; set; } = string.Empty;
+    // tiene relacion con la entidad Variedad
+    public ICollection<Variedad> Variedades { get; set; } = new List<Variedad>();
     // define el constructor vacio
     public CalidadAltitud()
     {

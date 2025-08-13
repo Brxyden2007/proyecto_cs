@@ -39,17 +39,17 @@ public class PersonaService
     {
         /*_repo.Update(persona);
         await _repo.SaveAsync();*/
-        var existingPersona = await _repo.GetByIdAsync(persona.id);
+        var existingPersona = await _repo.GetByIdAsync(persona.Id);
         if (existingPersona == null)
         {
             throw new InvalidOperationException($"Persona {persona} no encontrada.");
         }
-        existingPersona.nombre = persona.nombre;
-        existingPersona.apellido = persona.apellido;
-        existingPersona.edad = persona.edad;
-        existingPersona.nacionalidad = persona.nacionalidad;
-        existingPersona.documento_identidad = persona.documento_identidad;
-        existingPersona.genero = persona.genero;
+        existingPersona.Nombre = persona.Nombre;
+        existingPersona.Apellido = persona.Apellido;
+        existingPersona.Edad = persona.Edad;
+        existingPersona.Nacionalidad = persona.Nacionalidad;
+        existingPersona.DocumentoIdentidad = persona.DocumentoIdentidad;
+        existingPersona.Genero = persona.Genero;
         _repo.Update(existingPersona);
         await _repo.SaveAsync();
     }
