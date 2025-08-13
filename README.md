@@ -112,7 +112,91 @@ El frontend será una **interfaz de consola avanzada**, y el backend se implemen
 │   │       ├── ConsoleUIHelpers.cs
 │   │       └── PdfGenerator.cs
 ```
+<!-- src/
+  personas/
+    domain/
+      entities/
+        Persona.cs
+        Usuario.cs
+        Administrador.cs
+        LogAccion.cs
+      repositories/
+        IPersonaRepository.cs
+        IUsuarioRepository.cs
+        IAdministradorRepository.cs
+        ILogAccionRepository.cs
+      services/
+        IPersonaService.cs
+        IUsuarioService.cs
+        ...
+    application/
+      usecases/
+        CrearUsuario.cs
+        EliminarUsuario.cs
+        ...
+    infrastructure/
+      persistence/
+        PersonaRepository.cs
+        UsuarioRepository.cs
+        ...
+      mappers/
+      dto/
+    ui/
+      console/
+        PersonaMenu.cs
+      api/
+        PersonaController.cs
 
+  catalogos/
+    domain/
+      entities/
+        Porte.cs
+        TamanioGrano.cs
+        Altitud.cs
+        ...
+      repositories/
+      services/
+    application/
+      usecases/
+    infrastructure/
+    ui/
+
+  variedades/
+    domain/
+      entities/
+        Variedad.cs
+        VariedadResistencia.cs
+        AtributoAgronomico.cs
+        HistoriaGenetica.cs
+      repositories/
+      services/
+    application/
+      usecases/
+    infrastructure/
+    ui/
+
+  pdfs/
+    domain/
+      entities/
+        PdfCatalogo.cs
+      repositories/
+      services/
+    application/
+      usecases/
+    infrastructure/
+    ui/
+
+shared/
+  context/
+    AppDbContext.cs
+  data/
+    IDbFactory.cs
+    IGenericRepository.cs
+    MySqlDbFactory.cs
+  utils/
+    Mappers.cs
+    Validators.cs
+ -->
 
 ## 🧭 Estructura del Menú Principal
 (aqui la gracia es que al querer ingresar un usuario o un administrador, se puede hacer con el mismo menu y cuando lo ejecute se ejecutara el metodo correspondiente, en el caso de registro se crearia la persona)
