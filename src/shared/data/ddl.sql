@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS administradores (
     email VARCHAR(150) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_id_administradores FOREIGN KEY (id) REFERENCES personas(id) ON DELETE CASCADE
+    CONSTRAINT fk_id_administradores FOREIGN KEY (id_administradores) REFERENCES personas(id) ON DELETE CASCADE
 ) ENGINE=INNODB;
 
 CREATE TABLE IF NOT EXISTS usuarios (
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     email VARCHAR(150) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_id_usuarios FOREIGN KEY (id) REFERENCES personas(id) ON DELETE CASCADE
+    CONSTRAINT fk_id_usuarios FOREIGN KEY (id_usuario) REFERENCES personas(id) ON DELETE CASCADE
 ) ENGINE=INNODB;
 
 -- esto corresponde a las entidades de catalogos y sus respectivos atibutos
@@ -52,7 +52,7 @@ CREATE TABLE rendimientos (
     nivel VARCHAR(50) UNIQUE NOT NULL
 );
 
-CREATE TABLE calidades_altitud (
+CREATE TABLE calidades_altitudes (
     id_calidad INT PRIMARY KEY AUTO_INCREMENT,
     nivel VARCHAR(50) UNIQUE NOT NULL
 );
@@ -79,7 +79,7 @@ CREATE TABLE variedades (
     FOREIGN KEY (id_tamano) REFERENCES tamanos_grano(id_tamano),
     FOREIGN KEY (id_altitud) REFERENCES altitudes(id_altitud),
     FOREIGN KEY (id_rendimiento) REFERENCES rendimientos(id_rendimiento),
-    FOREIGN KEY (id_calidad) REFERENCES calidades_altitud(id_calidad)
+    FOREIGN KEY (id_calidad) REFERENCES calidades_altitudes(id_calidad)
 );
 
 -- Relación de variedades con resistencias (N:M)
@@ -113,21 +113,12 @@ CREATE TABLE historias_geneticas (
     FOREIGN KEY (id_variedad) REFERENCES variedades(id_variedad) ON DELETE CASCADE
 );
 
--- esto va relacionado con la creacion de usuarios y administradores
-CREATE TABLE logs_acciones (
-    id_log INT PRIMARY KEY AUTO_INCREMENT,
-    id_usuario INT,
-    accion VARCHAR(255),
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
-);
-
--- esto es para la informacion del pdf
-CREATE TABLE pdf_catalogos (
-    id_pdf INT PRIMARY KEY AUTO_INCREMENT,
-    id_usuario INT,
-    filtros_usados TEXT,
-    ruta_pdf VARCHAR(255),
-    fecha_generacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
-);
+-- -- esto es para la informacion del pdf
+-- CREATE TABLE pdf_catalogos (
+--     id_pdf INT PRIMARY KEY AUTO_INCREMENT,
+--     id_usuario INT,
+--     filtros_usados TEXT,
+--     ruta_pdf VARCHAR(255),
+--     fecha_generacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+-- );

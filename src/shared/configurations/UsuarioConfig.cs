@@ -13,22 +13,26 @@ public class UsuarioConfig : IEntityTypeConfiguration<Usuario>
     {
         builder.ToTable("usuarios");
 
-        builder.HasKey(u => u.id);
+        builder.HasKey(u => u.Id);
 
-        builder.Property(u => u.nombre)
+        builder.Property(u => u.Nombre)
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(u => u.email)
+        builder.Property(u => u.Email)
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(u => u.password_hash)
+        builder.Property(u => u.PasswordHash)
             .IsRequired()
             .HasMaxLength(255);
 
-        builder.Property(u => u.created_at)
+        builder.Property(u => u.CreatedAt)
             .IsRequired()
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+        builder.HasOne(u => u.Persona)
+            .WithOne(p => p.Usuario)
+            .HasForeignKey<Usuario>(u => u.Id);
     }
 }
