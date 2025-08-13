@@ -18,7 +18,7 @@ public class UsuarioRepository
     public async Task<Usuario?> GetByIdAsync(int id)
     {
         return await _context.Usuarios
-        .FirstOrDefaultAsync(u => u.id == id);
+        .FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public async Task<IEnumerable<Usuario>>GetAllAsync()

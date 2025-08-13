@@ -21,7 +21,7 @@ public class PersonaRepository : IPersonaRepository
     public async Task<Persona?> GetByIdAsync(int id)
     {
     return await _context.Personas
-        .FirstOrDefaultAsync(p => p.id == id);
+        .FirstOrDefaultAsync(p => p.Id == id);
     }
     public void Add(Persona persona) =>
     _context.Personas.Add(persona);

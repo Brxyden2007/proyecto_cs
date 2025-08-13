@@ -106,9 +106,9 @@ CREATE TABLE atributos_agronomicos (
 CREATE TABLE historias_geneticas (
     id_historia INT PRIMARY KEY AUTO_INCREMENT,
     id_variedad INT NOT NULL,
-    obtentor VARCHAR(100),
-    familia VARCHAR(100),
-    grupo VARCHAR(100),
+    obtentor VARCHAR(80),
+    familia VARCHAR(80),
+    grupo VARCHAR(80),
     descripcion TEXT,
     FOREIGN KEY (id_variedad) REFERENCES variedades(id_variedad) ON DELETE CASCADE
 );

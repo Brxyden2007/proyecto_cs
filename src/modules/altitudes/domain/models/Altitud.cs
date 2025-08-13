@@ -8,6 +8,8 @@ public class Altitud
 {
     public int IdAltitud { get; set; }
     public string Rango { get; set; } = string.Empty;
+    // tiene relacion con la entidad Variedad
+    public ICollection<Variedad> Variedades { get; set; } = new List<Variedad>();
     // define el constructor vacio
     public Altitud()
     {
