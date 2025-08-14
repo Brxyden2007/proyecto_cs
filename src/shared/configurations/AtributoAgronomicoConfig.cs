@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace proyecto_cs;
 public class AtributoAgronomicoConfig : IEntityTypeConfiguration<AtributoAgronomico>
 {
-    public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AtributoAgronomico> builder)
+    public void Configure(EntityTypeBuilder<AtributoAgronomico> builder)
     {
         builder.ToTable("atributos_agronomicos");
 

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace proyecto_cs;
 public class VariedadResistenciaConfig : IEntityTypeConfiguration<VariedadResistencia>
 {
-    public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<VariedadResistencia> builder)
+    public void Configure(EntityTypeBuilder<VariedadResistencia> builder)
     {
         builder.ToTable("variedad_resistencia");
 

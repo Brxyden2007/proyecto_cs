@@ -17,17 +17,21 @@ CREATE TABLE IF NOT EXISTS personas (
 -- la gracia de las tablas de administradores y usuarios es que no haga falta definir un rol en una unica tabla si no que directamente se separan en 2 tipos porque son unicamente 2
 CREATE TABLE IF NOT EXISTS administradores (
     id_administradores INT,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    createdat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_id_administradores FOREIGN KEY (id_administradores) REFERENCES personas(id) ON DELETE CASCADE
 ) ENGINE=INNODB;
 
 CREATE TABLE IF NOT EXISTS usuarios (
     id_usuario INT,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    createdat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_id_usuarios FOREIGN KEY (id_usuario) REFERENCES personas(id) ON DELETE CASCADE
 ) ENGINE=INNODB;
 
@@ -60,7 +64,7 @@ CREATE TABLE calidades_altitudes (
 CREATE TABLE resistencias (
     id_resistencia INT PRIMARY KEY AUTO_INCREMENT,
     enfermedad VARCHAR(50) UNIQUE NOT NULL,
-    nivel VARCHAR(50) UNIQUE NOT NULL,
+    nivel VARCHAR(50) UNIQUE NOT NULL
 );
 
 -- tabla de variedades, esto se podria considerar la entidad principal
@@ -76,7 +80,7 @@ CREATE TABLE variedades (
     id_rendimiento INT,
     id_calidad INT,
     FOREIGN KEY (id_porte) REFERENCES portes(id_porte),
-    FOREIGN KEY (id_tamano) REFERENCES tamanos_grano(id_tamano),
+    FOREIGN KEY (id_tamano) REFERENCES tamanios_grano(id_tamanio),
     FOREIGN KEY (id_altitud) REFERENCES altitudes(id_altitud),
     FOREIGN KEY (id_rendimiento) REFERENCES rendimientos(id_rendimiento),
     FOREIGN KEY (id_calidad) REFERENCES calidades_altitudes(id_calidad)

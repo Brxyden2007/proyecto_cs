@@ -33,6 +33,7 @@ public class PersonaConfig : IEntityTypeConfiguration<Persona>
             .HasMaxLength(100);
 
         builder.Property(p => p.DocumentoIdentidad)
+            .HasColumnName("documento_identidad")
             .IsRequired();
 
         builder.Property(p => p.Genero)

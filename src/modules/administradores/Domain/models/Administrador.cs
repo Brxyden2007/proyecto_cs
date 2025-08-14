@@ -10,6 +10,7 @@ public class Administrador
     public int Id { get; set; }
     // Apunte: Recomendado probablemente usar sin null debido a que deberia ser requerido.
     public string? Nombre { get; set; }
+    public string? Apellido { get; set; }
     public string? Email { get; set; }
     public string? PasswordHash { get; set; }
     public DateTime CreatedAt { get; set; }

@@ -14,12 +14,12 @@ public class RendimientoConfig : IEntityTypeConfiguration<Rendimiento>
         builder.ToTable("rendimientos");
 
         // define la llave principal
-        builder.HasKey(r => r.IdRendimiento);
+        builder.HasKey(ren => ren.IdRendimiento);
         // define que es autoincrement
-        builder.Property(r => r.IdRendimiento)
+        builder.Property(ren => ren.IdRendimiento)
             .ValueGeneratedOnAdd();
 
-        builder.Property(r => r.Nivel)
+        builder.Property(ren => ren.Nivel)
             .IsRequired()
             .HasMaxLength(100);
     }
