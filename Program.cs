@@ -1,77 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using proyecto_cs;
-using proyecto_cs.src.modules.usuarios.application;
-using proyecto_cs.src.modules.administradores.application;
-using proyecto_cs.src.modules.administradores.ui;
+﻿using System;
+using System.Text;
+using System.Threading.Tasks;
 
-class Program
+namespace ProyectoCS
 {
-    static async Task Main()
+    internal class Program
     {
-        var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .Build();
-
-        var services = new ServiceCollection();
-        services.AddDbContext<AppDbContext>(options =>
-            options.UseMySql(configuration.GetConnectionString("MysqlConnection"),
-            new MySqlServerVersion(new Version(8, 0, 36))));
-
-        services.AddScoped<UsuarioService>();
-        services.AddScoped<MenuUsuarios>();
-        services.AddScoped<AdministradorService>();
-        services.AddScoped<MenuAdministradores>();
-
-        var provider = services.BuildServiceProvider();
-
-        bool salir = false;
-        while (!salir)
+        private static async Task Main(string[] args)
         {
-            Console.Clear();
-            Console.WriteLine("===================================");
-            Console.WriteLine("        GESTIÓN DEL SISTEMA        ");
-            Console.WriteLine("===================================");
-            Console.WriteLine("1. Registrar Usuario");
-            Console.WriteLine("2. Login Usuario");
-            Console.WriteLine("3. Registrar Admin");
-            Console.WriteLine("4. Login Admin");
-            Console.WriteLine("5. Salir");
-            Console.WriteLine("===================================");
-            Console.Write("Seleccione una opción: ");
-            string opcion = Console.ReadLine() ?? "";
-
-            switch (opcion)
-            {
-                case "1":
-                    await provider.GetRequiredService<MenuUsuarios>().RegistrarUsuarioAsync();
-                    break;
-                case "2":
-                    await provider.GetRequiredService<MenuUsuarios>().LoginUsuarioAsync();
-                    break;
-                case "3":
-                    await provider.GetRequiredService<MenuAdministradores>().RegistrarAdministradorAsync();
-                    break;
-                case "4":
-                    await provider.GetRequiredService<MenuAdministradores>().LoginAdministradorAsync();
-                    break;
-                case "5":
-                    salir = true;
-                    break;
-                default:
-                    Console.WriteLine("❌ Opción no válida.");
-                    break;
-            }
-
-            if (!salir)
-            {
-                Console.WriteLine("\nPresione cualquier tecla para continuar...");
-                Console.ReadKey();
-            }
+            Console.OutputEncoding = Encoding.UTF8;
+            
+            var menuPrincipal = new MenuPrincipal();
+            await menuPrincipal.IniciarAplicacion();
         }
     }
 }
+
 
 
 
