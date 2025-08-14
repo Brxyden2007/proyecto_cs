@@ -9,6 +9,7 @@ public class Usuario
 {
     public int Id { get; set; }
     public string Nombre { get; set; } = string.Empty;
+    public string Apellido { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.Now;
@@ -19,9 +20,10 @@ public class Usuario
     {
     }
     // define el constructor con parametros
-    public Usuario(string nombre, string email, string passwordHash)
+    public Usuario(string nombre, string apellido, string email, string passwordHash)
     {
         Nombre = nombre;
+        Apellido = apellido;
         Email = email;
         PasswordHash = passwordHash;
     }

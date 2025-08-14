@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace proyecto_cs;
-public class TamanioGranoConfig
+public class TamanioGranoConfig : IEntityTypeConfiguration<TamanioGrano>
 {
-    public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TamanioGrano> builder)
+    public void Configure(EntityTypeBuilder<TamanioGrano> builder)
     { 
         builder.ToTable("tamanios_grano");
 

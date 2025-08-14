@@ -11,18 +11,18 @@ public class ResistenciaConfig: IEntityTypeConfiguration<Resistencia>
     public void Configure(EntityTypeBuilder<Resistencia> builder)
     {
         // definir el nombre de la tabla
-        builder.ToTable("rendimientos");
+        builder.ToTable("resistencias");
 
         // define la llave principal
-        builder.HasKey(r => r.IdResistencia);
+        builder.HasKey(res => res.IdResistencia);
         // define que es autoincrement
-        builder.Property(r => r.IdResistencia)
+        builder.Property(res => res.IdResistencia)
             .ValueGeneratedOnAdd();
 
-        builder.Property(r => r.Enfermedad)
+        builder.Property(res => res.Enfermedad)
             .IsRequired()
             .HasMaxLength(50);
-        builder.Property(r => r.Nivel)
+        builder.Property(res => res.Nivel)
             .IsRequired()
             .HasMaxLength(50);
     }
