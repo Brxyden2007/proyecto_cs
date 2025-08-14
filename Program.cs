@@ -2,17 +2,15 @@
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProyectoCS
+namespace proyecto_cs;
+internal class Program
 {
-    internal class Program
+    private static async Task Main(string[] args)
     {
-        private static async Task Main(string[] args)
-        {
-            Console.OutputEncoding = Encoding.UTF8;
-            
-            var menuPrincipal = new MenuPrincipal();
-            await menuPrincipal.IniciarAplicacion();
-        }
+        Console.OutputEncoding = Encoding.UTF8;
+        
+        var menuPrincipal = new MenuPrincipal();
+        await menuPrincipal.IniciarAplicacion();
     }
 }
 
