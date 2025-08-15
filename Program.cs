@@ -11,12 +11,10 @@ internal class Program
     private static void Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8;
-
-        QuestPDF.Settings.License = LicenseType.Community;
-
         // 1. Crear el contexto de base de datos
         var context = DbContextFactory.Create();
-        
+
+        // esto es lo que he usado para crear unicamente una variedad
         var variedad = context.Variedades.FirstOrDefault(v => v.IdVariedad == 1);
 
         if (variedad == null)
@@ -24,10 +22,14 @@ internal class Program
             Console.WriteLine("No se encontró la variedad solicitada.");
             return;
         }
-
         // 3. Generar el PDF para esa variedad
         var generator = new VariedadPdfGenerator(variedad);
-        generator.Compose(context); // Esto ya hace el GeneratePdf("hello.pdf") dentro
+        
+        // crear 2 variedades
+        var todasGenerator = new VariedadesTodasPdfGenerator(context);
+        todasGenerator.GenerateAll();
+
+        Console.WriteLine("PDFs generados para todas las variedades.");
     }
 }
 

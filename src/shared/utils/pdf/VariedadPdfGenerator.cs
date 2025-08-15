@@ -18,7 +18,9 @@ public class VariedadPdfGenerator
   }
   public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
   public Task Compose(AppDbContext context)
+  
   {
+    QuestPDF.Settings.License = LicenseType.Community;
     Document.Create(container =>
       {
         container.Page(page =>
