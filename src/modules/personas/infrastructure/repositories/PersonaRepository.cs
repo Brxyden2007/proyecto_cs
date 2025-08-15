@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using proyecto_cs.src.modules.administradores.Domain.Entities;
+using proyecto_cs.src.modules.personas.application.interfaces;
 
-namespace proyecto_cs;
+namespace proyecto_cs.src.modules.personas.infrastructure.repositories;
 
 public class PersonaRepository : IPersonaRepository
 {

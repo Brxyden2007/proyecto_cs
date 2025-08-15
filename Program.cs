@@ -9,17 +9,18 @@ using QuestPDF.Infrastructure;
 namespace proyecto_cs;
 internal class Program
 {
-    private static async Task Main(string[] args)
+    private static void Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8;
 
-        var cartelBienvenida = new MenuPrincipal();
-        await cartelBienvenida.CartelBienvenida();
+        // var cartelBienvenida = new MenuPrincipal();
+        // await cartelBienvenida.CartelBienvenida();
 
-        var menuPrincipal = new MenuPrincipal();
-        await menuPrincipal.IniciarAplicacion();
+        // var menuPrincipal = new MenuPrincipal();
+        // await menuPrincipal.IniciarAplicacion();
+        
         // 1. Crear el contexto de base de datos
-        /*
+
         var context = DbContextFactory.Create();
 
         // esto es lo que he usado para crear unicamente una variedad
@@ -37,7 +38,7 @@ internal class Program
         // var todasGenerator = new VariedadesTodasPdfGenerator(context);
         // todasGenerator.GenerateAll();
 
-        Console.WriteLine("PDFs generados para todas las variedades.");*/
+        Console.WriteLine("PDFs generados para todas las variedades.");
     }
 }
 

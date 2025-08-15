@@ -9,6 +9,7 @@ using proyecto_cs.src.modules.administradores.application;
 using proyecto_cs.src.modules.administradores.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Internal;
 using proyecto_cs;
+using proyecto_cs.src.modules.usuarios.domain.models;
 
 namespace proyecto_cs;
 public class MenuPrincipal

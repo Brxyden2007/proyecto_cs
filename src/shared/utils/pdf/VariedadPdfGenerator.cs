@@ -7,6 +7,7 @@ using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using proyecto_cs.src.modules.variedades.domain.models;
 
 namespace proyecto_cs.src.shared.utils.pdf;
 

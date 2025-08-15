@@ -4,6 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using proyecto_cs.src.modules.administradores.Domain.Entities;
+using proyecto_cs.src.modules.altitudes.domain.models;
+using proyecto_cs.src.modules.atributos_agronomicos.domain.models;
+using proyecto_cs.src.modules.calidades_altitudes.domain.models;
+using proyecto_cs.src.modules.historias_geneticas.domain.models;
+using proyecto_cs.src.modules.portes.domain.models;
+using proyecto_cs.src.modules.rendimientos.domain.models;
+using proyecto_cs.src.modules.resistencias.domain.models;
+using proyecto_cs.src.modules.tamanios_granos.domain.models;
+using proyecto_cs.src.modules.usuarios.domain.models;
+using proyecto_cs.src.modules.variedad_resistencia.domain.models;
+using proyecto_cs.src.modules.variedades.domain.models;
 
 namespace proyecto_cs;
 public class AppDbContext : DbContext

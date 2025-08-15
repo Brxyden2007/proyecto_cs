@@ -38,165 +38,262 @@ El frontend será una **interfaz de consola avanzada**, y el backend se implemen
 ---
 
 ## 🧱 Estructura General del Proyecto
-```plaintext
-<proyecto_cs>/
-│
-├── Program.cs
-├── soccer_csharp.csproj
-├── soccer_csharp.sln
-├── README.md
-├── appsettings.json
-├── .gitignore
-├── src/
-│   ├── Modules/
-│   │   ├── Personas/
-│   │   │   ├── Domain/
-│   │   │   │   └── models/
-│   │   │   │       └── Persona.cs
-│   │   │   ├── Application/
-│   │   │   │   ├── Interfaces/
-│   │   │   │   │   ├── IPersonaService.cs
-│   │   │   │   │   ├── IPersonaRepository.cs
-│   │   │   │   ├── Services/
-│   │   │   │   │   └── PersonaService.cs
-│   │   │   ├── Infrastructure/
-│   │   │   │   └── Repository/
-│   │   │   │       └── PersonaRepository.cs
-│   │   │   └── UI/
-│   │   │       └── MenuPersonas.cs
-│   │   ├── Usuarios/
-│   │   │   ├── Domain/
-│   │   │   │   └── models/
-│   │   │   │       └── Usuario.cs
-│   │   │   ├── Application/
-│   │   │   │   ├── Interfaces/
-│   │   │   │   │   ├── IUsuarioService.cs
-│   │   │   │   │   ├── IUsuarioRepository.cs
-│   │   │   │   ├── Services/
-│   │   │   │   │   └── UsuarioService.cs
-│   │   │   ├── Infrastructure/
-│   │   │   │   └── Repository/
-│   │   │   │       └── UsuarioRepository.cs
-│   │   │   └── UI/
-│   │   │       └── MenuUsuarios.cs
-│   │   ├── Variedades/
-│   │   │   ├── Domain/
-│   │   │   │   └── models/
-│   │   │   │       ├── Variedad.cs
-│   │   │   │       ├── AtributosAgronomicos.cs
-│   │   │   │       └── HistoriaGenetica.cs
-│   │   │   ├── Application/
-│   │   │   │   ├── Interfaces/
-│   │   │   │   │   ├── IVariedadService.cs
-│   │   │   │   │   ├── IVariedadRepository.cs
-│   │   │   │   ├── Services/
-│   │   │   │   │   └── VariedadService.cs
-│   │   │   ├── Infrastructure/
-│   │   │   │   └── Repository/
-│   │   │   │       └── VariedadRepository.cs
-│   │   │   └── UI/
-│   │   │       └── MenuVariedades.cs
-│   ├── Shared/
-│   │   ├── Configurations/   # Fluent API para EF Core
-│   │   │   ├── PersonaConfig.cs
-│   │   │   ├── UsuarioConfig.cs
-│   │   │   ├── VariedadConfig.cs
-│   │   │   ├── AtributosAgronomicosConfig.cs
-│   │   │   └── HistoriaGeneticaConfig.cs
-│   │   ├── Context/
-│   │   │   └── AppDbContext.cs
-│   │   ├── Helpers/
-│   │   │   ├── DbContextFactory.cs
-│   │   │   └── MySqlVersionResolver.cs
-│   │   └── Utils/
-│   │       ├── ConsoleUIHelpers.cs
-│   │       └── PdfGenerator.cs
 ```
-<!-- src/
-  personas/
-    domain/
-      entities/
-        Persona.cs
-        Usuario.cs
-        Administrador.cs
-        LogAccion.cs
-      repositories/
-        IPersonaRepository.cs
-        IUsuarioRepository.cs
-        IAdministradorRepository.cs
-        ILogAccionRepository.cs
-      services/
-        IPersonaService.cs
-        IUsuarioService.cs
-        ...
-    application/
-      usecases/
-        CrearUsuario.cs
-        EliminarUsuario.cs
-        ...
-    infrastructure/
-      persistence/
-        PersonaRepository.cs
-        UsuarioRepository.cs
-        ...
-      mappers/
-      dto/
-    ui/
-      console/
-        PersonaMenu.cs
-      api/
-        PersonaController.cs
+├── 📁 .git/ 🚫 (auto-hidden)
+├── 📁 bin/ 🚫 (auto-hidden)
+├── 📁 obj/ 🚫 (auto-hidden)
+├── 📁 src/
+│   ├── 📁 modules/
+│   │   ├── 📁 administradores/
+│   │   │   ├── 📁 Application/
+│   │   │   │   ├── 📁 Interfaces/
+│   │   │   │   │   ├── 🟣 IAdministradorRepository.cs
+│   │   │   │   │   └── 🟣 IAdministradorService.cs
+│   │   │   │   └── 📁 Services/
+│   │   │   │       └── 🟣 AdministradorService.cs
+│   │   │   ├── 📁 Domain/
+│   │   │   │   └── 📁 models/
+│   │   │   │       └── 🟣 Administrador.cs
+│   │   │   ├── 📁 Infrastructure/
+│   │   │   │   └── 📁 Repositories/
+│   │   │   │       └── 🟣 AdministradorRepository.cs
+│   │   │   └── 📁 UI/
+│   │   │       └── 🟣 MenuAdmin.cs
+│   │   ├── 📁 altitudes/
+│   │   │   ├── 📁 application/
+│   │   │   │   ├── 📁 interfaces/
+│   │   │   │   │   ├── 🟣 IAltitudRepository.cs
+│   │   │   │   │   └── 🟣 IAltitudService.cs
+│   │   │   │   └── 📁 services/
+│   │   │   │       └── 🟣 AltitudService.cs
+│   │   │   ├── 📁 domain/
+│   │   │   │   └── 📁 models/
+│   │   │   │       └── 🟣 Altitud.cs
+│   │   │   ├── 📁 infrastructure/
+│   │   │   │   └── 📁 repositories/
+│   │   │   │       └── 🟣 AltitudRepository.cs
+│   │   │   └── 📁 ui/
+│   │   │       └── 🟣 MenuAltitud.cs
+│   │   ├── 📁 atributos_agronomicos/
+│   │   │   ├── 📁 application/
+│   │   │   │   ├── 📁 interfaces/
+│   │   │   │   │   ├── 🟣 IAtributoAgronomicoRepository.cs
+│   │   │   │   │   └── 🟣 IAtributoAgronomicoService.cs
+│   │   │   │   └── 📁 services/
+│   │   │   │       └── 🟣 AtributoAgronomicoService.cs
+│   │   │   ├── 📁 domain/
+│   │   │   │   └── 📁 models/
+│   │   │   │       └── 🟣 AtributoAgronomico.cs
+│   │   │   ├── 📁 infrastructure/
+│   │   │   │   └── 📁 repositories/
+│   │   │   │       └── 🟣 AtributoAgronomicoRepository.cs
+│   │   │   └── 📁 ui/
+│   │   │       └── 🟣 MenuAtributoAgronomico.cs
+│   │   ├── 📁 calidades_altitudes/
+│   │   │   ├── 📁 application/
+│   │   │   │   ├── 📁 interfaces/
+│   │   │   │   │   ├── 🟣 ICalidadAltitudRepository.cs
+│   │   │   │   │   └── 🟣 ICalidadAltitudService.cs
+│   │   │   │   └── 📁 services/
+│   │   │   │       └── 🟣 CalidadAltitudService.cs
+│   │   │   ├── 📁 domain/
+│   │   │   │   └── 📁 models/
+│   │   │   │       └── 🟣 CalidadAltitud.cs
+│   │   │   ├── 📁 infrastructure/
+│   │   │   │   └── 📁 repositories/
+│   │   │   │       └── 🟣 CalidadAltitudRepository.cs
+│   │   │   └── 📁 ui/
+│   │   │       └── 🟣 MenuCalidadAltitud.cs
+│   │   ├── 📁 historias_geneticas/
+│   │   │   ├── 📁 application/
+│   │   │   │   ├── 📁 interfaces/
+│   │   │   │   │   ├── 🟣 IHistoriaGeneticaRepository.cs
+│   │   │   │   │   └── 🟣 IHistoriaGeneticaService.cs
+│   │   │   │   └── 📁 services/
+│   │   │   │       └── 🟣 HistoriaGeneticaService.cs
+│   │   │   ├── 📁 domain/
+│   │   │   │   └── 📁 models/
+│   │   │   │       └── 🟣 HistoriaGenetica.cs
+│   │   │   ├── 📁 infrastructure/
+│   │   │   │   └── 📁 repositories/
+│   │   │   │       └── 🟣 HistoriaGeneticaRepository.cs
+│   │   │   └── 📁 ui/
+│   │   │       └── 🟣 MenuPorte.cs
+│   │   ├── 📁 personas/
+│   │   │   ├── 📁 application/
+│   │   │   │   ├── 📁 interfaces/
+│   │   │   │   │   ├── 🟣 IPersonaRepository.cs
+│   │   │   │   │   └── 🟣 IPersonaService.cs
+│   │   │   │   └── 📁 services/
+│   │   │   │       └── 🟣 PersonaService.cs
+│   │   │   ├── 📁 domain/
+│   │   │   │   └── 📁 models/
+│   │   │   │       └── 🟣 Persona.cs
+│   │   │   ├── 📁 infrastructure/
+│   │   │   │   └── 📁 repositories/
+│   │   │   │       └── 🟣 PersonaRepository.cs
+│   │   │   └── 📁 ui/
+│   │   │       └── 🟣 MenuPersonas.cs
+│   │   ├── 📁 portes/
+│   │   │   ├── 📁 application/
+│   │   │   │   ├── 📁 interfaces/
+│   │   │   │   │   ├── 🟣 IPorteRepository.cs
+│   │   │   │   │   └── 🟣 IPorteService.cs
+│   │   │   │   └── 📁 services/
+│   │   │   │       └── 🟣 PorteService.cs
+│   │   │   ├── 📁 domain/
+│   │   │   │   └── 📁 models/
+│   │   │   │       └── 🟣 Porte.cs
+│   │   │   ├── 📁 infrastructure/
+│   │   │   │   └── 📁 repositories/
+│   │   │   │       └── 🟣 PorteRepository.cs
+│   │   │   └── 📁 ui/
+│   │   │       └── 🟣 MenuPorte.cs
+│   │   ├── 📁 rendimientos/
+│   │   │   ├── 📁 application/
+│   │   │   │   ├── 📁 interfaces/
+│   │   │   │   │   ├── 🟣 IRendimientoRepository.cs
+│   │   │   │   │   └── 🟣 IRendimientoService.cs
+│   │   │   │   └── 📁 services/
+│   │   │   │       └── 🟣 RendimientoService.cs
+│   │   │   ├── 📁 domain/
+│   │   │   │   └── 📁 models/
+│   │   │   │       └── 🟣 Rendimiento.cs
+│   │   │   ├── 📁 infrastructure/
+│   │   │   │   └── 📁 repositories/
+│   │   │   │       └── 🟣 RendimientoRepository.cs
+│   │   │   └── 📁 ui/
+│   │   │       └── 🟣 MenuRendimiento.cs
+│   │   ├── 📁 resistencias/
+│   │   │   ├── 📁 application/
+│   │   │   │   ├── 📁 interfaces/
+│   │   │   │   │   ├── 🟣 IResistenciaRepository.cs
+│   │   │   │   │   └── 🟣 IResistenciaService.cs
+│   │   │   │   └── 📁 services/
+│   │   │   │       └── 🟣 ResistenciaService.cs
+│   │   │   ├── 📁 domain/
+│   │   │   │   └── 📁 models/
+│   │   │   │       └── 🟣 Resistencia.cs
+│   │   │   ├── 📁 infrastructure/
+│   │   │   │   └── 📁 repositories/
+│   │   │   │       └── 🟣 ResistenciaRepository.cs
+│   │   │   └── 📁 ui/
+│   │   │       └── 🟣 MenuResistencia.cs
+│   │   ├── 📁 tamanios_granos/
+│   │   │   ├── 📁 application/
+│   │   │   │   ├── 📁 interfaces/
+│   │   │   │   │   ├── 🟣 ITamanioGranoRepository.cs
+│   │   │   │   │   └── 🟣 ITamanioGranoService.cs
+│   │   │   │   └── 📁 services/
+│   │   │   │       └── 🟣 TamanioGranoService.cs
+│   │   │   ├── 📁 domain/
+│   │   │   │   └── 📁 models/
+│   │   │   │       └── 🟣 TamanioGrano.cs
+│   │   │   ├── 📁 infrastructure/
+│   │   │   │   └── 📁 repositories/
+│   │   │   │       └── 🟣 TamanioGranoRepository.cs
+│   │   │   └── 📁 ui/
+│   │   │       └── 🟣 MenuTamanioGrano.cs
+│   │   ├── 📁 usuarios/
+│   │   │   ├── 📁 application/
+│   │   │   │   ├── 📁 interfaces/
+│   │   │   │   │   ├── 🟣 IUsuarioRepository.cs
+│   │   │   │   │   └── 🟣 IUsuarioService.cs
+│   │   │   │   └── 📁 services/
+│   │   │   │       └── 🟣 UsuarioService.cs
+│   │   │   ├── 📁 domain/
+│   │   │   │   └── 📁 models/
+│   │   │   │       └── 🟣 Usuario.cs
+│   │   │   ├── 📁 infrastructure/
+│   │   │   │   └── 📁 repository/
+│   │   │   │       └── 🟣 UsuarioRepository.cs
+│   │   │   └── 📁 ui/
+│   │   │       └── 🟣 MenuUsuarios.cs
+│   │   ├── 📁 variedad_resistencia/
+│   │   │   ├── 📁 application/
+│   │   │   │   ├── 📁 interfaces/
+│   │   │   │   │   ├── 🟣 IVariedadResistenciaRepository.cs
+│   │   │   │   │   └── 🟣 IVariedadResistenciaService.cs
+│   │   │   │   └── 📁 services/
+│   │   │   │       └── 🟣 VariedadResistenciaService.cs
+│   │   │   ├── 📁 domain/
+│   │   │   │   └── 📁 models/
+│   │   │   │       └── 🟣 VariedadResistencia.cs
+│   │   │   ├── 📁 infrastructure/
+│   │   │   │   └── 📁 repositories/
+│   │   │   │       └── 🟣 VariedadResistenciaRepository.cs
+│   │   │   └── 📁 ui/
+│   │   │       └── 🟣 MenuVariedadResistencia.cs
+│   │   └── 📁 variedades/
+│   │       ├── 📁 application/
+│   │       │   ├── 📁 interfaces/
+│   │       │   │   ├── 🟣 IVariedadRepository.cs
+│   │       │   │   └── 🟣 IVariedadService.cs
+│   │       │   └── 📁 services/
+│   │       │       └── 🟣 VariedadService.cs
+│   │       ├── 📁 domain/
+│   │       │   └── 📁 models/
+│   │       │       └── 🟣 Variedad.cs
+│   │       ├── 📁 infrastructure/
+│   │       │   └── 📁 repository/
+│   │       │       └── 🟣 VariedadRepository.cs
+│   │       └── 📁 ui/
+│   │           └── 🟣 MenuVariedades.cs
+│   ├── 📁 shared/
+│   │   ├── 📁 configurations/
+│   │   │   ├── 🟣 AdministradorConfig.cs
+│   │   │   ├── 🟣 AltitudConfig.cs
+│   │   │   ├── 🟣 AtributoAgronomicoConfig.cs
+│   │   │   ├── 🟣 CalidadAltitudConfig.cs
+│   │   │   ├── 🟣 HistoriaGeneticaConfig.cs
+│   │   │   ├── 🟣 PersonaConfig.cs
+│   │   │   ├── 🟣 PorteConfig.cs
+│   │   │   ├── 🟣 RendimientoConfig.cs
+│   │   │   ├── 🟣 ResistenciaConfig.cs
+│   │   │   ├── 🟣 TamanioGranoConfig.cs
+│   │   │   ├── 🟣 UsuarioConfig.cs
+│   │   │   ├── 🟣 VariedadConfig.cs
+│   │   │   └── 🟣 VariedadResistenciaConfig.cs
+│   │   ├── 📁 context/
+│   │   │   └── 🟣 AppDbContext.cs
+│   │   ├── 📁 data/
+│   │   │   ├── 🗄️ ddl.sql
+│   │   │   └── 🗄️ dml.sql
+│   │   ├── 📁 helpers/
+│   │   │   ├── 🟣 DbContextFactory.cs
+│   │   │   └── 🟣 MySqlVersionResolver.cs
+│   │   └── 📁 utils/
+│   │       ├── 📁 pdf/
+│   │       │   ├── 📁 images/
+│   │       │   │   ├── 🖼️ bourbon.jpeg
+│   │       │   │   ├── 🖼️ castillo.jpeg
+│   │       │   │   ├── 🖼️ catimor.jpeg
+│   │       │   │   ├── 🖼️ caturra.jpeg
+│   │       │   │   ├── 🖼️ colombia.jpeg
+│   │       │   │   ├── 🖼️ geisha.jpg
+│   │       │   │   ├── 🖼️ gesha.jpeg
+│   │       │   │   ├── 🖼️ maragogipe.jpeg
+│   │       │   │   ├── 🖼️ pacamara.jpeg
+│   │       │   │   └── 🖼️ typica.jpeg
+│   │       │   ├── 🟣 VariedadPdfGenerator.cs
+│   │       │   └── 🟣 VariedadesTodasPdfGenerator.cs
+│   │       ├── 🟣 DbUtil.cs
+│   │       ├── 🟣 PasswordHasher.cs
+│   │       └── 🟣 Validaciones.cs
+│   └── 📁 ui/
+│       ├── 🟣 MenuAdministrador.cs
+│       ├── 🟣 MenuPrincipal.cs
+│       └── 🟣 MenuUsuario.cs
+├── 🚫 .gitignore
+├── 🟣 Program.cs
+├── 📖 README.md
+├── 📄 appsettings.json
+├── 🟣 proyecto_cs.csproj
+└── 🟣 proyecto_cs.sln
+```
 
-  catalogos/
-    domain/
-      entities/
-        Porte.cs
-        TamanioGrano.cs
-        Altitud.cs
-        ...
-      repositories/
-      services/
-    application/
-      usecases/
-    infrastructure/
-    ui/
-
-  variedades/
-    domain/
-      entities/
-        Variedad.cs
-        VariedadResistencia.cs
-        AtributoAgronomico.cs
-        HistoriaGenetica.cs
-      repositories/
-      services/
-    application/
-      usecases/
-    infrastructure/
-    ui/
-
-  pdfs/
-    domain/
-      entities/
-        PdfCatalogo.cs
-      repositories/
-      services/
-    application/
-      usecases/
-    infrastructure/
-    ui/
-
-shared/
-  context/
-    AppDbContext.cs
-  data/
-    IDbFactory.cs
-    IGenericRepository.cs
-    MySqlDbFactory.cs
-  utils/
-    Mappers.cs
-    Validators.cs
- -->
+---
+*Generated by FileTree Pro Extension*
 
 ## 🧭 Estructura del Menú Principal
 (aqui la gracia es que al querer ingresar un usuario o un administrador, se puede hacer con el mismo menu y cuando lo ejecute se ejecutara el metodo correspondiente, en el caso de registro se crearia la persona)

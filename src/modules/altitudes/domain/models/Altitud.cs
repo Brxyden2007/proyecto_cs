@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using proyecto_cs.src.modules.variedades.domain.models;
 
-namespace proyecto_cs;
+namespace proyecto_cs.src.modules.altitudes.domain.models;
 public class Altitud
 {
     public int IdAltitud { get; set; }

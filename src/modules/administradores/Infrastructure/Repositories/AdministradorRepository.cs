@@ -10,27 +10,13 @@ namespace proyecto_cs.src.modules.administradores.Infrastructure.Repositories;
 public class AdministradorRepository : IAdministradorRepository
 {
     private readonly AppDbContext _context;
-
-    public AdministradorRepository(AppDbContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<Administrador?> GetAdministradorByIdAsync(int id)
-    {
-    return await _context.Administradors
-        .FirstOrDefaultAsync(a => a.Id == id);
-    }
-
-    public async Task<IEnumerable<Administrador>> GetAllAdministradorsAsync()
-    {
-        return await _context.Administradors.ToListAsync();
-    }
-
-    public void Add(Administrador administrador)
-    {
-        _context.Administradors.Add(administrador);
-    }
+    // genera el constructor con el contexto de la base de datos
+    public AdministradorRepository(AppDbContext context) => _context = context;
+    // genera el repositorio para obtener un administrador por id
+    public async Task<Administrador?> GetAdministradorByIdAsync(int id) => await _context.Administradors.FirstOrDefaultAsync(a => a.Id == id);
+    // obtiene todos los administradores
+    public async Task<IEnumerable<Administrador>> GetAllAdministradorsAsync() => await _context.Administradors.ToListAsync();
+    public void Add(Administrador administrador) =>_context.Administradors.Add(administrador);
 
     public void Update(Administrador administrador)
     {
@@ -42,25 +28,8 @@ public class AdministradorRepository : IAdministradorRepository
             // Update other properties as needed
         }
     }
-
-    public void Delete(Administrador administrador)
-    {
-        _context.Administradors.Remove(administrador);
-    }
-
-    public Task SaveAsync()
-    {
-        // In a real application, this would save changes to the database
-        return Task.CompletedTask;
-    }
-
-    public Task<Administrador?> GetByEmailAsync(string email)
-    {
-        return Task.FromResult(_context.Administradors.FirstOrDefault(a => a.Email == email));
-    }
-
-    public Task<Administrador?> GetByEmailAndPasswordAsync(string email, string password_hash)
-    {
-        return Task.FromResult(_context.Administradors.FirstOrDefault(a => a.Email == email && a.PasswordHash == password_hash));
-    }    
+    public void Delete(Administrador administrador) => _context.Administradors.Remove(administrador);
+    public Task SaveAsync() => Task.CompletedTask;
+    public Task<Administrador?> GetByEmailAsync(string email) => Task.FromResult(_context.Administradors.FirstOrDefault(a => a.Email == email));
+    public Task<Administrador?> GetByEmailAndPasswordAsync(string email, string password_hash) => Task.FromResult(_context.Administradors.FirstOrDefault(a => a.Email == email && a.PasswordHash == password_hash));
 }

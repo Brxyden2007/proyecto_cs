@@ -1,14 +1,15 @@
 using System;
 using System.Threading.Tasks;
+using proyecto_cs.src.modules.usuarios.domain.models;
 
 namespace proyecto_cs;
 public class MenuUsuario
 {
-    private readonly proyecto_cs.Usuario usuario;
+    private readonly Usuario usuario;
     private readonly string[] opcionesMenu;
     private int opcionSeleccionada = 0;
 
-    public MenuUsuario(proyecto_cs.Usuario usuarioActual)
+    public MenuUsuario(Usuario usuarioActual)
     {
         usuario = usuarioActual;
         opcionesMenu = new string[]

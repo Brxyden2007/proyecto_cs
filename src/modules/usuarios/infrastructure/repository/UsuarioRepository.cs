@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using proyecto_cs.src.modules.usuarios.domain.models;
 
-namespace proyecto_cs;
+namespace proyecto_cs.src.modules.usuarios.infrastructure.repository;
 public class UsuarioRepository
 {
     private readonly AppDbContext _context;
