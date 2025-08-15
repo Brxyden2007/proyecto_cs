@@ -12,7 +12,7 @@ public class Administrador
     public string? Nombre { get; set; }
     public string? Apellido { get; set; }
     public string? Email { get; set; }
-    public string? PasswordHash { get; set; }
+    public string PasswordHash { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     // se establece la relacion de uno a uno con persona
     public Persona Persona { get; set; } = null!;

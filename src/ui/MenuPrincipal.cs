@@ -10,317 +10,315 @@ using proyecto_cs.src.modules.administradores.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Internal;
 using proyecto_cs;
 
-namespace ProyectoCS
+namespace proyecto_cs;
+public class MenuPrincipal
 {
-    public class MenuPrincipal
+    private readonly UsuarioService _usuarioService;
+    private readonly AdministradorService _administradorService;
+    private readonly AppDbContext _context;
+
+    private readonly string[] opcionesLogin =
     {
-        private readonly UsuarioService _usuarioService;
-        private readonly AdministradorService _administradorService;
-        private readonly AppDbContext _context;
+        "Registrar Usuario",
+        "Login Usuario", 
+        "Registrar Admin",
+        "Login Admin",
+        "Salir"
+    };
 
-        private readonly string[] opcionesLogin =
+    private int opcionSeleccionadaLogin = 0;
+
+    public MenuPrincipal()
+    {
+        _context = DbContextFactory.Create();
+        _usuarioService = new UsuarioService(_context);
+        _administradorService = new AdministradorService(_context);
+    }
+
+    public async Task IniciarAplicacion()
+    {
+        bool salir = false;
+        while (!salir)
         {
-            "Registrar Usuario",
-            "Login Usuario", 
-            "Registrar Admin",
-            "Login Admin",
-            "Salir"
-        };
+            DibujarMenuLogin();
+            var tecla = Console.ReadKey(true);
 
-        private int opcionSeleccionadaLogin = 0;
-
-        public MenuPrincipal()
-        {
-            _context = DbContextFactory.Create();
-            _usuarioService = new UsuarioService(_context);
-            _administradorService = new AdministradorService(_context);
-        }
-
-        public async Task IniciarAplicacion()
-        {
-            bool salir = false;
-            while (!salir)
+            switch (tecla.Key)
             {
-                DibujarMenuLogin();
-                var tecla = Console.ReadKey(true);
+                case ConsoleKey.UpArrow:
+                    opcionSeleccionadaLogin = (opcionSeleccionadaLogin - 1 + opcionesLogin.Length) % opcionesLogin.Length;
+                    break;
 
-                switch (tecla.Key)
+                case ConsoleKey.DownArrow:
+                    opcionSeleccionadaLogin = (opcionSeleccionadaLogin + 1) % opcionesLogin.Length;
+                    break;
+
+                case ConsoleKey.Enter:
+                    salir = await EjecutarOpcionLogin(opcionSeleccionadaLogin);
+                    break;
+            }
+        }
+    }
+
+    private void DibujarMenuLogin()
+    {
+        Console.Clear();
+        EscribirConPausa("=== --------------------------------------------------------------------  ===", 10);
+        EscribirConPausa("          ░█▀▀█ ░█▀▀█ 　 ── 　 ░█─── ░█▀▀▀█ ░█▀▀█ ▀█▀ ░█▄─░█ ", 10);
+        EscribirConPausa("          ░█─── ░█─── 　 ▀▀ 　 ░█─── ░█──░█ ░█─▄▄ ░█─ ░█░█░█ ", 10);
+        EscribirConPausa("          ░█▄▄█ ░█▄▄█ 　 ── 　 ░█▄▄█ ░█▄▄▄█ ░█▄▄█ ▄█▄ ░█──▀█ ", 10);
+        EscribirConPausa("=== --------------------------------------------------------------------  ===\n", 10);
+
+        Console.WriteLine("Usa las flechas ↑ ↓ y Enter para seleccionar.\n");
+
+        for (int i = 0; i < opcionesLogin.Length; i++)
+        {
+            if (i == opcionSeleccionadaLogin)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"🌱 {opcionesLogin[i]}");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.WriteLine($"  {opcionesLogin[i]}");
+            }
+        }
+    }
+
+    private async Task<bool> EjecutarOpcionLogin(int opcion)
+    {
+        switch (opcion)
+        {
+            case 0:
+                await RegistrarUsuario();
+                return false;
+
+            case 1:
+                var usuarioLogueado = await RealizarLoginUsuario();
+                if (usuarioLogueado != null)
                 {
-                    case ConsoleKey.UpArrow:
-                        opcionSeleccionadaLogin = (opcionSeleccionadaLogin - 1 + opcionesLogin.Length) % opcionesLogin.Length;
-                        break;
-
-                    case ConsoleKey.DownArrow:
-                        opcionSeleccionadaLogin = (opcionSeleccionadaLogin + 1) % opcionesLogin.Length;
-                        break;
-
-                    case ConsoleKey.Enter:
-                        salir = await EjecutarOpcionLogin(opcionSeleccionadaLogin);
-                        break;
+                    var menuUsuario = new MenuUsuario(usuarioLogueado);
+                    await menuUsuario.MostrarMenu();
                 }
-            }
-        }
+                return false;
 
-        private void DibujarMenuLogin()
-        {
-            Console.Clear();
-            EscribirConPausa("=== --------------------------------------------------------------------  ===", 10);
-            EscribirConPausa("          ░█▀▀█ ░█▀▀█ 　 ── 　 ░█─── ░█▀▀▀█ ░█▀▀█ ▀█▀ ░█▄─░█ ", 10);
-            EscribirConPausa("          ░█─── ░█─── 　 ▀▀ 　 ░█─── ░█──░█ ░█─▄▄ ░█─ ░█░█░█ ", 10);
-            EscribirConPausa("          ░█▄▄█ ░█▄▄█ 　 ── 　 ░█▄▄█ ░█▄▄▄█ ░█▄▄█ ▄█▄ ░█──▀█ ", 10);
-            EscribirConPausa("=== --------------------------------------------------------------------  ===\n", 10);
+            case 2:
+                await RegistrarAdministrador();
+                return false;
 
-            Console.WriteLine("Usa las flechas ↑ ↓ y Enter para seleccionar.\n");
-
-            for (int i = 0; i < opcionesLogin.Length; i++)
-            {
-                if (i == opcionSeleccionadaLogin)
+            case 3:
+                var adminLogueado = await RealizarLoginAdministrador();
+                if (adminLogueado != null)
                 {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine($"🌱 {opcionesLogin[i]}");
-                    Console.ResetColor();
+                    var menuAdmin = new MenuAdministrador(adminLogueado);
+                    await menuAdmin.MostrarMenu();
                 }
-                else
-                {
-                    Console.WriteLine($"  {opcionesLogin[i]}");
-                }
-            }
+                return false;
+
+            case 4:
+                return true; // salir
+
+            default:
+                return false;
         }
+    }
 
-        private async Task<bool> EjecutarOpcionLogin(int opcion)
+    private async Task RegistrarUsuario()
+    {
+        Console.Clear();
+        Console.WriteLine("📋 Registro de Usuario");
+        
+        try
         {
-            switch (opcion)
-            {
-                case 0:
-                    await RegistrarUsuario();
-                    return false;
-
-                case 1:
-                    var usuarioLogueado = await RealizarLoginUsuario();
-                    if (usuarioLogueado != null)
-                    {
-                        var menuUsuario = new MenuUsuario(usuarioLogueado);
-                        await menuUsuario.MostrarMenu();
-                    }
-                    return false;
-
-                case 2:
-                    await RegistrarAdministrador();
-                    return false;
-
-                case 3:
-                    var adminLogueado = await RealizarLoginAdministrador();
-                    if (adminLogueado != null)
-                    {
-                        var menuAdmin = new MenuAdministrador(adminLogueado);
-                        await menuAdmin.MostrarMenu();
-                    }
-                    return false;
-
-                case 4:
-                    return true; // salir
-
-                default:
-                    return false;
-            }
-        }
-
-        private async Task RegistrarUsuario()
-        {
-            Console.Clear();
-            Console.WriteLine("📋 Registro de Usuario");
-            
-            try
-            {
-                Console.Write("Nombre: ");
-                string nombre = Console.ReadLine()!;
-                Console.Write("Apellido: ");
-                string apellido = Console.ReadLine()!;
-                Console.Write("Edad: ");
-                int edad = int.Parse(Console.ReadLine()!);
-                Console.Write("Nacionalidad: ");
-                string nacionalidad = Console.ReadLine()!;
-                Console.Write("Documento de Identidad: ");
-                int documento = int.Parse(Console.ReadLine()!);
-                Console.Write("Género: ");
-                string genero = Console.ReadLine()!;
-                Console.Write("Email: ");
-                string email = Console.ReadLine()!;
-                Console.Write("Contraseña: ");
-                string password = LeerPassword();
-
-                await _usuarioService.RegistrarUsuarioAsync(nombre, apellido, edad, nacionalidad, documento, genero, email, password);
-                
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("\n✅ Usuario registrado exitosamente.");
-                Console.ResetColor();
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\n❌ Error: {ex.Message}");
-                Console.ResetColor();
-            }
-            
-            Console.ReadKey();
-        }
-
-        private async Task RegistrarAdministrador()
-        {
-            Console.Clear();
-            Console.WriteLine("📋 Registro de Administrador");
-            
-            try
-            {
-                Console.Write("Nombre: ");
-                string nombre = Console.ReadLine()!;
-                Console.Write("Apellido: ");
-                string apellido = Console.ReadLine()!;
-                Console.Write("Edad: ");
-                int edad = int.Parse(Console.ReadLine()!);
-                Console.Write("Nacionalidad: ");
-                string nacionalidad = Console.ReadLine()!;
-                Console.Write("Documento de Identidad: ");
-                int documento = int.Parse(Console.ReadLine()!);
-                Console.Write("Género: ");
-                string genero = Console.ReadLine()!;
-                Console.Write("Email: ");
-                string email = Console.ReadLine()!;
-                Console.Write("Contraseña: ");
-                string password = LeerPassword();
-
-                await _administradorService.RegistrarAdministradorAsync(nombre, apellido, edad, nacionalidad, documento, genero, email, password);
-                
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("\n✅ Administrador registrado exitosamente.");
-                Console.ResetColor();
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\n❌ Error: {ex.Message}");
-                Console.ResetColor();
-            }
-            
-            Console.ReadKey();
-        }
-
-        private async Task<Usuario?> RealizarLoginUsuario()
-        {
-            Console.Clear();
-            Console.WriteLine("🔐 Login USUARIO");
+            Console.Write("Nombre: ");
+            string nombre = Console.ReadLine()!;
+            Console.Write("Apellido: ");
+            string apellido = Console.ReadLine()!;
+            Console.Write("Edad: ");
+            int edad = int.Parse(Console.ReadLine()!);
+            Console.Write("Nacionalidad: ");
+            string nacionalidad = Console.ReadLine()!;
+            Console.Write("Documento de Identidad: ");
+            int documento = int.Parse(Console.ReadLine()!);
+            Console.Write("Género: ");
+            string genero = Console.ReadLine()!;
             Console.Write("Email: ");
             string email = Console.ReadLine()!;
             Console.Write("Contraseña: ");
             string password = LeerPassword();
 
-            try
-            {
-                bool loginExitoso = await _usuarioService.LoginUsuarioAsync(email, password);
-                
-                if (loginExitoso)
-                {
-                    var usuario = await _context.Usuarios
-                        .Include(u => u.Persona)
-                        .FirstOrDefaultAsync(u => u.Email == email);
-                    
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("\n✅ Inicio de sesión exitoso.");
-                    Console.ResetColor();
-                    Thread.Sleep(1000);
-                    return usuario;
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\n❌ Email o contraseña incorrectos.");
-                    Console.ResetColor();
-                    Console.ReadKey();
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\n❌ Error: {ex.Message}");
-                Console.ResetColor();
-                Console.ReadKey();
-                return null;
-            }
+            await _usuarioService.RegistrarUsuarioAsync(nombre, apellido, edad, nacionalidad, documento, genero, email, password);
+            
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n✅ Usuario registrado exitosamente.");
+            Console.ResetColor();
         }
-
-        private async Task<Administrador?> RealizarLoginAdministrador()
+        catch (Exception ex)
         {
-            Console.Clear();
-            Console.WriteLine("🔐 Login ADMINISTRADOR");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"\n❌ Error: {ex.Message}");
+            Console.ResetColor();
+        }
+        
+        Console.ReadKey();
+    }
+
+    private async Task RegistrarAdministrador()
+    {
+        Console.Clear();
+        Console.WriteLine("📋 Registro de Administrador");
+        
+        try
+        {
+            Console.Write("Nombre: ");
+            string nombre = Console.ReadLine()!;
+            Console.Write("Apellido: ");
+            string apellido = Console.ReadLine()!;
+            Console.Write("Edad: ");
+            int edad = int.Parse(Console.ReadLine()!);
+            Console.Write("Nacionalidad: ");
+            string nacionalidad = Console.ReadLine()!;
+            Console.Write("Documento de Identidad: ");
+            int documento = int.Parse(Console.ReadLine()!);
+            Console.Write("Género: ");
+            string genero = Console.ReadLine()!;
             Console.Write("Email: ");
             string email = Console.ReadLine()!;
             Console.Write("Contraseña: ");
             string password = LeerPassword();
 
-            try
+            await _administradorService.RegistrarAdministradorAsync(nombre, apellido, edad, nacionalidad, documento, genero, email, password);
+            
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n✅ Administrador registrado exitosamente.");
+            Console.ResetColor();
+        }
+        catch (Exception ex)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"\n❌ Error: {ex.Message}");
+            Console.ResetColor();
+        }
+        
+        Console.ReadKey();
+    }
+
+    private async Task<Usuario?> RealizarLoginUsuario()
+    {
+        Console.Clear();
+        Console.WriteLine("🔐 Login USUARIO");
+        Console.Write("Email: ");
+        string email = Console.ReadLine()!;
+        Console.Write("Contraseña: ");
+        string password = LeerPassword();
+
+        try
+        {
+            bool loginExitoso = await _usuarioService.LoginUsuarioAsync(email, password);
+            
+            if (loginExitoso)
             {
-                bool loginExitoso = await _administradorService.LoginAdministradorAsync(email, password);
+                var usuario = await _context.Usuarios
+                    .Include(u => u.Persona)
+                    .FirstOrDefaultAsync(u => u.Email == email);
                 
-                if (loginExitoso)
-                {
-                    var admin = await _context.Administradors
-                        .Include(a => a.Persona)
-                        .FirstOrDefaultAsync(a => a.Email == email);
-                    
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("\n✅ Inicio de sesión exitoso.");
-                    Console.ResetColor();
-                    Thread.Sleep(1000);
-                    return admin;
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\n❌ Email o contraseña incorrectos.");
-                    Console.ResetColor();
-                    Console.ReadKey();
-                    return null;
-                }
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("\n✅ Inicio de sesión exitoso.");
+                Console.ResetColor();
+                Thread.Sleep(1000);
+                return usuario;
             }
-            catch (Exception ex)
+            else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\n❌ Error: {ex.Message}");
+                Console.WriteLine("\n❌ Email o contraseña incorrectos.");
                 Console.ResetColor();
                 Console.ReadKey();
                 return null;
             }
         }
-
-        private string LeerPassword()
+        catch (Exception ex)
         {
-            string password = "";
-            ConsoleKeyInfo key;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"\n❌ Error: {ex.Message}");
+            Console.ResetColor();
+            Console.ReadKey();
+            return null;
+        }
+    }
 
-            do
+    private async Task<Administrador?> RealizarLoginAdministrador()
+    {
+        Console.Clear();
+        Console.WriteLine("🔐 Login ADMINISTRADOR");
+        Console.Write("Email: ");
+        string email = Console.ReadLine()!;
+        Console.Write("Contraseña: ");
+        string password = LeerPassword();
+
+        try
+        {
+            bool loginExitoso = await _administradorService.LoginAdministradorAsync(email, password);
+            
+            if (loginExitoso)
             {
-                key = Console.ReadKey(true);
-                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
-                {
-                    password += key.KeyChar;
-                    Console.Write("*");
-                }
-                else if (key.Key == ConsoleKey.Backspace && password.Length > 0)
-                {
-                    password = password.Substring(0, password.Length - 1);
-                    Console.Write("\b \b");
-                }
-            } while (key.Key != ConsoleKey.Enter);
-
-            Console.WriteLine();
-            return password;
+                var admin = await _context.Administradors
+                    .Include(a => a.Persona)
+                    .FirstOrDefaultAsync(a => a.Email == email);
+                
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("\n✅ Inicio de sesión exitoso.");
+                Console.ResetColor();
+                Thread.Sleep(1000);
+                return admin;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\n❌ Email o contraseña incorrectos.");
+                Console.ResetColor();
+                Console.ReadKey();
+                return null;
+            }
         }
-
-        public static void EscribirConPausa(string texto, int ms)
+        catch (Exception ex)
         {
-            Console.WriteLine(texto);
-            Thread.Sleep(ms);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"\n❌ Error: {ex.Message}");
+            Console.ResetColor();
+            Console.ReadKey();
+            return null;
         }
+    }
+
+    private string LeerPassword()
+    {
+        string password = "";
+        ConsoleKeyInfo key;
+
+        do
+        {
+            key = Console.ReadKey(true);
+            if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+            {
+                password += key.KeyChar;
+                Console.Write("*");
+            }
+            else if (key.Key == ConsoleKey.Backspace && password.Length > 0)
+            {
+                password = password.Substring(0, password.Length - 1);
+                Console.Write("\b \b");
+            }
+        } while (key.Key != ConsoleKey.Enter);
+
+        Console.WriteLine();
+        return password;
+    }
+
+    public static void EscribirConPausa(string texto, int ms)
+    {
+        Console.WriteLine(texto);
+        Thread.Sleep(ms);
     }
 }
