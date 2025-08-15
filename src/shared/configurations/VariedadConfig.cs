@@ -15,13 +15,16 @@ public class VariedadConfig : IEntityTypeConfiguration<Variedad>
         builder.HasKey(v => v.IdVariedad);
 
         builder.Property(v => v.IdVariedad)
+            .HasColumnName("id_variedad")
             .ValueGeneratedOnAdd();
 
         builder.Property(v => v.NombreComun)
+            .HasColumnName("nombre_comun")
             .IsRequired()
             .HasMaxLength(100);
 
         builder.Property(v => v.NombreCientifico)
+            .HasColumnName("nombre_cientifico")
             .IsRequired()
             .HasMaxLength(150);
 
@@ -30,22 +33,28 @@ public class VariedadConfig : IEntityTypeConfiguration<Variedad>
             .HasMaxLength(500);
 
         builder.Property(v => v.ImagenUrl)
+            .HasColumnName("imagen_url")
             .IsRequired()
             .HasMaxLength(255);
 
         builder.Property(v => v.IdPorte)
+            .HasColumnName("id_porte")
             .IsRequired();
 
         builder.Property(v => v.IdTamanio)
+            .HasColumnName("id_tamanio")
             .IsRequired();
 
         builder.Property(v => v.IdAltitud)
+            .HasColumnName("id_altitud")
             .IsRequired();
 
         builder.Property(v => v.IdRendimiento)
+            .HasColumnName("id_rendimiento")
             .IsRequired();
 
         builder.Property(v => v.IdCalidad)
+            .HasColumnName("id_calidad")
             .IsRequired();
 
         builder.HasOne(v => v.Porte)

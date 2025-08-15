@@ -1,16 +1,35 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using proyecto_cs.src.shared.utils.pdf;
+using QuestPDF.Fluent;
+using QuestPDF.Infrastructure;
 
 namespace proyecto_cs;
 internal class Program
 {
-    private static async Task Main(string[] args)
+    private static void Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8;
+        // 1. Crear el contexto de base de datos
+        var context = DbContextFactory.Create();
+
+        // esto es lo que he usado para crear unicamente una variedad
+        var variedad = context.Variedades.FirstOrDefault(v => v.IdVariedad == 1);
+
+        if (variedad == null)
+        {
+            Console.WriteLine("No se encontró la variedad solicitada.");
+            return;
+        }
+        // 3. Generar el PDF para esa variedad
+        var generator = new VariedadPdfGenerator(variedad);
         
-        var menuPrincipal = new MenuPrincipal();
-        await menuPrincipal.IniciarAplicacion();
+        // crear 2 variedades
+        var todasGenerator = new VariedadesTodasPdfGenerator(context);
+        todasGenerator.GenerateAll();
+
+        Console.WriteLine("PDFs generados para todas las variedades.");
     }
 }
 
