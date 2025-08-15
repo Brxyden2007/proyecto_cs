@@ -1,16 +1,33 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using proyecto_cs.src.shared.utils.pdf;
+using QuestPDF.Fluent;
+using QuestPDF.Infrastructure;
 
 namespace proyecto_cs;
 internal class Program
 {
-    private static async Task Main(string[] args)
+    private static void Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8;
+
+        QuestPDF.Settings.License = LicenseType.Community;
+
+        // 1. Crear el contexto de base de datos
+        var context = DbContextFactory.Create();
         
-        var menuPrincipal = new MenuPrincipal();
-        await menuPrincipal.IniciarAplicacion();
+        var variedad = context.Variedades.FirstOrDefault(v => v.IdVariedad == 1);
+
+        if (variedad == null)
+        {
+            Console.WriteLine("No se encontró la variedad solicitada.");
+            return;
+        }
+
+        // 3. Generar el PDF para esa variedad
+        var generator = new VariedadPdfGenerator(variedad);
+        generator.Compose(context); // Esto ya hace el GeneratePdf("hello.pdf") dentro
     }
 }
 

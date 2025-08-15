@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using proyecto_cs;
 using proyecto_cs.src.modules.administradores.Domain.Entities;
+using proyecto_cs.src.shared.utils;
 
 namespace proyecto_cs.src.modules.administradores.application
 {

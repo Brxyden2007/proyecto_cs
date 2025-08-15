@@ -255,8 +255,6 @@ lo mismo que en el login de administrador, pero en la tabla de usuarios
 - 4.1 Generar pdf de una variedad
 - 4.3 Generar pdf de todas las variedades
 - 4.4 Generar PDF filtrado por características (por altitud, tamaño de grano, porte, rendimiento o resistencia.)
-- 4.5 Generar PDF con ordenamiento personalizado (Ascendente o descendente por nombre, altitud, calidad, etc.)
-- 4.6 Generar PDF con selección múltiple (El usuario marca ciertas variedades en el sistema y genera el catálogo solo con esas.)
 - 4.7 Generar PDF resumido (Solo con nombre, imagen y características principales.)
 - 4.8 Generar PDF detallado (Con ficha técnica completa, descripciones extensas e imágenes.)
 ---

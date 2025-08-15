@@ -38,33 +38,33 @@ CREATE TABLE IF NOT EXISTS usuarios (
 -- esto corresponde a las entidades de catalogos y sus respectivos atibutos
 CREATE TABLE portes (
     id_porte INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50) UNIQUE NOT NULL
+    nombre VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE tamanios_grano (
     id_tamanio INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50) UNIQUE NOT NULL
+    nombre VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE altitudes (
     id_altitud INT PRIMARY KEY AUTO_INCREMENT,
-    rango VARCHAR(100) UNIQUE NOT NULL
+    rango VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE rendimientos (
     id_rendimiento INT PRIMARY KEY AUTO_INCREMENT,
-    nivel VARCHAR(50) UNIQUE NOT NULL
+    nivel VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE calidades_altitudes (
     id_calidad INT PRIMARY KEY AUTO_INCREMENT,
-    nivel VARCHAR(50) UNIQUE NOT NULL
+    nivel VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE resistencias (
     id_resistencia INT PRIMARY KEY AUTO_INCREMENT,
-    enfermedad VARCHAR(50) UNIQUE NOT NULL,
-    nivel VARCHAR(50) UNIQUE NOT NULL
+    enfermedad VARCHAR(50) NOT NULL,
+    nivel VARCHAR(50) NOT NULL
 );
 
 -- tabla de variedades, esto se podria considerar la entidad principal
@@ -75,12 +75,12 @@ CREATE TABLE variedades (
     descripcion TEXT,
     imagen_url VARCHAR(255),
     id_porte INT,
-    id_tamano INT,
+    id_tamanio INT,
     id_altitud INT,
     id_rendimiento INT,
     id_calidad INT,
     FOREIGN KEY (id_porte) REFERENCES portes(id_porte),
-    FOREIGN KEY (id_tamano) REFERENCES tamanios_grano(id_tamanio),
+    FOREIGN KEY (id_tamanio) REFERENCES tamanios_grano(id_tamanio),
     FOREIGN KEY (id_altitud) REFERENCES altitudes(id_altitud),
     FOREIGN KEY (id_rendimiento) REFERENCES rendimientos(id_rendimiento),
     FOREIGN KEY (id_calidad) REFERENCES calidades_altitudes(id_calidad)
@@ -116,13 +116,3 @@ CREATE TABLE historias_geneticas (
     descripcion TEXT,
     FOREIGN KEY (id_variedad) REFERENCES variedades(id_variedad) ON DELETE CASCADE
 );
-
--- -- esto es para la informacion del pdf
--- CREATE TABLE pdf_catalogos (
---     id_pdf INT PRIMARY KEY AUTO_INCREMENT,
---     id_usuario INT,
---     filtros_usados TEXT,
---     ruta_pdf VARCHAR(255),
---     fecha_generacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
--- );

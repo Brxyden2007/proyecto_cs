@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using proyecto_cs.src.shared.utils;
 
 namespace proyecto_cs.src.modules.usuarios.application
 {
