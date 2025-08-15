@@ -8,7 +8,6 @@ public class Validaciones
 {
   public string ValidarTexto(string? text)
   {
-    // TODO: hacer que esto sea un condicionales porque si es un bucle se ejecuta constantemente el error de  
     while (string.IsNullOrWhiteSpace(text))
     {
       Console.WriteLine("error al ingresar un texto vacio, presione una tecla para continuar");

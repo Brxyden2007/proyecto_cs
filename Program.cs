@@ -15,19 +15,19 @@ internal class Program
         var context = DbContextFactory.Create();
 
         // esto es lo que he usado para crear unicamente una variedad
-        var variedad = context.Variedades.FirstOrDefault(v => v.IdVariedad == 1);
+        var variedad = context.Variedades.FirstOrDefault(v => v.IdVariedad == 4);
 
         if (variedad == null)
         {
             Console.WriteLine("No se encontró la variedad solicitada.");
             return;
         }
-        // 3. Generar el PDF para esa variedad
+        // 2. Generar el PDF para de un id en especifico
         var generator = new VariedadPdfGenerator(variedad);
-        
-        // crear 2 variedades
-        var todasGenerator = new VariedadesTodasPdfGenerator(context);
-        todasGenerator.GenerateAll();
+        generator.Compose(context);
+        // // crear todas las variedades
+        // var todasGenerator = new VariedadesTodasPdfGenerator(context);
+        // todasGenerator.GenerateAll();
 
         Console.WriteLine("PDFs generados para todas las variedades.");
     }

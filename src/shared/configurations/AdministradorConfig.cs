@@ -15,7 +15,7 @@ public class AdministradorConfig : IEntityTypeConfiguration<Administrador>
 
         builder.HasKey(a => a.Id);
 
-       builder.Property(a => a.Id)
+        builder.Property(a => a.Id)
         .HasColumnName("id_administradores") // nombre real en MySQL
         .ValueGeneratedOnAdd();
 

@@ -50,7 +50,7 @@ public class VariedadConfig : IEntityTypeConfiguration<Variedad>
             .IsRequired();
 
         builder.Property(v => v.IdRendimiento)
-            .HasColumnName("id_rendimiento")
+            .HasColumnName("IdRendimiento")
             .IsRequired();
 
         builder.Property(v => v.IdCalidad)

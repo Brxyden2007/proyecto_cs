@@ -178,17 +178,17 @@ INSERT INTO usuarios (id_usuario, nombre, apellido, email, password_hash) VALUES
 (26, 'Gabriel', 'Salazar', 'gabriel.salazar@user.com', 'z6a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5');
 
 
-INSERT INTO variedades (nombre_comun, nombre_cientifico, descripcion, imagen_url, id_porte, id_tamanio, id_altitud, id_rendimiento, id_calidad) VALUES
-('Caturra', 'Coffea arabica var. Caturra', 'Una mutación natural del Bourbon, conocida por su alta producción y sabor afrutado. De porte bajo, lo que facilita la recolección.', './src/shared/utils/pdf/images/temp.jpeg', 1, 2, 2, 3, 3),
-('Castillo', 'Híbrido Castillo', 'Híbrido colombiano desarrollado para ser resistente a la roya del café. Tiene una taza limpia y equilibrada.', './src/shared/utils/pdf/images/temp.jpeg', 2, 2, 2, 4, 2),
-('Geisha', 'Coffea arabica var. Geisha', 'Variedad muy apreciada por su perfil de taza floral y complejo. Exige condiciones específicas de cultivo.', './src/shared/utils/pdf/images/temp.jpeg', 3, 3, 3, 1, 4),
-('Bourbon', 'Coffea arabica var. Bourbon', 'Una de las variedades más antiguas y conocidas, con un sabor dulce y cuerpo cremoso. Es susceptible a enfermedades.', './src/shared/utils/pdf/images/temp.jpeg', 2, 2, 2, 2, 3),
-('Pacamara', 'Híbrido de Pacas y Maragogipe', 'Híbrido salvadoreño de granos grandes. Ofrece notas de chocolate y especias con una acidez brillante.', './src/shared/utils/pdf/images/temp.jpeg', 2, 4, 3, 2, 3),
-('Typica', 'Coffea arabica var. Typica', 'Considerada la base de muchas variedades de café arábica. Sabor limpio y dulce, pero de bajo rendimiento.', './src/shared/utils/pdf/images/temp.jpeg', 3, 2, 2, 1, 3),
-('Gesha', 'Coffea arabica var. Gesha', 'Similar al Geisha, pero a menudo se cultiva a menor altitud. Mantiene sus notas florales y de jazmín.', './src/shared/utils/pdf/images/temp.jpeg', 3, 3, 3, 1, 4),
-('Colombia', 'Híbrido Colombia', 'Híbrido de Caturra y Timor, resistente a la roya. Rendimiento alto y perfil de taza balanceado.', './src/shared/utils/pdf/images/temp.jpeg', 2, 2, 2, 4, 2),
-('Maragogipe', 'Coffea arabica var. Maragogipe', 'Variedad con granos gigantes. Perfil de taza suave y delicado, pero muy bajo rendimiento.', './src/shared/utils/pdf/images/temp.jpeg', 3, 4, 2, 1, 2),
-('Catimor', 'Híbrido de Caturra y Timor', 'Híbrido de alta producción y resistencia a la roya, pero puede presentar un sabor menos refinado.', './src/shared/utils/pdf/images/temp.jpeg', 1, 2, 1, 4, 1);
+INSERT INTO variedades (nombre_comun, nombre_cientifico, descripcion, imagen_url, id_porte, id_tamanio, id_altitud, IdRendimiento, id_calidad) VALUES
+('Caturra', 'Coffea arabica var. Caturra', 'Una mutación natural del Bourbon, conocida por su alta producción y sabor afrutado. De porte bajo, lo que facilita la recolección.', './src/shared/utils/pdf/images/caturra.jpeg', 1, 2, 2, 3, 3),
+('Castillo', 'Híbrido Castillo', 'Híbrido colombiano desarrollado para ser resistente a la roya del café. Tiene una taza limpia y equilibrada.', './src/shared/utils/pdf/images/castillo.jpeg', 2, 2, 2, 4, 2),
+('Geisha', 'Coffea arabica var. Geisha', 'Variedad muy apreciada por su perfil de taza floral y complejo. Exige condiciones específicas de cultivo.', './src/shared/utils/pdf/images/geisha.jpeg', 3, 3, 3, 1, 4),
+('Bourbon', 'Coffea arabica var. Bourbon', 'Una de las variedades más antiguas y conocidas, con un sabor dulce y cuerpo cremoso. Es susceptible a enfermedades.', './src/shared/utils/pdf/images/bourbon.jpeg', 2, 2, 2, 2, 3),
+('Pacamara', 'Híbrido de Pacas y Maragogipe', 'Híbrido salvadoreño de granos grandes. Ofrece notas de chocolate y especias con una acidez brillante.', './src/shared/utils/pdf/images/pacamara.jpeg', 2, 4, 3, 2, 3),
+('Typica', 'Coffea arabica var. Typica', 'Considerada la base de muchas variedades de café arábica. Sabor limpio y dulce, pero de bajo rendimiento.', './src/shared/utils/pdf/images/typica.jpeg', 3, 2, 2, 1, 3),
+('Gesha', 'Coffea arabica var. Gesha', 'Similar al Geisha, pero a menudo se cultiva a menor altitud. Mantiene sus notas florales y de jazmín.', './src/shared/utils/pdf/images/gesha.jpeg', 3, 3, 3, 1, 4),
+('Colombia', 'Híbrido Colombia', 'Híbrido de Caturra y Timor, resistente a la roya. Rendimiento alto y perfil de taza balanceado.', './src/shared/utils/pdf/images/colombia.jpeg', 2, 2, 2, 4, 2),
+('Maragogipe', 'Coffea arabica var. Maragogipe', 'Variedad con granos gigantes. Perfil de taza suave y delicado, pero muy bajo rendimiento.', './src/shared/utils/pdf/images/maragogipe.jpeg', 3, 4, 2, 1, 2),
+('Catimor', 'Híbrido de Caturra y Timor', 'Híbrido de alta producción y resistencia a la roya, pero puede presentar un sabor menos refinado.', './src/shared/utils/pdf/images/catimor.jpeg', 1, 2, 1, 4, 1);
 
 INSERT INTO variedad_resistencia (id_variedad, id_resistencia) VALUES
 (1, 1), -- Caturra es vulnerable a la Roya
@@ -198,7 +198,6 @@ INSERT INTO variedad_resistencia (id_variedad, id_resistencia) VALUES
 (4, 1), -- Bourbon es vulnerable
 (5, 6), -- Pacamara con resistencia a Mancha de hierro
 (6, 1), -- Typica es muy vulnerable
-(7, 1), -- Gesha es vulnerable
 (8, 1), -- Colombia es resistente a la Roya
 (8, 5), -- Colombia es resistente a Ojo de gallo
 (9, 1), -- Maragogipe es vulnerable

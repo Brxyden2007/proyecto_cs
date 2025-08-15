@@ -52,7 +52,7 @@ CREATE TABLE altitudes (
 );
 
 CREATE TABLE rendimientos (
-    id_rendimiento INT PRIMARY KEY AUTO_INCREMENT,
+    IdRendimiento INT PRIMARY KEY AUTO_INCREMENT,
     nivel VARCHAR(50) NOT NULL
 );
 
@@ -77,12 +77,12 @@ CREATE TABLE variedades (
     id_porte INT,
     id_tamanio INT,
     id_altitud INT,
-    id_rendimiento INT,
+    IdRendimiento INT,
     id_calidad INT,
     FOREIGN KEY (id_porte) REFERENCES portes(id_porte),
     FOREIGN KEY (id_tamanio) REFERENCES tamanios_grano(id_tamanio),
     FOREIGN KEY (id_altitud) REFERENCES altitudes(id_altitud),
-    FOREIGN KEY (id_rendimiento) REFERENCES rendimientos(id_rendimiento),
+    FOREIGN KEY (IdRendimiento) REFERENCES rendimientos(IdRendimiento),
     FOREIGN KEY (id_calidad) REFERENCES calidades_altitudes(id_calidad)
 );
 
