@@ -1,73 +1,73 @@
 using Microsoft.EntityFrameworkCore;
+using proyecto_cs.src.modules.administradores.Domain.Entities;
+using proyecto_cs.src.modules.usuarios.domain.models;
 using proyecto_cs.src.shared.utils;
 
-namespace proyecto_cs.src.modules.usuarios.application
+namespace proyecto_cs.src.modules.usuarios.application;
+public class UsuarioService
 {
-    public class UsuarioService
+    private readonly AppDbContext _context;
+
+    public UsuarioService(AppDbContext context)
     {
-        private readonly AppDbContext _context;
+        _context = context;
+    }
 
-        public UsuarioService(AppDbContext context)
+    public async Task RegistrarUsuarioAsync(
+        string nombre,
+        string apellido,
+        int edad,
+        string nacionalidad,
+        int documentoIdentidad,
+        string genero,
+        string email,
+        string password)
+    {
+        // Validar email único
+        if (await _context.Usuarios.AnyAsync(u => u.Email == email))
+            throw new Exception("El email ya está registrado.");
+
+        // Hashear contraseña
+        var hash = PasswordHasher.HashPassword(password);
+
+        // Crear entidad Persona
+        var persona = new Persona
         {
-            _context = context;
-        }
+            Nombre = nombre,
+            Apellido = apellido,
+            Edad = edad,
+            Nacionalidad = nacionalidad,
+            DocumentoIdentidad = documentoIdentidad,
+            Genero = genero
+        };
 
-        public async Task RegistrarUsuarioAsync(
-            string nombre,
-            string apellido,
-            int edad,
-            string nacionalidad,
-            int documentoIdentidad,
-            string genero,
-            string email,
-            string password)
+        // Crear entidad Usuario
+        var usuario = new Usuario
         {
-            // Validar email único
-            if (await _context.Usuarios.AnyAsync(u => u.Email == email))
-                throw new Exception("El email ya está registrado.");
+            Nombre = nombre,
+            Apellido = apellido,
+            Email = email,
+            PasswordHash = hash,
+            CreatedAt = DateTime.Now,
+            Persona = persona
+        };
 
-            // Hashear contraseña
-            var hash = PasswordHasher.HashPassword(password);
+        _context.Usuarios.Add(usuario);
+        await _context.SaveChangesAsync();
+    }
+    public async Task<bool> LoginUsuarioAsync(string email, string password)
+    {
+        var usuario = await _context.Usuarios
+            .Include(u => u.Persona)
+            .FirstOrDefaultAsync(u => u.Email == email);
 
-            // Crear entidad Persona
-            var persona = new Persona
-            {
-                Nombre = nombre,
-                Apellido = apellido,
-                Edad = edad,
-                Nacionalidad = nacionalidad,
-                DocumentoIdentidad = documentoIdentidad,
-                Genero = genero
-            };
+        if (usuario == null)
+            return false;
 
-            // Crear entidad Usuario
-            var usuario = new Usuario
-            {
-                Nombre = nombre,
-                Apellido = apellido,
-                Email = email,
-                PasswordHash = hash,
-                CreatedAt = DateTime.Now,
-                Persona = persona
-            };
-
-            _context.Usuarios.Add(usuario);
-            await _context.SaveChangesAsync();
-        }
-        public async Task<bool> LoginUsuarioAsync(string email, string password)
-        {
-            var usuario = await _context.Usuarios
-                .Include(u => u.Persona)
-                .FirstOrDefaultAsync(u => u.Email == email);
-
-            if (usuario == null)
-                return false;
-
-            // Aquí asumimos que guardaste también el Salt en la DB
-            return usuario.PasswordHash != null && 
-                PasswordHasher.VerifyPassword(password, usuario.PasswordHash);
-
-        }
+        // Aquí asumimos que guardaste también el Salt en la DB
+        return usuario.PasswordHash != null && 
+            PasswordHasher.VerifyPassword(password, usuario.PasswordHash);
 
     }
+
 }

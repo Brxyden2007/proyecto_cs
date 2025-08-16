@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using proyecto_cs.src.modules.historias_geneticas.domain.models;
 
 namespace proyecto_cs;
 public class HistoriaGeneticaConfig : IEntityTypeConfiguration<HistoriaGenetica>

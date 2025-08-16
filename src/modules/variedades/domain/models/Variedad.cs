@@ -2,8 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using proyecto_cs.src.modules.altitudes.domain.models;
+using proyecto_cs.src.modules.atributos_agronomicos.domain.models;
+using proyecto_cs.src.modules.calidades_altitudes.domain.models;
+using proyecto_cs.src.modules.historias_geneticas.domain.models;
+using proyecto_cs.src.modules.portes.domain.models;
+using proyecto_cs.src.modules.rendimientos.domain.models;
+using proyecto_cs.src.modules.tamanios_granos.domain.models;
+using proyecto_cs.src.modules.variedad_resistencia.domain.models;
 
-namespace proyecto_cs;
+namespace proyecto_cs.src.modules.variedades.domain.models;
 public class Variedad
 {
     public int IdVariedad { get; set; }

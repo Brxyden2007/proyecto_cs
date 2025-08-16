@@ -1,33 +1,46 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using proyecto_cs.src.modules.variedades.domain.models;
 
 namespace proyecto_cs.src.shared.utils.pdf;
 
 public class VariedadPdfGenerator
 {
+  
   private readonly Variedad _variedad;
-
-  public VariedadPdfGenerator(Variedad variedad)
-  {
-    _variedad = variedad;
-  }
+  public VariedadPdfGenerator(Variedad variedad) =>_variedad = variedad;
   public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
   public Task Compose(AppDbContext context)
-  
   {
+    var variedad = context.Variedades
+        .Include(v => v.Rendimiento)
+        .Include(v => v.TamanioGrano)
+        .Include(v => v.Porte)
+        .Include(v => v.Altitud)
+        .Include(v => v.CalidadAltitud)
+        .FirstOrDefault(v => v.IdVariedad == 1);
+        
     QuestPDF.Settings.License = LicenseType.Community;
     Document.Create(container =>
       {
         container.Page(page =>
         {
+          // esta parte es para definir la parte del diseño del pdf
           page.Size(PageSizes.A4);
+          // pixeles de magin como si fuera un css
           page.Margin(20);
+          // definir fuente 
           page.DefaultTextStyle(x => x.FontSize(12));
+          page.Background();
+          // bacground de la pagina
+          page.PageColor("#F1f1f1");
 
           page.Content().Row(row =>
           {
@@ -60,18 +73,11 @@ public class VariedadPdfGenerator
 
               col.Spacing(5);
 
-              // Country of release
-              col.Item().Column(c =>
-              {
-                c.Item().Text("COUNTRY OF RELEASE").Bold().FontColor(Colors.Green.Medium);
-                c.Item().Text("Indonesia"); // aquí podrías mapear de BD
-              });
-
               // Bean size
               col.Item().Column(c =>
               {
                 c.Item().Text("BEAN SIZE").Bold().FontColor(Colors.Green.Medium);
-                c.Item().Text($"{_variedad.TamanioGrano?.Nombre}");
+                c.Item().Text($"{_variedad.TamanioGrano?.Nombre.Clone()}");
               });
 
               // Coffee leaf rust
@@ -103,7 +109,8 @@ public class VariedadPdfGenerator
             row.RelativeItem(1.2f).Column(col =>
             {
               // Imagen principal
-              col.Item().Image(_variedad.ImagenUrl, ImageScaling.FitArea);
+              // col.Item().Image(_variedad.ImagenUrl, ImageScaling.FitArea);
+              col.Item().Image(Image.FromFile(_variedad.ImagenUrl));
 
               // Características
               col.Item().PaddingTop(10).Text("CHARACTERISTICS")
@@ -158,3 +165,11 @@ public class VariedadPdfGenerator
     });
   }
 }
+
+
+
+// container
+//     .Background(Colors.Grey.Lighten2)
+//     .CornerRadius(25)
+//     .Padding(25)
+//     .Text("Content with rounded corners");

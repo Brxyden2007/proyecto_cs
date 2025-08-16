@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using proyecto_cs.src.modules.administradores.Domain.Entities;
+using proyecto_cs.src.modules.usuarios.domain.models;
 
-namespace proyecto_cs;
+namespace proyecto_cs.src.modules.administradores.Domain.Entities;
 
 public class Persona
 {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using proyecto_cs.src.modules.calidades_altitudes.domain.models;
 
 namespace proyecto_cs;
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using proyecto_cs.src.modules.variedades.domain.models;
 
 namespace proyecto_cs;
 public class VariedadConfig : IEntityTypeConfiguration<Variedad>
@@ -50,7 +51,7 @@ public class VariedadConfig : IEntityTypeConfiguration<Variedad>
             .IsRequired();
 
         builder.Property(v => v.IdRendimiento)
-            .HasColumnName("id_rendimiento")
+            .HasColumnName("IdRendimiento")
             .IsRequired();
 
         builder.Property(v => v.IdCalidad)

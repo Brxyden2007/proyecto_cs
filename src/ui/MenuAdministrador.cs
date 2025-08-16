@@ -13,17 +13,10 @@ public class MenuAdministrador
         administrador = administradorActual;
         opcionesMenu = new string[]
         {
-            "Consultar Variedades de café",
-            "Recomendar café según preferencias",
-            "Ficha Técnica de café", 
-            "Consultar Proveedores",
-            "Consultar Precios",
-            "Consultar Beneficios del café",
-            "Recomendaciones Para Usuarios",
-            "Panel Administrativo (CRUD)",
-            "Gestión de Usuarios",
-            "Reportes y Estadísticas",
-            "Volver al menú principal"
+            "CRUD variedad completa",
+            "CRUD usuarios",
+            "CRUD administradores", 
+            "Salir/Cerrar sesion"
         };
     }
 
@@ -57,12 +50,12 @@ public class MenuAdministrador
     private void MostrarBienvenidaAdmin()
     {
         Console.Clear();
-        MenuPrincipal.EscribirConPausa("=====================================================", 10);
-        MenuPrincipal.EscribirConPausa("▄▀█ █▀▄ █▀▄▀█ █ █▄░█ █ █▀ ▀█▀ █▀█ ▄▀█ █▀▄ █▀█ █▀█", 10);
-        MenuPrincipal.EscribirConPausa("█▀█ █▄▀ █░▀░█ █ █░▀█ █ ▄█ ░█░ █▀▄ █▀█ █▄▀ █▄█ █▀▄", 10);
-        MenuPrincipal.EscribirConPausa($"    Bienvenido/a Admin {administrador.Nombre} {administrador.Apellido} 👑", 10);
-        MenuPrincipal.EscribirConPausa($"    Email: {administrador.Email}", 10);
-        MenuPrincipal.EscribirConPausa("=====================================================", 10);
+        MenuPrincipal.EscribirConPausa("===============================================================", 10);
+        MenuPrincipal.EscribirConPausa("  ▒█▀▀█ ▀█▀ ▒█▀▀▀ ▒█▄░▒█ ▒█░░▒█ ▒█▀▀▀ ▒█▄░▒█ ▀█▀ ▒█▀▀▄ ▒█▀▀▀█",10); 
+        MenuPrincipal.EscribirConPausa("  ▒█▀▀▄ ▒█░ ▒█▀▀▀ ▒█▒█▒█ ░▒█▒█░ ▒█▀▀▀ ▒█▒█▒█ ▒█░ ▒█░▒█ ▒█░░▒█",10); 
+        MenuPrincipal.EscribirConPausa("  ▒█▄▄█ ▄█▄ ▒█▄▄▄ ▒█░░▀█ ░░▀▄▀░ ▒█▄▄▄ ▒█░░▀█ ▄█▄ ▒█▄▄▀ ▒█▄▄▄█",10);
+        MenuPrincipal.EscribirConPausa($" --¡Admin {administrador.Nombre} {administrador.Apellido} 👑!--", 10);
+        MenuPrincipal.EscribirConPausa("================================================================", 10);
         Console.WriteLine("\nPresiona cualquier tecla para continuar...");
         Console.ReadKey();
     }
@@ -71,7 +64,10 @@ public class MenuAdministrador
     {
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("========== MENÚ ADMINISTRADOR ==========\n");
+        Console.WriteLine("========================================\n");
+        Console.WriteLine("▄▀█ █▀▄ █▀▄▀█ █ █▄░█   █▀▄▀█ █▀▀ █▄░█ █░█");
+        Console.WriteLine("█▀█ █▄▀ █░▀░█ █ █░▀█   █░▀░█ ██▄ █░▀█ █▄█");
+        Console.WriteLine("========================================\n");
         Console.ResetColor();
 
         for (int i = 0; i < opcionesMenu.Length; i++)
@@ -79,7 +75,7 @@ public class MenuAdministrador
             if (i == opcionSeleccionada)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"👑 {opcionesMenu[i]}");
+                Console.WriteLine($"🌱 {opcionesMenu[i]}");
                 Console.ResetColor();
             }
             else
@@ -95,7 +91,7 @@ public class MenuAdministrador
         Console.Clear();
         string seleccion = opcionesMenu[opcion];
 
-        if (seleccion.Contains("Volver"))
+        if (seleccion.Contains("Salir")) // Se implementa esto para que cuando el usuario quiera salir, aquella palabra reservada "Salir" se ejecute y salga del menu
         {
             return Task.FromResult(false); // Volver al menú principal
         }

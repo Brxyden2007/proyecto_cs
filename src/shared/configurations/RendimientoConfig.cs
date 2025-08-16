@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using proyecto_cs.src.modules.rendimientos.domain.models;
 
 namespace proyecto_cs;
 public class RendimientoConfig : IEntityTypeConfiguration<Rendimiento>

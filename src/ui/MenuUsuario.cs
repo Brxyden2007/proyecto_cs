@@ -1,26 +1,25 @@
 using System;
 using System.Threading.Tasks;
+using proyecto_cs.src.modules.usuarios.domain.models;
 
 namespace proyecto_cs;
 public class MenuUsuario
 {
-    private readonly proyecto_cs.Usuario usuario;
+    private readonly Usuario usuario;
     private readonly string[] opcionesMenu;
     private int opcionSeleccionada = 0;
 
-    public MenuUsuario(proyecto_cs.Usuario usuarioActual)
+    public MenuUsuario(Usuario usuarioActual)
     {
         usuario = usuarioActual;
         opcionesMenu = new string[]
         {
-            "Consultar Variedades de café",
-            "Recomendar café según preferencias", 
-            "Ficha Técnica de café",
-            "Consultar Proveedores",
-            "Consultar Precios",
-            "Consultar Beneficios del café",
-            "Recomendaciones Para Usuarios",
-            "Volver al menú principal"
+            "Ver catalogo completo de variedades",
+            "Filtrar variedades",
+            "Ver ficha técnica de una variedad",
+            "Generar PDF",
+            "Salir/Cerrar Sesion"
+
         };
     }
 
@@ -54,12 +53,12 @@ public class MenuUsuario
     private void MostrarBienvenidaUsuario()
     {
         Console.Clear();
-        MenuPrincipal.EscribirConPausa("=====================================================", 10);
-        MenuPrincipal.EscribirConPausa("█░█ █▀ █░█ ▄▀█ █▀█ █ █▀█", 10);
-        MenuPrincipal.EscribirConPausa("█▄█ ▄█ █▄█ █▀█ █▀▄ █ █▄█", 10);
-        MenuPrincipal.EscribirConPausa($"    Bienvenido/a {usuario.Nombre} {usuario.Apellido} 🌱", 10);
-        MenuPrincipal.EscribirConPausa($"    Email: {usuario.Email}", 10);
-        MenuPrincipal.EscribirConPausa("=====================================================", 10);
+        MenuPrincipal.EscribirConPausa("===============================================================", 10);
+        MenuPrincipal.EscribirConPausa("  ▒█▀▀█ ▀█▀ ▒█▀▀▀ ▒█▄░▒█ ▒█░░▒█ ▒█▀▀▀ ▒█▄░▒█ ▀█▀ ▒█▀▀▄ ▒█▀▀▀█",10); 
+        MenuPrincipal.EscribirConPausa("  ▒█▀▀▄ ▒█░ ▒█▀▀▀ ▒█▒█▒█ ░▒█▒█░ ▒█▀▀▀ ▒█▒█▒█ ▒█░ ▒█░▒█ ▒█░░▒█",10); 
+        MenuPrincipal.EscribirConPausa("  ▒█▄▄█ ▄█▄ ▒█▄▄▄ ▒█░░▀█ ░░▀▄▀░ ▒█▄▄▄ ▒█░░▀█ ▄█▄ ▒█▄▄▀ ▒█▄▄▄█",10);
+        MenuPrincipal.EscribirConPausa($"    Usuario {usuario.Nombre} {usuario.Apellido} 🌱!", 10);
+        MenuPrincipal.EscribirConPausa("===============================================================", 10);
         Console.WriteLine("\nPresiona cualquier tecla para continuar...");
         Console.ReadKey();
     }
@@ -92,7 +91,7 @@ public class MenuUsuario
         Console.Clear();
         string seleccion = opcionesMenu[opcion];
 
-        if (seleccion.Contains("Volver"))
+        if (seleccion.Contains("Salir"))
         {
             return Task.FromResult(false); // Volver al menú principal
         }
@@ -106,4 +105,3 @@ public class MenuUsuario
         }
     }
 }
-

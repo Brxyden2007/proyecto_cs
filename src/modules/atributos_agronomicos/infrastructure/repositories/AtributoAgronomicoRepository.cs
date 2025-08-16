@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace proyecto_cs;
+namespace proyecto_cs.src.modules.atributos_agronomicos.infrastructure.repositories;
 public class AtributoAgronomicoRepository
 {
     

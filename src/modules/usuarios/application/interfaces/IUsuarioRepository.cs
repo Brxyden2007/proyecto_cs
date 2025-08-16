@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using proyecto_cs.src.modules.usuarios.domain.models;
 
-namespace proyecto_cs;
+namespace proyecto_cs.src.modules.usuarios.application.interfaces;
 public interface IUsuarioRepository
 {
     Task<Usuario?> GetByIdAsync(int id);
