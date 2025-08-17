@@ -68,9 +68,8 @@ public class MenuUsuario
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("=====================================================");
-        Console.WriteLine("▒█░▒█ ▒█▀▀▀█ ▒█▀▀▀ ▒█▀▀█ 　 ▒█▀▄▀█ ▒█▀▀▀ ▒█▄░▒█ ▒█░▒█");
-        Console.WriteLine("▒█░▒█ ░▀▀▀▄▄ ▒█▀▀▀ ▒█▄▄▀ 　 ▒█▒█▒█ ▒█▀▀▀ ▒█▒█▒█ ▒█░▒█");
-        Console.WriteLine("░▀▄▄▀ ▒█▄▄▄█ ▒█▄▄▄ ▒█░▒█ 　 ▒█░░▒█ ▒█▄▄▄ ▒█░░▀█ ░▀▄▄▀");
+        Console.WriteLine("█░█ █▀ █▀▀ █▀█   █▀▄▀█ █▀▀ █▄░█ █░█");
+        Console.WriteLine("█▄█ ▄█ ██▄ █▀▄   █░▀░█ ██▄ █░▀█ █▄█");
         Console.WriteLine("=====================================================");
 
         Console.ResetColor();
