@@ -14,30 +14,30 @@ public class PersonaConfig : IEntityTypeConfiguration<Persona>
     {
         builder.ToTable("personas");
 
-        builder.HasKey(p => p.Id);
-        builder.Property(p => p.Id)
+        builder.HasKey(pe => pe.Id);
+        builder.Property(pe => pe.Id)
             .ValueGeneratedOnAdd();
 
-        builder.Property(p => p.Nombre)
+        builder.Property(pe => pe.Nombre)
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(p => p.Apellido)
+        builder.Property(pe => pe.Apellido)
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(p => p.Edad)
+        builder.Property(pe => pe.Edad)
             .IsRequired();
 
-        builder.Property(p => p.Nacionalidad)
+        builder.Property(pe => pe.Nacionalidad)
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(p => p.DocumentoIdentidad)
+        builder.Property(pe => pe.DocumentoIdentidad)
             .HasColumnName("documento_identidad")
             .IsRequired();
 
-        builder.Property(p => p.Genero)
+        builder.Property(pe => pe.Genero)
             .IsRequired()
             .HasMaxLength(50);
     }
