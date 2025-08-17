@@ -13,11 +13,13 @@ public class AltitudConfig : IEntityTypeConfiguration<Altitud>
     {
         builder.ToTable("altitudes");
 
-        builder.HasKey(a => a.IdAltitud);
-        builder.Property(a => a.IdAltitud)
+        builder.HasKey(al => al.IdAltitud);
+
+        builder.Property(al => al.IdAltitud)
+            .HasColumnName("id_altitud")
             .ValueGeneratedOnAdd();
 
-        builder.Property(a => a.Rango)
+        builder.Property(al => al.Rango)
             .IsRequired()
             .HasMaxLength(100);
     }

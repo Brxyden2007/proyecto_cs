@@ -15,6 +15,7 @@ public class TamanioGranoConfig : IEntityTypeConfiguration<TamanioGrano>
 
         builder.HasKey(t => t.IdTamanio);
         builder.Property(t => t.IdTamanio)
+            .HasColumnName("id_tamanio")
             .ValueGeneratedOnAdd();
 
         builder.Property(t => t.Nombre)
