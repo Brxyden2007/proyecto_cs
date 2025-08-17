@@ -18,6 +18,7 @@ public class ResistenciaConfig: IEntityTypeConfiguration<Resistencia>
         builder.HasKey(res => res.IdResistencia);
         // define que es autoincrement
         builder.Property(res => res.IdResistencia)
+            .HasColumnName("id_resistencia")
             .ValueGeneratedOnAdd();
 
         builder.Property(res => res.Enfermedad)

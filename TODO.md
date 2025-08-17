@@ -1,5 +1,3 @@
-arrelgar todos los namespace
-
 arreglar los nombres de las columnas de la base de datos con los mismos de la clase, la configuracion y el ddl 
 
 perfeccionar el diseno del pdf

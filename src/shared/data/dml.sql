@@ -178,7 +178,7 @@ INSERT INTO usuarios (id_usuario, nombre, apellido, email, password_hash) VALUES
 (26, 'Gabriel', 'Salazar', 'gabriel.salazar@user.com', 'z6a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5');
 
 
-INSERT INTO variedades (nombre_comun, nombre_cientifico, descripcion, imagen_url, id_porte, id_tamanio, id_altitud, IdRendimiento, id_calidad) VALUES
+INSERT INTO variedades (nombre_comun, nombre_cientifico, descripcion, imagen_url, id_porte, id_tamanio, id_altitud, id_rendimiento, id_calidad) VALUES
 ('Caturra', 'Coffea arabica var. Caturra', 'Una mutación natural del Bourbon, conocida por su alta producción y sabor afrutado. De porte bajo, lo que facilita la recolección.', './src/shared/utils/pdf/images/caturra.jpeg', 1, 2, 2, 3, 3),
 ('Castillo', 'Híbrido Castillo', 'Híbrido colombiano desarrollado para ser resistente a la roya del café. Tiene una taza limpia y equilibrada.', './src/shared/utils/pdf/images/castillo.jpeg', 2, 2, 2, 4, 2),
 ('Geisha', 'Coffea arabica var. Geisha', 'Variedad muy apreciada por su perfil de taza floral y complejo. Exige condiciones específicas de cultivo.', './src/shared/utils/pdf/images/geisha.jpeg', 3, 3, 3, 1, 4),
