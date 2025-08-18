@@ -327,7 +327,7 @@ lo mismo que en el login de administrador, pero en la tabla de usuarios
 ---
 **variedades:**
 - 1.1 Mostrar lista paginada de todas las variedades
-- 1.2 Mostrar ficha tecnica detallada de una variedad
+- <!-- Aqui se supondría que en vez de ejecutar una opcion se ejecute directamente el ver catalogo completo de variedades-->
 
 ---
 **Filtrar por:**
