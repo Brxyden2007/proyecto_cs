@@ -265,7 +265,7 @@ public class MenuAdministrador
             Console.WriteLine("\nAltitudes disponibles:");
             for (int i = 0; i < altitudes.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {altitudes[i]}");
+                Console.WriteLine($"{i + 1}. {altitudes[i].Rango}");
             }
             Console.Write("Seleccione altitud (número): ");
             int idAltitud = int.Parse(Console.ReadLine() ?? "1");
@@ -275,7 +275,7 @@ public class MenuAdministrador
             Console.WriteLine("\nRendimientos disponibles:");
             for (int i = 0; i < rendimientos.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {rendimientos[i]}");
+                Console.WriteLine($"{i + 1}. {rendimientos[i].Nivel}");
             }
             Console.Write("Seleccione rendimiento (número): ");
             int idRendimiento = int.Parse(Console.ReadLine() ?? "1");
@@ -285,7 +285,7 @@ public class MenuAdministrador
             Console.WriteLine("\nCalidades disponibles:");
             for (int i = 0; i < calidades.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {calidades[i]}");
+                Console.WriteLine($"{i + 1}. {calidades[i].Nivel}");
             }
             Console.Write("Seleccione calidad (número): ");
             int idCalidad = int.Parse(Console.ReadLine() ?? "1");
@@ -463,7 +463,10 @@ public class MenuAdministrador
                     Console.WriteLine($"   Científico: {variedad.NombreCientifico}");
                     Console.WriteLine($"   Porte: {variedad.Porte.Nombre}");
                     Console.WriteLine($"   Tamaño: {variedad.TamanioGrano.Nombre}");
-                    Console.WriteLine($"   Rendimiento: {variedad.Rendimiento}");
+                    Console.WriteLine($"   Rendimiento: {variedad.Rendimiento.Nivel}");
+                    Console.WriteLine($"   Altitud: {variedad.Altitud.Rango}");
+                    Console.WriteLine($"   Calidad: {variedad.CalidadAltitud.Nivel}");
+                    Console.WriteLine($"   Descripción: {variedad.Descripcion}");
                     Console.WriteLine("   " + new string('-', 50));
                 }
             }
