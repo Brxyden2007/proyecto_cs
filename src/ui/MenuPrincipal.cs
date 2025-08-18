@@ -60,7 +60,7 @@ public class MenuPrincipal
             }
         }
     }
-    public async Task CartelBienvenida()
+    public Task CartelBienvenida()
     {
         Console.Clear();
         Console.WriteLine("=== -------------------------------------------------------------------------------------------------------  ===");
@@ -74,7 +74,7 @@ public class MenuPrincipal
         Console.WriteLine("¡Bienvenido al sistema de catálogo de café más completo!");
         Console.WriteLine("Presiona cualquier tecla para continuar...");
         Console.ReadKey();
-
+        return Task.CompletedTask;
     }
 
     private void DibujarMenuLogin()
