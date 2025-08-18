@@ -352,11 +352,10 @@ lo mismo que en el login de administrador, pero en la tabla de usuarios
 
 ---
 - 4.1 Generar pdf detallado de una variedad
-- 4.3 Generar pdf detallado de todas las variedades
-- 4.4 Generar pdf con solo los atributos agronomicos de todas las variedades
-- 4.5 Generar pdf con solo los historia genetica de todas las variedades 
-- 4.5 Generar PDF resumido (Solo con nombre, imagen y características principales.)
-- 4.6 Regresar al menu de usuario
+- 4.2 Generar pdf detallado de todas las variedades 
+- 4.3 Generar pdf con ficha tecnica de todas las variedades (atributos agronomicos e historias geneticas)
+- 4.4 Generar PDF resumido (Solo con nombre, imagen y características principales.)
+- 4.5 Regresar al menu de usuario
 ---
 
 ### Menu principal administrador
