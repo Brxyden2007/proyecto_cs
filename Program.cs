@@ -12,10 +12,11 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        // esto es para crear la base de datos una vez se ejecute el programa, a su vez, los ejecuta con usnos inserts de prueba de toda la base de datos
-        var context = DbContextFactory.Create();
+        // esto es para crear la base de datos una vez se ejecute el programa, a su vez, los ejecuta con unos inserts de prueba de toda la base de datos
         DbUtil dbUtil = new DbUtil();
         dbUtil.CrearBaseDeDatos("server=localhost;user=campus2023;password=campus2023;", "proyecto_cs");
+        dbUtil.CrearInserts("server=localhost;user=campus2023;password=campus2023;", "proyecto_cs");
+        var context = DbContextFactory.Create();
         // esto es para facillitar el frontend de la consola
         Console.OutputEncoding = Encoding.UTF8;
         
