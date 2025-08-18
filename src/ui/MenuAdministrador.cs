@@ -146,11 +146,13 @@ public class MenuAdministrador
         while (continuarVariedades)
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║                  GESTIÓN DE VARIEDADES                      ║");
-            Console.WriteLine("║                    🌱 CAFÉ COLOMBIANO 🌱                   ║");
-            Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("╔══════════════════════════════════════╗");
+            Console.WriteLine("║ -------------------------------------║");
+            Console.WriteLine("║        GESTIÓN DE VARIEDADES         ║");
+            Console.WriteLine("║       🌱  CAFÉ COLOMBIANO  🌱       ║");
+            Console.WriteLine("║ -------------------------------------║");
+            Console.WriteLine("╚══════════════════════════════════════╝");
             Console.ResetColor();
 
             for (int i = 0; i < opcionesVariedades.Length; i++)
@@ -221,9 +223,11 @@ public class MenuAdministrador
     {
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                    CREAR NUEVA VARIEDAD                     ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+            Console.WriteLine("╔══════════════════════════════════════╗");
+            Console.WriteLine("║ -------------------------------------║");
+            Console.WriteLine("║     🌱  CREAR NUEVA VARIEDAD  🌱    ║");
+            Console.WriteLine("║ -------------------------------------║");
+            Console.WriteLine("╚══════════════════════════════════════╝");
         Console.ResetColor();
 
         try
@@ -265,7 +269,7 @@ public class MenuAdministrador
             Console.WriteLine("\nAltitudes disponibles:");
             for (int i = 0; i < altitudes.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {altitudes[i]}");
+                Console.WriteLine($"{i + 1}. {altitudes[i].Rango}");
             }
             Console.Write("Seleccione altitud (número): ");
             int idAltitud = int.Parse(Console.ReadLine() ?? "1");
@@ -275,7 +279,7 @@ public class MenuAdministrador
             Console.WriteLine("\nRendimientos disponibles:");
             for (int i = 0; i < rendimientos.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {rendimientos[i]}");
+                Console.WriteLine($"{i + 1}. {rendimientos[i].Nivel}");
             }
             Console.Write("Seleccione rendimiento (número): ");
             int idRendimiento = int.Parse(Console.ReadLine() ?? "1");
@@ -285,7 +289,7 @@ public class MenuAdministrador
             Console.WriteLine("\nCalidades disponibles:");
             for (int i = 0; i < calidades.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {calidades[i]}");
+                Console.WriteLine($"{i + 1}. {calidades[i].Nivel}");
             }
             Console.Write("Seleccione calidad (número): ");
             int idCalidad = int.Parse(Console.ReadLine() ?? "1");
@@ -313,10 +317,11 @@ public class MenuAdministrador
     private async Task ActualizarVariedad()
     {
         Console.Clear();
-        Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                   ACTUALIZAR VARIEDAD                       ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
-
+        Console.WriteLine("╔══════════════════════════════════════╗");
+        Console.WriteLine("║ -------------------------------------║");
+        Console.WriteLine("║     🌱  ACTUALIZAR VARIEDAD  🌱     ║");
+        Console.WriteLine("║ -------------------------------------║");           
+        Console.WriteLine("╚══════════════════════════════════════╝");
         try
         {
             // Mostrar variedades existentes
@@ -378,9 +383,11 @@ public class MenuAdministrador
     private async Task EliminarVariedad()
     {
         Console.Clear();
-        Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                    ELIMINAR VARIEDAD                        ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+        Console.WriteLine("╔══════════════════════════════════════╗");
+        Console.WriteLine("║ -------------------------------------║");
+        Console.WriteLine("║      🌱  ELIMINAR VARIEDAD  🌱      ║");
+        Console.WriteLine("║ -------------------------------------║");           
+        Console.WriteLine("╚══════════════════════════════════════╝");
 
         try
         {
@@ -441,9 +448,11 @@ public class MenuAdministrador
     private async Task MostrarTodasLasVariedades()
     {
         Console.Clear();
-        Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                   TODAS LAS VARIEDADES                      ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+        Console.WriteLine("╔══════════════════════════════════════╗");
+        Console.WriteLine("║ -------------------------------------║");
+        Console.WriteLine("║     🌱  TODAS LAS VARIEDADES  🌱    ║");
+        Console.WriteLine("║ -------------------------------------║");           
+        Console.WriteLine("╚══════════════════════════════════════╝");
 
         try
         {
@@ -463,7 +472,10 @@ public class MenuAdministrador
                     Console.WriteLine($"   Científico: {variedad.NombreCientifico}");
                     Console.WriteLine($"   Porte: {variedad.Porte.Nombre}");
                     Console.WriteLine($"   Tamaño: {variedad.TamanioGrano.Nombre}");
-                    Console.WriteLine($"   Rendimiento: {variedad.Rendimiento}");
+                    Console.WriteLine($"   Rendimiento: {variedad.Rendimiento.Nivel}");
+                    Console.WriteLine($"   Altitud: {variedad.Altitud.Rango}");
+                    Console.WriteLine($"   Calidad: {variedad.CalidadAltitud.Nivel}");
+                    Console.WriteLine($"   Descripción: {variedad.Descripcion}");
                     Console.WriteLine("   " + new string('-', 50));
                 }
             }
@@ -495,11 +507,12 @@ public class MenuAdministrador
         while (continuarUsuarios)
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║                   GESTIÓN DE USUARIOS                       ║");
-            Console.WriteLine("║                      👥 USUARIOS 👥                        ║");
-            Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.WriteLine("╔══════════════════════════════════════╗");
+        Console.WriteLine("║ -------------------------------------║");
+        Console.WriteLine("║     👥  GESTION DE USUARIOS  👥     ║");
+        Console.WriteLine("║ -------------------------------------║");           
+        Console.WriteLine("╚══════════════════════════════════════╝");
             Console.ResetColor();
 
             for (int i = 0; i < opcionesUsuarios.Length; i++)
@@ -569,9 +582,11 @@ public class MenuAdministrador
     private async Task CrearUsuario()
     {
         Console.Clear();
-        Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                     CREAR NUEVO USUARIO                     ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+        Console.WriteLine("╔══════════════════════════════════════╗");
+        Console.WriteLine("║ -------------------------------------║");
+        Console.WriteLine("║     👥  CREAR NUEVO USUARIOS  👥    ║");
+        Console.WriteLine("║ -------------------------------------║");           
+        Console.WriteLine("╚══════════════════════════════════════╝");
 
         try
         {
@@ -612,9 +627,11 @@ public class MenuAdministrador
     private async Task ActualizarUsuario()
     {
         Console.Clear();
-        Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                    ACTUALIZAR USUARIO                       ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+        Console.WriteLine("╔══════════════════════════════════════╗");
+        Console.WriteLine("║ -------------------------------------║");
+        Console.WriteLine("║     👥  ACTUALIZAR USUARIO  👥      ║");
+        Console.WriteLine("║ -------------------------------------║");           
+        Console.WriteLine("╚══════════════════════════════════════╝");
 
         try
         {
@@ -676,9 +693,11 @@ public class MenuAdministrador
     private async Task EliminarUsuario()
     {
         Console.Clear();
-        Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                     ELIMINAR USUARIO                        ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+        Console.WriteLine("╔══════════════════════════════════════╗");
+        Console.WriteLine("║ -------------------------------------║");
+        Console.WriteLine("║       👥 ELIMINAR USUARIO  👥       ║");
+        Console.WriteLine("║ -------------------------------------║");           
+        Console.WriteLine("╚══════════════════════════════════════╝");
 
         try
         {
@@ -733,9 +752,11 @@ public class MenuAdministrador
     private async Task MostrarTodosLosUsuarios()
     {
         Console.Clear();
-        Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                    TODOS LOS USUARIOS                       ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+        Console.WriteLine("╔══════════════════════════════════════╗");
+        Console.WriteLine("║ -------------------------------------║");
+        Console.WriteLine("║     👥  TODOS LOS USUARIOS  👥      ║");
+        Console.WriteLine("║ -------------------------------------║");           
+        Console.WriteLine("╚══════════════════════════════════════╝");
 
         try
         {
@@ -787,10 +808,11 @@ public class MenuAdministrador
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║                GESTIÓN DE ADMINISTRADORES                   ║");
-            Console.WriteLine("║                      👑 ADMINS 👑                          ║");
-            Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+        Console.WriteLine("╔══════════════════════════════════════╗");
+        Console.WriteLine("║ -------------------------------------║");
+        Console.WriteLine("║   👑  GESTION DE ADMINISTRADOR  👑  ║");
+        Console.WriteLine("║ -------------------------------------║");           
+        Console.WriteLine("╚══════════════════════════════════════╝");
             Console.ResetColor();
 
             for (int i = 0; i < opcionesAdmins.Length; i++)
@@ -860,9 +882,11 @@ public class MenuAdministrador
     private async Task CrearAdministrador()
     {
         Console.Clear();
-        Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                  CREAR NUEVO ADMINISTRADOR                  ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+        Console.WriteLine("╔══════════════════════════════════════╗");
+        Console.WriteLine("║ -------------------------------------║");
+        Console.WriteLine("║  👑  CREAR NUEVO ADMINISTRADOR  👑  ║");
+        Console.WriteLine("║ -------------------------------------║");           
+        Console.WriteLine("╚══════════════════════════════════════╝");
 
         try
         {
@@ -903,9 +927,11 @@ public class MenuAdministrador
     private async Task ActualizarAdministrador()
     {
         Console.Clear();
-        Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                 ACTUALIZAR ADMINISTRADOR                    ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+        Console.WriteLine("╔══════════════════════════════════════╗");
+        Console.WriteLine("║ -------------------------------------║");
+        Console.WriteLine("║   👑  ACTUALIZAR ADMINISTRADOR  👑  ║");
+        Console.WriteLine("║ -------------------------------------║");           
+        Console.WriteLine("╚══════════════════════════════════════╝");
 
         try
         {
@@ -967,9 +993,11 @@ public class MenuAdministrador
     private async Task EliminarAdministrador()
     {
         Console.Clear();
-        Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                  ELIMINAR ADMINISTRADOR                     ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+        Console.WriteLine("╔══════════════════════════════════════╗");
+        Console.WriteLine("║ -------------------------------------║");
+        Console.WriteLine("║    👑  ELIMINAR ADMINISTRADOR  👑   ║");
+        Console.WriteLine("║ -------------------------------------║");           
+        Console.WriteLine("╚══════════════════════════════════════╝");
 
         try
         {
@@ -1024,9 +1052,11 @@ public class MenuAdministrador
     private async Task MostrarTodosLosAdministradores()
     {
         Console.Clear();
-        Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                 TODOS LOS ADMINISTRADORES                   ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+        Console.WriteLine("╔══════════════════════════════════════╗");
+        Console.WriteLine("║ -------------------------------------║");
+        Console.WriteLine("║   👑  TODOS LOS ADMINISTRADORES  👑 ║");
+        Console.WriteLine("║ -------------------------------------║");           
+        Console.WriteLine("╚══════════════════════════════════════╝");
 
         try
         {

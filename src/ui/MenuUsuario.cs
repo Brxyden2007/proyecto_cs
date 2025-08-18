@@ -122,10 +122,12 @@ public class MenuUsuario
     {
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                    CATÁLOGO COMPLETO                        ║");
-        Console.WriteLine("║                  VARIEDADES DE CAFÉ 🌱                      ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+            Console.WriteLine("╔══════════════════════════════════════╗");
+            Console.WriteLine("║ -------------------------------------║");
+            Console.WriteLine("║            CATÁLOGO COMPLETO         ║");
+            Console.WriteLine("║       🌱  VARIEDADES DE CAFÉ  🌱    ║");
+            Console.WriteLine("║ -------------------------------------║");
+            Console.WriteLine("╚══════════════════════════════════════╝");
         Console.ResetColor();
 
         try
@@ -148,10 +150,12 @@ public class MenuUsuario
 
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-                Console.WriteLine("║                    CATÁLOGO COMPLETO                        ║");
-                Console.WriteLine($"║                      Página {paginaActual}                              ║");
-                Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+            Console.WriteLine("╔══════════════════════════════════════╗");
+            Console.WriteLine("║ -------------------------------------║");
+            Console.WriteLine("║           CATÁLOGO COMPLETO          ║");
+            Console.WriteLine("║        🌱  PAGINA ACTUAL  🌱        ║");
+            Console.WriteLine("║ -------------------------------------║");
+            Console.WriteLine("╚══════════════════════════════════════╝");
                 Console.ResetColor();
 
                 for (int i = 0; i < listaVariedades.Count; i++)
@@ -214,10 +218,12 @@ public class MenuUsuario
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║                    FILTROS DE BÚSQUEDA                      ║");
-            Console.WriteLine("║                    🔍 VARIEDADES 🔍                         ║");
-            Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+            Console.WriteLine("╔══════════════════════════════════════╗");
+            Console.WriteLine("║ -------------------------------------║");
+            Console.WriteLine("║          FILTROS DE BÚSQUEDA         ║");
+            Console.WriteLine("║        🔍  EN VARIEDADES  🔍        ║");
+            Console.WriteLine("║ -------------------------------------║");
+            Console.WriteLine("╚══════════════════════════════════════╝");
             Console.ResetColor();
 
             for (int i = 0; i < opcionesFiltros.Length; i++)
@@ -275,26 +281,31 @@ public class MenuUsuario
                     break;
 
                 case 2: // Filtrar por porte
+                    Console.Clear();
                     await FiltrarPorPorte();
                     break;
 
                 case 3: // Filtrar por tamaño de grano
+                    Console.Clear();
                     await FiltrarPorTamanioGrano();
                     break;
 
                 case 4: // Filtrar por altitud
+                    Console.Clear();
                     await FiltrarPorAltitud();
                     break;
 
                 case 5: // Filtrar por rendimiento
+                    Console.Clear();
                     await FiltrarPorRendimiento();
                     break;
 
                 case 6: // Filtrar por resistencia
+                    Console.Clear();
                     await FiltrarPorResistencia();
                     break;
 
-                case 7: // Filtrar por tipo de variedad
+                case 7:
                     Console.Clear();
                     Console.Write("Ingrese el tipo de variedad a buscar: ");
                     string tipo = Console.ReadLine() ?? "";
@@ -303,14 +314,17 @@ public class MenuUsuario
                     break;
 
                 case 8: // Filtrar por atributos agronómicos
+                    Console.Clear();
                     await FiltrarPorAtributoAgronomico();
                     break;
 
                 case 9: // Filtrar por historia genética
+                    Console.Clear();
                     await FiltrarPorHistoriaGenetica();
                     break;
 
                 case 10: // Regresar
+                    Console.Clear();
                     return false;
             }
         }
@@ -469,7 +483,7 @@ public class MenuUsuario
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine($"║ {titulo.PadRight(60)} ║");
+        Console.WriteLine($"║ {titulo.PadRight(60)}🔍 ║");
         Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
         Console.ResetColor();
 
@@ -540,10 +554,12 @@ public class MenuUsuario
     {
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                    FICHA TÉCNICA                            ║");
-        Console.WriteLine("║                   🌱 VARIEDAD 🌱                            ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════════╝");
+            Console.WriteLine("╔══════════════════════════════════════╗");
+            Console.WriteLine("║ -------------------------------------║");
+            Console.WriteLine("║             FICHA TÉCNICA            ║");
+            Console.WriteLine("║            🌱  VARIEDAD  🌱         ║");
+            Console.WriteLine("║ -------------------------------------║");
+            Console.WriteLine("╚══════════════════════════════════════╝");
         Console.ResetColor();
 
         Console.WriteLine($"\n📋 INFORMACIÓN GENERAL");
