@@ -38,7 +38,7 @@ INSERT INTO resistencias (enfermedad, nivel) VALUES
 ('Nemátodos', 'Media');
 
 INSERT INTO personas (nombre, apellido, edad, nacionalidad, documento_identidad, genero) VALUES
-('Juan', 'Pérez', 30, 'Colombiana', 101010101, 'Masculino'),
+('Juan', 'Pérez', 30, 'Colombiana', 101020202, 'Masculino'),
 ('María', 'García', 25, 'Colombiana', 102020202, 'Femenino'),
 ('Carlos', 'López', 45, 'Ecuatoriana', 103030303, 'Masculino'),
 ('Ana', 'Rodríguez', 35, 'Venezolana', 104040404, 'Femenino'),
