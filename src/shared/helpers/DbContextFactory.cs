@@ -16,7 +16,7 @@ public class DbContextFactory
       .AddEnvironmentVariables()
       .Build();
     string? connectionString = Environment.GetEnvironmentVariable("MYSQL_CONNECTION")
-                    ?? config.GetConnectionString("MysqlConnection");
+                    ?? config.GetConnectionString("MysqlDatabase");
 
     if (string.IsNullOrWhiteSpace(connectionString))
       throw new InvalidOperationException("No se encontró una cadena de conexión válida.");
@@ -26,6 +26,8 @@ public class DbContextFactory
     if (detectedVersion < minVersion)
       throw new NotSupportedException($"Versión de MySQL no soportada: {detectedVersion}. Requiere {minVersion} o superior.");
     Console.WriteLine($"🔍 MySQL detectado: {detectedVersion}");
+    System.Console.WriteLine("presione una tecla para continuar...");
+    Console.WriteLine();
     var options = new DbContextOptionsBuilder<AppDbContext>()
       .UseMySql(connectionString, new MySqlServerVersion(detectedVersion))
       .Options;

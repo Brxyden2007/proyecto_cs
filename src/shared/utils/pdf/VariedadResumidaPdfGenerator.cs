@@ -1,22 +1,20 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using proyecto_cs.src.modules.variedades.domain.models;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using proyecto_cs.src.modules.variedades.domain.models;
 
-namespace proyecto_cs.src.shared.utils.pdf;
-
-public class VariedadPdfGenerator
+namespace proyecto_cs;
+public class VariedadResumidaPdfGenerator
 {
   private readonly Variedad _variedad;
-  public VariedadPdfGenerator(Variedad variedad) =>_variedad = variedad;
+  public VariedadResumidaPdfGenerator(Variedad variedad) =>_variedad = variedad;
 
-  public VariedadPdfGenerator(string? variedad)
+  public VariedadResumidaPdfGenerator(string? variedad)
   {
   }
 
@@ -170,10 +168,3 @@ public class VariedadPdfGenerator
   }
 }
 
-
-
-// container
-//     .Background(Colors.Grey.Lighten2)
-//     .CornerRadius(25)
-//     .Padding(25)
-//     .Text("Content with rounded corners");
