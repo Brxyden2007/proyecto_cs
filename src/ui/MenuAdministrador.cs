@@ -507,7 +507,7 @@ public class MenuAdministrador
         while (continuarUsuarios)
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.WriteLine("╔══════════════════════════════════════╗");
         Console.WriteLine("║ -------------------------------------║");
         Console.WriteLine("║     👥  GESTION DE USUARIOS  👥     ║");
