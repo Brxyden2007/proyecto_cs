@@ -13,14 +13,14 @@ namespace proyecto_cs.src.shared.utils.pdf;
 
 public class VariedadPdfGenerator
 {
-  private readonly Variedad _variedad;
+  private readonly Variedad? _variedad; // En este apartado, decidi poner el ? en Variedad para que no interfiera con la ejecucion del program.cs
   public VariedadPdfGenerator(Variedad variedad) =>_variedad = variedad;
 
   public VariedadPdfGenerator(string? variedad)
   {
   }
 
-    public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
+  public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
   public Task Compose(AppDbContext context)
   {
     var variedad = context.Variedades
@@ -56,12 +56,12 @@ public class VariedadPdfGenerator
                 .Padding(15)
                 .Column(c =>
                 {
-                  c.Item().Text(_variedad.NombreComun)
+                  c.Item().Text(_variedad?.NombreComun)
                     .FontSize(28)
                     .Bold()
                     .FontColor(Colors.White);
 
-                  c.Item().Text(_variedad.Descripcion)
+                  c.Item().Text(_variedad?.Descripcion)
                     .FontColor(Colors.White)
                     .FontSize(12);
                 });
@@ -72,7 +72,7 @@ public class VariedadPdfGenerator
               col.Item().Column(c =>
               {
                 c.Item().Text("YIELD POTENTIAL").Bold().FontColor(Colors.Green.Medium);
-                c.Item().Text($"{_variedad.Rendimiento?.Nivel}").FontSize(14);
+                c.Item().Text($"{_variedad?.Rendimiento?.Nivel}").FontSize(14);
               });
 
               col.Spacing(5);
@@ -81,7 +81,7 @@ public class VariedadPdfGenerator
               col.Item().Column(c =>
               {
                 c.Item().Text("BEAN SIZE").Bold().FontColor(Colors.Green.Medium);
-                c.Item().Text($"{_variedad.TamanioGrano?.Nombre.Clone()}");
+                c.Item().Text($"{_variedad?.TamanioGrano?.Nombre.Clone()}");
               });
 
               // Coffee leaf rust
@@ -114,7 +114,7 @@ public class VariedadPdfGenerator
             {
               // Imagen principal
               // col.Item().Image(_variedad.ImagenUrl, ImageScaling.FitArea);
-              col.Item().Image(Image.FromFile(_variedad.ImagenUrl));
+              col.Item().Image(Image.FromFile(_variedad?.ImagenUrl)); // Intentaremos arreglar el Null en esta linea de codigo.
 
               // Características
               col.Item().PaddingTop(10).Text("CHARACTERISTICS")
@@ -156,7 +156,7 @@ public class VariedadPdfGenerator
           });
         });
       })
-    .GeneratePdf($"Variedad_{_variedad.IdVariedad}.pdf");
+    .GeneratePdf($"Variedad_{_variedad?.IdVariedad}.pdf");
     return Task.CompletedTask;
   }
 
@@ -177,3 +177,4 @@ public class VariedadPdfGenerator
 //     .CornerRadius(25)
 //     .Padding(25)
 //     .Text("Content with rounded corners");
+
