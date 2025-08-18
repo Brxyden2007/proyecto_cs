@@ -13,15 +13,9 @@ namespace proyecto_cs.src.shared.utils.pdf;
 
 public class VariedadPdfGenerator
 {
-  private readonly Variedad? _variedad; // En este apartado, decidi poner el ? en Variedad para que no interfiera con la ejecucion del program.cs
-  public VariedadPdfGenerator(Variedad variedad) =>_variedad = variedad;
-
-  public VariedadPdfGenerator(string? variedad)
-  {
-  }
-
+  public VariedadPdfGenerator() {}
   public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
-  public Task Compose(AppDbContext context)
+  public Task Compose(AppDbContext context, int idVariedad)
   {
     var variedad = context.Variedades
         .Include(v => v.Rendimiento)
@@ -29,8 +23,10 @@ public class VariedadPdfGenerator
         .Include(v => v.Porte)
         .Include(v => v.Altitud)
         .Include(v => v.CalidadAltitud)
-        .FirstOrDefault(v => v.IdVariedad == 1);
-        
+        .FirstOrDefault(v => v.IdVariedad == idVariedad);
+    if (variedad == null)
+        throw new Exception($"No se encontró la variedad con ID {idVariedad}");
+
     QuestPDF.Settings.License = LicenseType.Community;
     Document.Create(container =>
       {
@@ -56,12 +52,12 @@ public class VariedadPdfGenerator
                 .Padding(15)
                 .Column(c =>
                 {
-                  c.Item().Text(_variedad?.NombreComun)
+                  c.Item().Text(variedad?.NombreComun)
                     .FontSize(28)
                     .Bold()
                     .FontColor(Colors.White);
 
-                  c.Item().Text(_variedad?.Descripcion)
+                  c.Item().Text(variedad?.Descripcion)
                     .FontColor(Colors.White)
                     .FontSize(12);
                 });
@@ -72,7 +68,7 @@ public class VariedadPdfGenerator
               col.Item().Column(c =>
               {
                 c.Item().Text("YIELD POTENTIAL").Bold().FontColor(Colors.Green.Medium);
-                c.Item().Text($"{_variedad?.Rendimiento?.Nivel}").FontSize(14);
+                c.Item().Text($"{variedad?.Rendimiento?.Nivel}").FontSize(14);
               });
 
               col.Spacing(5);
@@ -81,7 +77,7 @@ public class VariedadPdfGenerator
               col.Item().Column(c =>
               {
                 c.Item().Text("BEAN SIZE").Bold().FontColor(Colors.Green.Medium);
-                c.Item().Text($"{_variedad?.TamanioGrano?.Nombre.Clone()}");
+                c.Item().Text($"{variedad?.TamanioGrano?.Nombre.Clone()}");
               });
 
               // Coffee leaf rust
@@ -113,9 +109,16 @@ public class VariedadPdfGenerator
             row.RelativeItem(1.2f).Column(col =>
             {
               // Imagen principal
-              // col.Item().Image(_variedad.ImagenUrl, ImageScaling.FitArea);
-              col.Item().Image(Image.FromFile(_variedad?.ImagenUrl)); // Intentaremos arreglar el Null en esta linea de codigo.
-
+              // col.Item().Image(variedad.ImagenUrl, ImageScaling.FitArea);
+              if (!string.IsNullOrWhiteSpace(variedad.ImagenUrl) && File.Exists(variedad.ImagenUrl))
+                {
+                    byte[] imageBytes = File.ReadAllBytes(variedad.ImagenUrl);
+                    col.Item().Image(imageBytes, ImageScaling.FitWidth);
+                }
+                else
+                {
+                    col.Item().Text("[Sin imagen disponible]").Italic().FontColor(Colors.Grey.Medium);
+                }
               // Características
               col.Item().PaddingTop(10).Text("CHARACTERISTICS")
                 .FontSize(18)
@@ -126,7 +129,7 @@ public class VariedadPdfGenerator
 
               col.Item().Column(c =>
               {
-                AddCharacteristic(c, "YIELD POTENTIAL", $"{_variedad.Rendimiento?.Nivel}");
+                AddCharacteristic(c, "YIELD POTENTIAL", $"{variedad.Rendimiento?.Nivel}");
                 AddCharacteristic(c, "COUNTRY OF RELEASE", "Indonesia");
                 AddCharacteristic(c, "CONTENTS OF MUCILAGE IN THE CHERRY", "Average");
                 AddCharacteristic(c, "COFFEE BERRY DISEASE", "Tolerant");
@@ -156,7 +159,7 @@ public class VariedadPdfGenerator
           });
         });
       })
-    .GeneratePdf($"Variedad_{_variedad?.IdVariedad}.pdf");
+    .GeneratePdf($"Variedad_{variedad?.IdVariedad}.pdf");
     return Task.CompletedTask;
   }
 

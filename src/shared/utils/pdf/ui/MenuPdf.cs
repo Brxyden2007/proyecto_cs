@@ -84,18 +84,18 @@ public class MenuPdf
     switch (opcion_seleccionada)
     {
       case 0:
-        System.Console.WriteLine("ingrese el id de la variedad que desea buscar:\n");
-        var variedad = Console.ReadLine();
+        Console.Write("Ingrese el id de la variedad que desea crear el pdf: ");
+        var idVariedad = int.Parse(Console.ReadLine() ?? "0");
         var context1 = DbContextFactory.Create();
-        VariedadPdfGenerator variedadPdfGenerator = new VariedadPdfGenerator(variedad);
-        variedadPdfGenerator.Compose(context1);
 
+        var variedadPdfGenerator = new VariedadPdfGenerator();
+        variedadPdfGenerator.Compose(context1, idVariedad);
         Console.ReadKey(true);
         return Task.FromResult(true);
       case 1:
         var context2 = DbContextFactory.Create();
         VariedadesTodasPdfGenerator variedadesTodasPdfGenerator = new VariedadesTodasPdfGenerator(context2);
-        variedadesTodasPdfGenerator.GenerateAll();
+        variedadesTodasPdfGenerator.GenerateAll(context2);
 
         Console.ReadKey(true);
         return Task.FromResult(true);

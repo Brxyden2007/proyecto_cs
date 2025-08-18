@@ -31,7 +31,7 @@ public class FichaTecnicaPdfGenerator
                         .Style(PdfBaseStyles.SubTitulo);
 
                     if (!string.IsNullOrEmpty(variedad.ImagenUrl))
-                        col.Item().Image(variedad.ImagenUrl, ImageScaling.FitArea);
+                        col.Item().Image(variedad.ImagenUrl, ImageScaling.FitArea); 
 
                     col.Item().Text(variedad.Descripcion).Style(PdfBaseStyles.Texto);
                     col.Item().Text($"Porte: {variedad.Porte}").Style(PdfBaseStyles.Texto);
