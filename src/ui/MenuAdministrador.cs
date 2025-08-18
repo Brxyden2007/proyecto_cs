@@ -66,10 +66,10 @@ public class MenuAdministrador
     {
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("========================================\n");
+        Console.WriteLine("==========================================\n");
         Console.WriteLine("▄▀█ █▀▄ █▀▄▀█ █ █▄░█   █▀▄▀█ █▀▀ █▄░█ █░█");
         Console.WriteLine("█▀█ █▄▀ █░▀░█ █ █░▀█   █░▀░█ ██▄ █░▀█ █▄█");
-        Console.WriteLine("========================================\n");
+        Console.WriteLine("==========================================\n");
         Console.ResetColor();
 
         for (int i = 0; i < opcionesMenu.Length; i++)
@@ -126,8 +126,10 @@ public class MenuAdministrador
         {
             Console.Clear();
             Console.WriteLine("╔══════════════════════════════════════╗");
+            Console.WriteLine("║ -------------------------------------║");
             Console.WriteLine("║        GESTIÓN DE VARIEDADES         ║");
-            Console.WriteLine("║            CAFÉ COLOMBIANO           ║");
+            Console.WriteLine("║       🌱  CAFÉ COLOMBIANO  🌱       ║");
+            Console.WriteLine("║ -------------------------------------║");
             Console.WriteLine("╚══════════════════════════════════════╝");
             Console.WriteLine();
             Console.WriteLine("1. Crear Variedad");
@@ -142,13 +144,13 @@ public class MenuAdministrador
             switch (opcion)
             {
                 case "1":
-                    Console.WriteLine("Crear nueva variedad de café...");
+                    Console.WriteLine("📋Creando nueva variedad de café...");
                     // Aquí implementarías la lógica de crear
                     Console.WriteLine("Presiona cualquier tecla para continuar...");
                     Console.ReadKey();
                     break;
                 case "2":
-                    Console.WriteLine("Listando variedades...");
+                    Console.WriteLine("n✅Listando variedades...");
                     Console.WriteLine("1. Caturra - Porte Bajo - Alto Rendimiento");
                     Console.WriteLine("2. Típica - Porte Alto - Medio Rendimiento");
                     Console.WriteLine("3. Variedad Colombia - Porte Medio - Excepcional");
@@ -156,13 +158,13 @@ public class MenuAdministrador
                     Console.ReadKey();
                     break;
                 case "3":
-                    Console.WriteLine("Actualizar variedad...");
+                    Console.WriteLine("Actualizando variedad...");
                     // Aquí implementarías la lógica de actualizar
                     Console.WriteLine("Presiona cualquier tecla para continuar...");
                     Console.ReadKey();
                     break;
                 case "4":
-                    Console.WriteLine("Eliminar variedad...");
+                    Console.WriteLine("❌Eliminando variedad...");
                     // Aquí implementarías la lógica de eliminar
                     Console.WriteLine("Presiona cualquier tecla para continuar...");
                     Console.ReadKey();
@@ -171,7 +173,7 @@ public class MenuAdministrador
                     continuar = false;
                     break;
                 default:
-                    Console.WriteLine("Opción no válida. Presiona cualquier tecla...");
+                    Console.WriteLine("❌Opción no válida. Presiona cualquier tecla...");
                     Console.ReadKey();
                     break;
             }
@@ -185,8 +187,10 @@ public class MenuAdministrador
         {
             Console.Clear();
             Console.WriteLine("╔══════════════════════════════════════╗");
-            Console.WriteLine("║         GESTIÓN DE USUARIOS          ║");
-            Console.WriteLine("╚══════════════════════════════════════╝");
+            Console.WriteLine("║ -------------------------------------║");
+            Console.WriteLine("║      🌱  GESTIÓN DE UNIDADES  🌱    ║");
+            Console.WriteLine("║ -------------------------------------║");
+            Console.WriteLine("╚══════════════════════════════════════╝");   
             Console.WriteLine();
             Console.WriteLine("1. Crear Usuario");
             Console.WriteLine("2. Listar Usuarios");
@@ -200,12 +204,12 @@ public class MenuAdministrador
             switch (opcion)
             {
                 case "1":
-                    Console.WriteLine("Crear nuevo usuario...");
+                    Console.WriteLine("📋Creando nuevo usuario...");
                     Console.WriteLine("Presiona cualquier tecla para continuar...");
                     Console.ReadKey();
                     break;
                 case "2":
-                    Console.WriteLine("Listando usuarios...");
+                    Console.WriteLine("✅Listando usuarios...");
                     Console.WriteLine("1. Juan Pérez - Agricultor - Huila");
                     Console.WriteLine("2. María García - Técnico - Nariño");
                     Console.WriteLine("3. Carlos López - Exportador - Caldas");
@@ -213,12 +217,12 @@ public class MenuAdministrador
                     Console.ReadKey();
                     break;
                 case "3":
-                    Console.WriteLine("Actualizar usuario...");
+                    Console.WriteLine("Actualizando usuario...");
                     Console.WriteLine("Presiona cualquier tecla para continuar...");
                     Console.ReadKey();
                     break;
                 case "4":
-                    Console.WriteLine("Eliminar usuario...");
+                    Console.WriteLine("❌Eliminando usuario...");
                     Console.WriteLine("Presiona cualquier tecla para continuar...");
                     Console.ReadKey();
                     break;
@@ -226,7 +230,7 @@ public class MenuAdministrador
                     continuar = false;
                     break;
                 default:
-                    Console.WriteLine("Opción no válida. Presiona cualquier tecla...");
+                    Console.WriteLine("❌Opción no válida. Presiona cualquier tecla...");
                     Console.ReadKey();
                     break;
             }
@@ -240,7 +244,9 @@ public class MenuAdministrador
         {
             Console.Clear();
             Console.WriteLine("╔══════════════════════════════════════╗");
-            Console.WriteLine("║      GESTIÓN DE ADMINISTRADORES      ║");
+            Console.WriteLine("║--------------------------------------║");
+            Console.WriteLine("║   🌱 GESTIÓN DE ADMINISTRADORES 🌱  ║");
+            Console.WriteLine("║--------------------------------------║");
             Console.WriteLine("╚══════════════════════════════════════╝");
             Console.WriteLine();
             Console.WriteLine("1. Crear Administrador");
@@ -255,12 +261,12 @@ public class MenuAdministrador
             switch (opcion)
             {
                 case "1":
-                    Console.WriteLine("Crear nuevo administrador...");
+                    Console.WriteLine("📋Creando nuevo administrador...");
                     Console.WriteLine("Presiona cualquier tecla para continuar...");
                     Console.ReadKey();
                     break;
                 case "2":
-                    Console.WriteLine("Listando administradores...");
+                    Console.WriteLine("✅Listando administradores...");
                     Console.WriteLine("1. Admin Principal - Nivel 5 - Sistemas");
                     Console.WriteLine("2. Ana Rodríguez - Nivel 3 - Contenido");
                     Console.WriteLine("3. Luis Martínez - Nivel 4 - Operaciones");
@@ -268,12 +274,12 @@ public class MenuAdministrador
                     Console.ReadKey();
                     break;
                 case "3":
-                    Console.WriteLine("Actualizar administrador...");
+                    Console.WriteLine("Actualizando administrador...");
                     Console.WriteLine("Presiona cualquier tecla para continuar...");
                     Console.ReadKey();
                     break;
                 case "4":
-                    Console.WriteLine("Eliminar administrador...");
+                    Console.WriteLine("❌Eliminando administrador...");
                     Console.WriteLine("Presiona cualquier tecla para continuar...");
                     Console.ReadKey();
                     break;
@@ -281,7 +287,7 @@ public class MenuAdministrador
                     continuar = false;
                     break;
                 default:
-                    Console.WriteLine("Opción no válida. Presiona cualquier tecla...");
+                    Console.WriteLine("❌Opción no válida. Presiona cualquier tecla...");
                     Console.ReadKey();
                     break;
             }
