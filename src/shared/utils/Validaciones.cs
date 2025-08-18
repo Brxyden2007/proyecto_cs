@@ -8,12 +8,20 @@ public class Validaciones
 {
   public string ValidarTexto(string? text)
   {
-    while (string.IsNullOrWhiteSpace(text))
+    do
     {
-      Console.WriteLine("error al ingresar un texto vacio, presione una tecla para continuar");
-      text = Console.ReadLine();
-    }
-    // el trim sirve para quitar todos los caracteres de espacio en blanco iniciales y finales de la cadena actual, sirve para arreglar errores mios como copiar "hola " en lugar de "hola"
+      if (string.IsNullOrWhiteSpace(text))
+      {
+        Console.WriteLine("Error al ingresar un texto vacío. Presione una tecla para continuar...");
+        Console.ReadKey(); // pausa hasta que el usuario presione una tecla
+        Console.Write("Ingrese de nuevo el valor solicitado: "); 
+        text = Console.ReadLine();
+      }
+      else
+      {
+        break; // si es válido, sale del ciclo
+      }
+    } while (true);
     return text.Trim();
   }
   public int ValidarEntero(string? num)

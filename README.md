@@ -327,7 +327,7 @@ lo mismo que en el login de administrador, pero en la tabla de usuarios
 ---
 **variedades:**
 - 1.1 Mostrar lista paginada de todas las variedades
-- 1.2 Mostrar ficha tecnica detallada de una variedad
+- <!-- Aqui se supondría que en vez de ejecutar una opcion se ejecute directamente el ver catalogo completo de variedades-->
 
 ---
 **Filtrar por:**
@@ -341,19 +341,22 @@ lo mismo que en el login de administrador, pero en la tabla de usuarios
 - 2.8 Filtrar por tipo de variedad
 - 2.9 Filtrar por atributos agronomicos
 - 2.10 Filtrar por historia genetica
+- 2.11 Regresar al menu de usuario
 
 ---
 - 3.1 Mostrar lista paginada de todas las variedades
 - 3.2 Mostrar ficha tecnica detallada de una variedad
 - 3.3 Mostrar atributos agronomicos de una variedad
 - 3.4 Mostrar historia genetica de una variedad
+- 3.5 Regresar al menu de usuario
 
 ---
-- 4.1 Generar pdf de una variedad
-- 4.3 Generar pdf de todas las variedades
-- 4.4 Generar PDF filtrado por características (por altitud, tamaño de grano, porte, rendimiento o resistencia.)
-- 4.7 Generar PDF resumido (Solo con nombre, imagen y características principales.)
-- 4.8 Generar PDF detallado (Con ficha técnica completa, descripciones extensas e imágenes.)
+- 4.1 Generar pdf detallado de una variedad
+- 4.3 Generar pdf detallado de todas las variedades
+- 4.4 Generar pdf con solo los atributos agronomicos de todas las variedades
+- 4.5 Generar pdf con solo los historia genetica de todas las variedades 
+- 4.5 Generar PDF resumido (Solo con nombre, imagen y características principales.)
+- 4.6 Regresar al menu de usuario
 ---
 
 ### Menu principal administrador

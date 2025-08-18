@@ -10,6 +10,7 @@ using proyecto_cs.src.modules.administradores.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Internal;
 using proyecto_cs;
 using proyecto_cs.src.modules.usuarios.domain.models;
+using proyecto_cs.src.shared.utils;
 
 namespace proyecto_cs;
 public class MenuPrincipal
@@ -24,6 +25,7 @@ public class MenuPrincipal
         "Login Usuario", 
         "Registrar Admin",
         "Login Admin",
+        "Borrar base de datos",
         "Salir"
     };
 
@@ -60,7 +62,7 @@ public class MenuPrincipal
             }
         }
     }
-    public async Task CartelBienvenida()
+    public Task CartelBienvenida()
     {
         Console.Clear();
         Console.WriteLine("=== -------------------------------------------------------------------------------------------------------  ===");
@@ -74,7 +76,7 @@ public class MenuPrincipal
         Console.WriteLine("¡Bienvenido al sistema de catálogo de café más completo!");
         Console.WriteLine("Presiona cualquier tecla para continuar...");
         Console.ReadKey();
-
+        return Task.CompletedTask;
     }
 
     private void DibujarMenuLogin()
@@ -135,6 +137,11 @@ public class MenuPrincipal
                 return false;
 
             case 4:
+                DbUtil dbUtil = new DbUtil();
+                dbUtil.BorrarBaseDeDatos("server=localhost;user=campus2023;password=campus2023;", "proyecto_cs");
+                Console.ReadLine();
+                return false;
+            case 5:
                 return true; // salir
 
             default:
