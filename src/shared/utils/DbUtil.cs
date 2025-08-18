@@ -170,7 +170,7 @@ public class DbUtil
     string? confirmacion = validate_data.ValidarTexto(Console.ReadLine());
     if (validate_data.ValidarBoleano(confirmacion))
     {
-      string tablas_query = $"DROP DATABASE IF EXISTS `{db_name};";
+      string tablas_query = $"DROP DATABASE IF EXISTS `{db_name}`;";
 
       using var connection = new MySqlConnection(connectionStringNoDB);
       connection.Open();

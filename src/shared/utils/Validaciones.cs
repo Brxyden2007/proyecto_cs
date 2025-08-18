@@ -14,7 +14,7 @@ public class Validaciones
       {
         Console.WriteLine("Error al ingresar un texto vacío. Presione una tecla para continuar...");
         Console.ReadKey(); // pausa hasta que el usuario presione una tecla
-        Console.Write("Ingrese de nuevo el valor solicitado: ");
+        Console.Write("Ingrese de nuevo el valor solicitado: "); 
         text = Console.ReadLine();
       }
       else
