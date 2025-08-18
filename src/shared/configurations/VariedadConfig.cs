@@ -51,7 +51,7 @@ public class VariedadConfig : IEntityTypeConfiguration<Variedad>
             .IsRequired();
 
         builder.Property(v => v.IdRendimiento)
-            .HasColumnName("IdRendimiento")
+            .HasColumnName("Id_rendimiento")
             .IsRequired();
 
         builder.Property(v => v.IdCalidad)
@@ -59,7 +59,7 @@ public class VariedadConfig : IEntityTypeConfiguration<Variedad>
             .IsRequired();
 
         builder.HasOne(v => v.Porte)
-            .WithMany(p => p.Variedades)
+            .WithMany(po => po.Variedades)
             .HasForeignKey(v => v.IdPorte);
 
         builder.HasOne(v => v.TamanioGrano)

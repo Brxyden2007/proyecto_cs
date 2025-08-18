@@ -19,6 +19,7 @@ public class CalidadAltitudConfig : IEntityTypeConfiguration<CalidadAltitud>
         builder.HasKey(ca => ca.IdCalidadAltitud);
         // define que es autoincrement
         builder.Property(ca => ca.IdCalidadAltitud)
+            .HasColumnName("id_calidad")
             .ValueGeneratedOnAdd();
 
         builder.Property(ca => ca.Nivel)

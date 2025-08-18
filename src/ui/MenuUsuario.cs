@@ -67,7 +67,11 @@ public class MenuUsuario
     {
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("========== MENÚ USUARIO ==========\n");
+        Console.WriteLine("=====================================================");
+        Console.WriteLine("█░█ █▀ █▀▀ █▀█   █▀▄▀█ █▀▀ █▄░█ █░█");
+        Console.WriteLine("█▄█ ▄█ ██▄ █▀▄   █░▀░█ ██▄ █░▀█ █▄█");
+        Console.WriteLine("=====================================================");
+
         Console.ResetColor();
 
         for (int i = 0; i < opcionesMenu.Length; i++)

@@ -16,9 +16,11 @@ public class VariedadResistenciaConfig : IEntityTypeConfiguration<VariedadResist
         builder.HasKey(vr => new { vr.IdVariedad, vr.IdResistencia });
 
         builder.Property(vr => vr.IdVariedad)
+            .HasColumnName("id_variedad")
             .IsRequired();
 
         builder.Property(vr => vr.IdResistencia)
+            .HasColumnName("id_resistencia")
             .IsRequired();
 
         builder.HasOne(vr => vr.Variedad)

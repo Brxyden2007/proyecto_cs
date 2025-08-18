@@ -13,11 +13,12 @@ public class PorteConfig : IEntityTypeConfiguration<Porte>
     {
         builder.ToTable("portes");
 
-        builder.HasKey(p => p.IdPorte);
-        builder.Property(p => p.IdPorte)
+        builder.HasKey(po => po.IdPorte);
+        builder.Property(po => po.IdPorte)
+            .HasColumnName("id_porte")
             .ValueGeneratedOnAdd();
 
-        builder.Property(p => p.Nombre)
+        builder.Property(po => po.Nombre)
             .IsRequired()
             .HasMaxLength(50);
     }

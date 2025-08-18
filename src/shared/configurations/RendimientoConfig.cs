@@ -18,6 +18,7 @@ public class RendimientoConfig : IEntityTypeConfiguration<Rendimiento>
         builder.HasKey(ren => ren.IdRendimiento);
         // define que es autoincrement
         builder.Property(ren => ren.IdRendimiento)
+            .HasColumnName("id_rendimiento")
             .ValueGeneratedOnAdd();
 
         builder.Property(ren => ren.Nivel)
