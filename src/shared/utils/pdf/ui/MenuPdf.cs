@@ -9,12 +9,16 @@ public class MenuPdf
 {
   private readonly string[] opcionesMenu =
   [
-    "Generar pdf detallado de una variedad",
-    "Generar pdf detallado de todas las variedades",
-    "Generar pdf con solo los atributos agronomicos de todas las variedades",
-    "Generar pdf con solo los historia genetica de todas las variedades",
-    "Generar PDF resumido (Solo con nombre, imagen y características principales.)"
+      "Generar pdf detallado de una variedad",
+      "Generar pdf detallado de todas las variedades",
+      "Generar pdf con solo los atributos agronomicos de todas las variedades",
+      "Generar pdf con solo los historia genetica de todas las variedades",
+      "Generar PDF resumido (Solo con nombre, imagen y características principales.)",
+      "Generar PDF de un usuario",
+      "Generar reporte administrativo de usuarios",
+      "Salir"
   ];
+
   // se declara la variable que se va a utilizar para el menu principal
   private int opcionSeleccionada = 0;
   // este es el metodo del menu principal en la consola con las flechas de arriba y abajo
@@ -113,7 +117,35 @@ public class MenuPdf
         // variedadResumidaPdfGenerator.Compose(context5);
         Console.ReadKey(true);
         return Task.FromResult(true);
-      case 5:  
+      case 5: // UsuarioPdf
+        Console.WriteLine("Ingrese el ID del usuario:");
+        var userId = int.Parse(Console.ReadLine() ?? "0");
+        var ctxU = DbContextFactory.Create();
+        var usuario = ctxU.Usuarios.FirstOrDefault(u => u.Id == userId);
+
+        if (usuario != null)
+        {
+          var pdfUsuario = new UsuarioPdfGenerator(usuario).Generate();
+          File.WriteAllBytes("Usuario.pdf", pdfUsuario);
+          Console.WriteLine("✅ PDF de usuario generado con éxito.");
+        }
+        else
+        {
+          Console.WriteLine("❌ Usuario no encontrado.");
+        }
+        Console.ReadKey(true);
+        return Task.FromResult(true);
+
+      case 6: // ReporteAdminPdf
+        var ctxR = DbContextFactory.Create();
+        var usuarios = ctxR.Usuarios.ToList();
+        var pdfReporte = new ReporteAdminPdfGenerator(usuarios).Generate();
+        File.WriteAllBytes("ReporteUsuarios.pdf", pdfReporte);
+        Console.WriteLine("✅ Reporte administrativo generado con éxito.");
+        Console.ReadKey(true);
+        return Task.FromResult(true);
+
+      case 7:
         return Task.FromResult(false);
       default:
         Console.Clear();
