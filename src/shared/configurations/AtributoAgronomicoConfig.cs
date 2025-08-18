@@ -38,6 +38,7 @@ public class AtributoAgronomicoConfig : IEntityTypeConfiguration<AtributoAgronom
             .HasMaxLength(50);
 
         builder.Property(ag => ag.DensidadSiembra)
+            .HasColumnName("densidad_siembra")
             .IsRequired()
             .HasMaxLength(50);
 
