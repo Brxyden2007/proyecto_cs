@@ -91,12 +91,23 @@ public class MenuPdf
         {
           Console.WriteLine($"{v.IdVariedad}. {v.NombreComun}");
         }
+        // pedir el id de la variedad
         Console.Write("Ingrese el id de la variedad que desea crear el pdf: ");
         var idVariedad = int.Parse(Console.ReadLine() ?? "0");
 
+        // crear el pdf
         var variedadPdfGenerator = new VariedadPdfGenerator();
-        variedadPdfGenerator.Compose(context1, idVariedad);
-        
+                _ = variedadPdfGenerator.Compose(context1, idVariedad);
+        // mostrar la ruta donde se guarda el pdf en caso de que haya sido creado
+        var ruta1 = Path.Combine(Directory.GetCurrentDirectory(), $"Variedad_{idVariedad}.pdf");
+        Console.WriteLine($"✅ PDF generado en: {ruta1}");
+        // abrir el pdf en el explorador de archivos
+        // TODO: por alguna razon en la forma local se genera la imagen pero en el servidor no
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+          FileName = ruta1,
+          UseShellExecute = true
+        });
         Console.ReadKey(true);
         return Task.FromResult(true);
       case 1:
