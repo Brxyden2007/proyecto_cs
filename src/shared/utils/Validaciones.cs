@@ -26,13 +26,23 @@ public class Validaciones
   }
   public int ValidarEntero(string? num)
   {
-    int resultado = 0;
-    while (!int.TryParse(num, out resultado))
-    {
-      Console.WriteLine("error al tratar de ingresar un valor entero");
-      num = Console.ReadLine();
-    }
-    return resultado;
+      int resultado = 0;
+      do
+      {
+          if (!int.TryParse(num, out resultado))
+          {
+              Console.WriteLine("Error al tratar de ingresar un valor entero. Presione una tecla para continuar...");
+              Console.ReadKey(); // pausa hasta que el usuario presione una tecla
+              Console.Write("Ingrese de nuevo el valor solicitado: "); 
+              num = Console.ReadLine();
+          }
+          else
+          {
+              break; // si es válido, salimos
+          }
+      } while (true);
+
+      return resultado;
   }
   public float ValidarDecimal(string? valor_decimal)
   {

@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using proyecto_cs.src.shared.utils;
 using proyecto_cs.src.shared.utils.pdf;
 
 namespace proyecto_cs;
 public class MenuPdf
 {
+  private static Validaciones validate_data = new Validaciones();  
   private readonly string[] opcionesMenu =
   [
       "Generar pdf detallado de una variedad",
@@ -93,7 +95,7 @@ public class MenuPdf
         }
         // pedir el id de la variedad
         Console.Write("Ingrese el id de la variedad que desea crear el pdf: ");
-        var idVariedad = int.Parse(Console.ReadLine() ?? "0");
+        var idVariedad = validate_data.ValidarEntero(Console.ReadLine());
 
         // crear el pdf
         var variedadPdfGenerator = new VariedadPdfGenerator();

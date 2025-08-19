@@ -30,8 +30,8 @@ public class VariedadPdfGenerator
         .Include(v => v.Porte)
         .Include(v => v.Altitud)
         .Include(v => v.CalidadAltitud)
-        // .Include(v => v.AtributosAgronomicos)
-        // .Include(v => v.HistoriasGeneticas)
+        .Include(v => v.AtributosAgronomicos)
+        .Include(v => v.HistoriasGeneticas)
         .FirstOrDefault(v => v.IdVariedad == idVariedad);
     if (variedad == null)
         throw new Exception($"No se encontró la variedad con ID {idVariedad}");
@@ -131,10 +131,10 @@ public class VariedadPdfGenerator
               {
                 table.ColumnsDefinition(columns =>
                 {
-                  columns.RelativeColumn();
-                  columns.RelativeColumn();
-                  columns.RelativeColumn();
-                  columns.RelativeColumn();
+                    columns.RelativeColumn(3); // Obtentor (más ancho)
+                    columns.RelativeColumn(2); // Familia
+                    columns.RelativeColumn(1); // Grupo
+                    columns.RelativeColumn(4); // Descripción
                 });
 
                 // Cabecera
