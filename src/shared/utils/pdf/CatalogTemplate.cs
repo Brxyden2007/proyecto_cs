@@ -91,23 +91,23 @@ public class CatalogTemplate : IDocument
 
                     if (variedad.AtributosAgronomicos != null)
                     {
-                        table.Cell().Text("Tiempo de cosecha:").SemiBold();
-                        table.Cell().Text(variedad.AtributosAgronomicos.IsReadOnly. ?? "N/A");
+                        // table.Cell().Text("Tiempo de cosecha:").SemiBold();
+                        // table.Cell().Text(variedad.AtributosAgronomicos.IsReadOnly. ?? "N/A");
 
-                        table.Cell().Text("Maduración:").SemiBold();
-                        table.Cell().Text(variedad.InformacionAgronomica.maduracion ?? "N/A");
+                        // table.Cell().Text("Maduración:").SemiBold();
+                        // table.Cell().Text(variedad.InformacionAgronomica.maduracion ?? "N/A");
                     }
                 });
 
                 // === Resistencias ===
                 variedadColumn.Item().PaddingTop(5).Text("Resistencias:").SemiBold();
-                if (variedad.VariedadesResistencia?.Any() == true)
+                if (variedad.VariedadResistencias?.Any() == true)
                 {
-                    foreach (var vr in variedad.VariedadesResistencia)
+                    foreach (var vr in variedad.VariedadResistencias)
                     {
                         variedadColumn.Item().Text(
-                            $"- {vr.TipoResistencia?.nombre_tipo ?? "Tipo desconocido"}: " +
-                            $"{vr.NivelResistencia?.nombre_nivel ?? "Nivel desconocido"}");
+                            $"- {vr.Resistencia?.Enfermedad ?? "Tipo desconocido"}: " +
+                            $"{vr.Resistencia?.Nivel ?? "Nivel desconocido"}");
                     }
                 }
                 else
@@ -117,7 +117,7 @@ public class CatalogTemplate : IDocument
 
                 // === Descripción ===
                 variedadColumn.Item().PaddingTop(5).Text("Descripción:").SemiBold();
-                variedadColumn.Item().Text(variedad.descripcion_general ?? "Sin descripción.");
+                variedadColumn.Item().Text(variedad.Descripcion ?? "Sin descripción.");
             });
     }
 

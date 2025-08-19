@@ -84,18 +84,25 @@ public class MenuPdf
     switch (opcion_seleccionada)
     {
       case 0:
+        // muestra la lista de variedades en la base de datos
+        var context1 = DbContextFactory.Create();
+        Console.WriteLine("Variedades en BD:");
+        foreach (var v in context1.Variedades)
+        {
+          Console.WriteLine($"{v.IdVariedad}. {v.NombreComun}");
+        }
         Console.Write("Ingrese el id de la variedad que desea crear el pdf: ");
         var idVariedad = int.Parse(Console.ReadLine() ?? "0");
-        var context1 = DbContextFactory.Create();
 
         var variedadPdfGenerator = new VariedadPdfGenerator();
         variedadPdfGenerator.Compose(context1, idVariedad);
+        
         Console.ReadKey(true);
         return Task.FromResult(true);
       case 1:
-        var context2 = DbContextFactory.Create();
-        VariedadesTodasPdfGenerator variedadesTodasPdfGenerator = new VariedadesTodasPdfGenerator(context2);
-        variedadesTodasPdfGenerator.GenerateAll(context2);
+        // var context2 = DbContextFactory.Create();
+        // VariedadesTodasPdfGenerator variedadesTodasPdfGenerator = new VariedadesTodasPdfGenerator(context2);
+        // variedadesTodasPdfGenerator.GenerateAll(context2);
 
         Console.ReadKey(true);
         return Task.FromResult(true);
@@ -118,16 +125,35 @@ public class MenuPdf
         Console.ReadKey(true);
         return Task.FromResult(true);
       case 5: // UsuarioPdf
-        Console.WriteLine("Ingrese el ID del usuario:");
-        var userId = int.Parse(Console.ReadLine() ?? "0");
-        var ctxU = DbContextFactory.Create();
-        var usuario = ctxU.Usuarios.FirstOrDefault(u => u.Id == userId);
+        var create_context = DbContextFactory.Create();
+        // que muestra la lista de usuarios en la base de datos
+        Console.WriteLine("Usuarios en BD:");
+        foreach (var u in create_context.Usuarios)
+        {
+            Console.WriteLine($"{u.Id}. {u.Nombre} {u.Apellido}");
+        }
+        Console.WriteLine("Ingrese el ID del usuario: ");
+        if (!int.TryParse(Console.ReadLine(), out var userId))
+        {
+            Console.WriteLine("❌ Entrada inválida. Debe ingresar un número.");
+            return Task.FromResult(true);
+        }
+        var usuario = create_context.Usuarios.FirstOrDefault(u => u.Id == userId);
 
         if (usuario != null)
         {
           var pdfUsuario = new UsuarioPdfGenerator(usuario).Generate();
           File.WriteAllBytes("Usuario.pdf", pdfUsuario);
           Console.WriteLine("✅ PDF de usuario generado con éxito.");
+          // muestra la ruta donde se guarda el pdf en caso de que haya sido creado
+          var ruta = Path.Combine(Directory.GetCurrentDirectory(), "Usuario.pdf");
+          File.WriteAllBytes(ruta, pdfUsuario);
+          Console.WriteLine($"✅ PDF generado en: {ruta}");
+          System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+          {
+            FileName = ruta,
+            UseShellExecute = true
+          });
         }
         else
         {

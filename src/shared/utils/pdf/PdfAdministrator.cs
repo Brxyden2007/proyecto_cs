@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using proyecto_cs.src.modules.variedades.infrastructure.repository;
 using QuestPDF.Fluent;
+using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 
 namespace proyecto_cs;    
@@ -29,12 +30,12 @@ public class PdfAdministrator
                 {
                     try
                     {
-                        var imageBytes = await CatalogTemplate.LoadImageFromUrl(variedad.imagen_referencia_url);
-                        imagenesVariedades[variedad.id] = imageBytes;
+                        var imageBytes = await CatalogTemplate.LoadImageFromUrl(variedad.ImagenUrl);
+                        imagenesVariedades[variedad.IdVariedad] = imageBytes;
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Error cargando imagen para {variedad.nombre_comun}: {ex.Message}");
+                        Console.WriteLine($"Error cargando imagen para {variedad.NombreComun}: {ex.Message}");
                     }
                 }
             }
