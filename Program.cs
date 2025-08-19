@@ -20,37 +20,12 @@ internal class Program
         // esto es para facillitar el frontend de la consola
         Console.OutputEncoding = Encoding.UTF8;
 
-        // esto es de pura prueba
-        MenuPdf menuPdf = new MenuPdf();
-        _ = menuPdf.EjecutarMenuMain();
+        // esto es para poder ejecutar mensaje de bienvenida
+        var cartelBienvenida = new MenuPrincipal();
+        cartelBienvenida.CartelBienvenida();
 
-        // // esto es para poder ejecutar mensaje de bienvenida
-        // var cartelBienvenida = new MenuPrincipal();
-        // cartelBienvenida.CartelBienvenida();
-
-        // // esto es para ejecutar el menu del programa principal (login y registro)
-        // var menuPrincipal = new MenuPrincipal();
-        // _ = menuPrincipal.IniciarAplicacion();
-
-        // // 1. Crear el contexto de base de datos
-
-        // var context = DbContextFactory.Create();
-
-        // // esto es lo que he usado para crear unicamente una variedad
-        // var variedad = context.Variedades.FirstOrDefault(v => v.IdVariedad == 4);
-
-        // if (variedad == null)
-        // {
-        //     Console.WriteLine("No se encontrÃ³ la variedad solicitada.");
-        //     return;
-        // }
-        // // 2. Generar el PDF para de un id en especifico
-        // var generator = new VariedadPdfGenerator(variedad);
-        // generator.Compose(context);
-        // // // crear todas las variedades
-        // // var todasGenerator = new VariedadesTodasPdfGenerator(context);
-        // // todasGenerator.GenerateAll();
-
-        // Console.WriteLine("PDFs generados para todas las variedades.");
+        // esto es para ejecutar el menu del programa principal (login y registro)
+        var menuPrincipal = new MenuPrincipal();
+        _ = menuPrincipal.IniciarAplicacion();
     }
 }

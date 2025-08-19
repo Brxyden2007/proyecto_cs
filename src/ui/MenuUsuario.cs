@@ -110,7 +110,8 @@ public class MenuUsuario
                 await MostrarFichaTecnica();
                 break;
             case 3: // Generar PDF
-                Console.Clear();
+                MenuPdf menuPdf = new MenuPdf();
+                _ = menuPdf.EjecutarMenuMain();
                 break;
             case 4: // Salir
                 return false;
