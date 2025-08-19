@@ -7,51 +7,55 @@ using proyecto_cs.src.modules.variedades.domain.models;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
-
 namespace proyecto_cs.src.shared.utils.pdf;
-public class FichaTecnicaPdfGenerator
+public class FichasTecnicasTodasPdfGenerator
 {
-public FichaTecnicaPdfGenerator() {}
-    // === Helpers de estilos ===
+  public FichasTecnicasTodasPdfGenerator() {}
+
+  // === Helpers de estilos ===
   private IContainer CellStyle(IContainer container) =>
     container.BorderBottom(1).BorderColor(Colors.Grey.Lighten1).Padding(5).Background(Colors.White);
 
   private IContainer CellStyleHeader(IContainer container) =>
     container.Background(Colors.Green.Lighten1).Padding(5).Border(1)
       .BorderColor(Colors.Green.Medium).DefaultTextStyle(x => x.Bold().FontColor(Colors.White));
+
   public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
-  public Task Compose(AppDbContext context, int idVariedad)
+
+  public Task Compose(AppDbContext context)
   {
-    var variedad = context.Variedades
-        .Include(v => v.Rendimiento)
-        .Include(v => v.TamanioGrano)
-        .Include(v => v.Porte)
-        .Include(v => v.Altitud)
-        .Include(v => v.CalidadAltitud)
-        .Include(v => v.AtributosAgronomicos)
-        .Include(v => v.HistoriasGeneticas)
-        .FirstOrDefault(v => v.IdVariedad == idVariedad);
-    if (variedad == null)
-        throw new Exception($"No se encontró la variedad con ID {idVariedad}");
+    var variedades = context.Variedades
+      .Include(v => v.Rendimiento)
+      .Include(v => v.TamanioGrano)
+      .Include(v => v.Porte)
+      .Include(v => v.Altitud)
+      .Include(v => v.CalidadAltitud)
+      .Include(v => v.AtributosAgronomicos)
+      .Include(v => v.HistoriasGeneticas)
+      .ToList();
+
+    if (!variedades.Any())
+      throw new Exception("No hay variedades registradas en la base de datos.");
 
     QuestPDF.Settings.License = LicenseType.Community;
-    Document.Create(container =>
-      {
-        container.Page(page =>
-        {
-          // esta parte es para definir la parte del diseño del pdf
-          page.Size(PageSizes.A4);
-          // pixeles de magin como si fuera un css
-          page.Margin(30);
-          // definir fuente 
-          page.DefaultTextStyle(x => x.FontSize(12));
-          page.Background();
-          // bacground de la pagina
-          page.PageColor("#F1f1f1");
 
-          // ===== ENCABEZADO =====
-          page.Header().Column(col =>
+    Document.Create(container =>
+    {
+      container.Page(page =>
+      {
+        // CONFIGURACIÓN GENERAL DE CADA PÁGINA
+        page.Size(PageSizes.A4);
+        page.Margin(30);
+        page.DefaultTextStyle(x => x.FontSize(12));
+        page.PageColor("#F1f1f1");
+
+        page.Content().Column(col =>
+        {
+          foreach (var variedad in variedades)
           {
+            col.Item().PageBreak(); // 📄 Salto de página para cada variedad
+
+            // ===== ENCABEZADO =====
             col.Item().Background(Colors.Green.Medium).Padding(15).Row(row =>
             {
               row.RelativeItem().Text($"Ficha Técnica - {variedad.NombreComun}")
@@ -60,14 +64,10 @@ public FichaTecnicaPdfGenerator() {}
               row.ConstantItem(60).Height(60).Background(Colors.White).AlignCenter().AlignMiddle()
                 .Text("PDF").FontColor(Colors.Green.Medium).Bold();
             });
-            // separador como "margin-bottom"
-            col.Item().Height(20).Background("#F1f1f1"); 
-          });
-          
-          // ===== CONTENIDO =====
-          page.Content().Column(col =>
-          {
-            // Imagen
+
+            col.Item().Height(20).Background("#F1f1f1"); // Separador
+
+            // ===== IMAGEN =====
             col.Item().Border(1).Background(Colors.White).CornerRadius(15).Padding(10).Column(c =>
             {
               if (!string.IsNullOrWhiteSpace(variedad.ImagenUrl) && File.Exists(variedad.ImagenUrl))
@@ -89,6 +89,7 @@ public FichaTecnicaPdfGenerator() {}
               col.Item().PaddingBottom(5)
                 .Text("Atributos Agronómicos")
                 .FontSize(18).Bold().FontColor(Colors.Green.Darken2);
+
               col.Item().Table(table =>
               {
                 table.ColumnsDefinition(columns =>
@@ -97,7 +98,6 @@ public FichaTecnicaPdfGenerator() {}
                   columns.RelativeColumn();
                 });
 
-                // Cabecera
                 table.Header(header =>
                 {
                   header.Cell().Element(CellStyleHeader).Text("Parámetro");
@@ -129,17 +129,17 @@ public FichaTecnicaPdfGenerator() {}
               col.Item().PaddingBottom(5)
                 .Text("Historia Genética")
                 .FontSize(18).Bold().FontColor(Colors.Green.Darken2);
+
               col.Item().Table(table =>
               {
                 table.ColumnsDefinition(columns =>
                 {
-                    columns.RelativeColumn(3); // Obtentor (más ancho)
-                    columns.RelativeColumn(2); // Familia
-                    columns.RelativeColumn(1); // Grupo
-                    columns.RelativeColumn(4); // Descripción
+                  columns.RelativeColumn(3);
+                  columns.RelativeColumn(2);
+                  columns.RelativeColumn(1);
+                  columns.RelativeColumn(4);
                 });
 
-                // Cabecera
                 table.Header(header =>
                 {
                   header.Cell().Element(CellStyleHeader).Text("Obtentor");
@@ -157,14 +157,16 @@ public FichaTecnicaPdfGenerator() {}
                 }
               });
             }
-          });
-            // ===== PIE DE PÁGINA =====
-          page.Footer().AlignCenter().Text($"Generado el {DateTime.Now:dd/MM/yyyy}")
-            .FontSize(10).FontColor(Colors.Grey.Medium);
+
+            col.Item().PaddingTop(10).AlignCenter().Text($"Generado el {DateTime.Now:dd/MM/yyyy}")
+              .FontSize(10).FontColor(Colors.Grey.Medium);
+          }
         });
-      })
-    .GeneratePdf($"Variedad_{variedad?.IdVariedad}.pdf");
+      });
+    })
+    .GeneratePdf("Todas_Fichas_Tecnicas.pdf");
 
     return Task.CompletedTask;
   }
 }
+

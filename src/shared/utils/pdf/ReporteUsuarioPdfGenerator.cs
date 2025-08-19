@@ -2,22 +2,21 @@ using System.Collections.Generic;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
-using proyecto_cs.src.modules.administradores.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace proyecto_cs.src.shared.utils.pdf;
-public class ReporteAdminPdfGenerator
+public class ReporteUsuarioPdfGenerator
 {
-    public ReporteAdminPdfGenerator() {}    
+    public ReporteUsuarioPdfGenerator() { }
+
     public Task Compose(AppDbContext context)
     {
-        var administradores = context.Administradors
-            .Include(a => a.Persona)
+        var usuarios = context.Usuarios
+            .Include(u => u.Persona) // si existe relación
             .ToArray();
 
-
-        if (!administradores.Any())
-            throw new Exception("No hay administradores registrados en la base de datos.");
+        if (!usuarios.Any())
+            throw new Exception("No hay usuarios registrados en la base de datos.");
 
         QuestPDF.Settings.License = LicenseType.Community;
         Document.Create(container =>
@@ -32,7 +31,7 @@ public class ReporteAdminPdfGenerator
                 // Encabezado
                 page.Header().Row(row =>
                 {
-                    row.RelativeItem().Text("Reporte de Administradores")
+                    row.RelativeItem().Text("Reporte de Usuarios")
                         .FontSize(18).Bold().FontColor(Colors.Blue.Darken2);
                     row.ConstantItem(50).Height(40).Image(Placeholders.Image(50, 40));
                 });
@@ -42,10 +41,10 @@ public class ReporteAdminPdfGenerator
                 {
                     column.Spacing(10);
 
-                    column.Item().Text($"Total de Administradores: {administradores.Count()}")
+                    column.Item().Text($"Total de Usuarios: {usuarios.Count()}")
                         .Bold().FontSize(12).FontColor(Colors.Grey.Darken1);
 
-                    // Tabla de administradores
+                    // Tabla de usuarios
                     column.Item().Table(table =>
                     {
                         // Definir columnas
@@ -53,10 +52,9 @@ public class ReporteAdminPdfGenerator
                         {
                             columns.RelativeColumn(1); // ID
                             columns.RelativeColumn(2); // Nombre
-                            columns.RelativeColumn(2); // Apellido
                             columns.RelativeColumn(3); // Email
-                            columns.RelativeColumn(3); // Persona (Documento)
-                            columns.RelativeColumn(3); // Fecha creación
+                            columns.RelativeColumn(2); // Rol
+                            columns.RelativeColumn(2); // Estado
                         });
 
                         // Encabezados
@@ -64,21 +62,17 @@ public class ReporteAdminPdfGenerator
                         {
                             header.Cell().Text("ID").Bold();
                             header.Cell().Text("Nombre").Bold();
-                            header.Cell().Text("Apellido").Bold();
                             header.Cell().Text("Email").Bold();
-                            header.Cell().Text("Documento").Bold();
-                            header.Cell().Text("Creado").Bold();
                         });
 
                         // Filas dinámicas
-                        foreach (var admin in administradores)
+                        foreach (var user in usuarios)
                         {
-                            table.Cell().Text(admin.Id.ToString());
-                            table.Cell().Text(admin.Nombre ?? "-");
-                            table.Cell().Text(admin.Apellido ?? "-");
-                            table.Cell().Text(admin.Email ?? "-");
-                            table.Cell().Text(admin.Persona?.DocumentoIdentidad.ToString() ?? "-");
-                            table.Cell().Text(admin.CreatedAt.ToString("dd/MM/yyyy"));
+                            table.Cell().Text(user.Id.ToString());
+                            table.Cell().Text(user.Persona != null 
+                                ? $"{user.Persona.Nombre} {user.Persona.Apellido}" 
+                                : "-");
+                            table.Cell().Text(user.Email ?? "-");
                         }
                     });
                 });
@@ -91,7 +85,7 @@ public class ReporteAdminPdfGenerator
                 });
             });
         })
-        .GeneratePdf("administradores.pdf");
+        .GeneratePdf("usuarios.pdf");
         return Task.CompletedTask;
     }
 }

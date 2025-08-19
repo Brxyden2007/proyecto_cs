@@ -13,12 +13,11 @@ public class MenuPdf
   [
       "Generar pdf detallado de una variedad",
       "Generar pdf detallado de todas las variedades",
-      "Generar pdf con solo los atributos agronomicos de todas las variedades",
-      "Generar pdf con solo los historia genetica de todas las variedades",
-      "Generar PDF resumido (Solo con nombre, imagen y características principales.)",
-      "Generar PDF de un usuario",
+      "Generar pdf con ficha tecnica (historia genética y atributos agronómicos) de una variedad",
+      "Generar pdf con ficha tecnica (historia genética y atributos agronómicos) de todas las variedades",
+      "Generar reporte administrativo de administradores",
       "Generar reporte administrativo de usuarios",
-      "Salir"
+      "Regresar al menu principal"
   ];
 
   // se declara la variable que se va a utilizar para el menu principal
@@ -28,7 +27,14 @@ public class MenuPdf
   {
     Console.Clear();
     Console.ForegroundColor = ConsoleColor.Cyan;
-    Console.WriteLine("========== MENÚ DE PDF ==========\n");
+    Console.WriteLine(@"
+      ███╗░░░███╗███████╗███╗░░██╗██╗░░░██╗  ██████╗░███████╗  ██████╗░██████╗░███████╗
+      ████╗░████║██╔════╝████╗░██║██║░░░██║  ██╔══██╗██╔════╝  ██╔══██╗██╔══██╗██╔════╝
+      ██╔████╔██║█████╗░░██╔██╗██║██║░░░██║  ██║░░██║█████╗░░  ██████╔╝██║░░██║█████╗░░
+      ██║╚██╔╝██║██╔══╝░░██║╚████║██║░░░██║  ██║░░██║██╔══╝░░  ██╔═══╝░██║░░██║██╔══╝░░
+      ██║░╚═╝░██║███████╗██║░╚███║╚██████╔╝  ██████╔╝███████╗  ██║░░░░░██████╔╝██║░░░░░
+      ╚═╝░░░░░╚═╝╚══════╝╚═╝░░╚══╝░╚═════╝░  ╚═════╝░╚══════╝  ╚═╝░░░░░╚═════╝░╚═╝░░░░░
+    ");
     Console.ResetColor();
     // este ciclo se encarga de dibujar las opciones del menu principal de acuerdo a la opcion seleccioada, recorriendo el arreglo de opcionesMenu definidco previamente
     for (int i = 0; i < opcionesMenu.Length; i++)
@@ -86,7 +92,6 @@ public class MenuPdf
     switch (opcion_seleccionada)
     {
       case 0:
-        // muestra la lista de variedades en la base de datos
         var context1 = DbContextFactory.Create();
         Console.WriteLine("Variedades en BD:");
         foreach (var v in context1.Variedades)
@@ -94,17 +99,16 @@ public class MenuPdf
           Console.WriteLine($"{v.IdVariedad}. {v.NombreComun}");
         }
         // pedir el id de la variedad
-        Console.Write("Ingrese el id de la variedad que desea crear el pdf: ");
-        var idVariedad = validate_data.ValidarEntero(Console.ReadLine());
+        Console.Write("Ingrese el id de la variedad que desea crear el pdf de la ficha tecnica: ");
+        var idVariedad1 = validate_data.ValidarEntero(Console.ReadLine());
 
         // crear el pdf
         var variedadPdfGenerator = new VariedadPdfGenerator();
-                _ = variedadPdfGenerator.Compose(context1, idVariedad);
+                _ = variedadPdfGenerator.Compose(context1, idVariedad1);
         // mostrar la ruta donde se guarda el pdf en caso de que haya sido creado
-        var ruta1 = Path.Combine(Directory.GetCurrentDirectory(), $"Variedad_{idVariedad}.pdf");
+        var ruta1 = Path.Combine(Directory.GetCurrentDirectory(), $"variedad_{idVariedad1}.pdf");
         Console.WriteLine($"✅ PDF generado en: {ruta1}");
         // abrir el pdf en el explorador de archivos
-        // TODO: por alguna razon en la forma local se genera la imagen pero en el servidor no
         System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
         {
           FileName = ruta1,
@@ -113,78 +117,95 @@ public class MenuPdf
         Console.ReadKey(true);
         return Task.FromResult(true);
       case 1:
-        // var context2 = DbContextFactory.Create();
-        // VariedadesTodasPdfGenerator variedadesTodasPdfGenerator = new VariedadesTodasPdfGenerator(context2);
-        // variedadesTodasPdfGenerator.GenerateAll(context2);
-
+        var context2 = DbContextFactory.Create();
+        // convoca el pdf de las fichas tecnicas de todas las variedades
+        var variedadesTodasPdfGenerator = new VariedadesTodasPdfGenerator();
+          _ = variedadesTodasPdfGenerator.Compose(context2);
+        // mostrar la ruta donde se guarda el pdf en caso de que haya sido creado
+        var ruta2 = Path.Combine(Directory.GetCurrentDirectory(), $"Variedades_Todos.pdf");
+        Console.WriteLine($"✅ PDF generado en: {ruta2}");
+        // abrir el pdf en el explorador de archivos
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+          FileName = ruta2,
+          UseShellExecute = true
+        });
         Console.ReadKey(true);
         return Task.FromResult(true);
       case 2:
-        // var context3 = DbContextFactory.Create();
-        // VariedadAtributosPdfGenerator variedadAtributosPdfGenerator = new VariedadAtributosPdfGenerator();
-        // variedadAtributosPdfGenerator.Compose(context3);
+        var context3 = DbContextFactory.Create();
+        Console.WriteLine("Variedades en BD:");
+        foreach (var v in context3.Variedades)
+        {
+          Console.WriteLine($"{v.IdVariedad}. {v.NombreComun}");
+        }
+        // pedir el id de la variedad
+        Console.Write("Ingrese el id de la variedad que desea crear el pdf de la ficha tecnica: ");
+        var idVariedad3 = validate_data.ValidarEntero(Console.ReadLine());
+
+        // crear el pdf
+        var fichaTecnicaPdfGenerator = new FichaTecnicaPdfGenerator();
+                _ = fichaTecnicaPdfGenerator.Compose(context3, idVariedad3);
+        // mostrar la ruta donde se guarda el pdf en caso de que haya sido creado
+        var ruta3 = Path.Combine(Directory.GetCurrentDirectory(), $"Ficha_Tecnica_{idVariedad3}.pdf");
+        Console.WriteLine($"✅ PDF generado en: {ruta3}");
+        // abrir el pdf en el explorador de archivos
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+          FileName = ruta3,
+          UseShellExecute = true
+        });
         Console.ReadKey(true);
         return Task.FromResult(true);
       case 3:
-        // var context4 = DbContextFactory.Create();
-        // VariedadHistoriaPdfGenerator variedadHistoriaPdfGenerator = new VariedadHistoriaPdfGenerator();
-        // variedadHistoriaPdfGenerator.Compose(context4);
+        var context4 = DbContextFactory.Create();
+        // convoca el pdf de las fichas tecnicas de todas las variedades
+        var pdfFichasTecnicasTodasPdfGenerator = new FichasTecnicasTodasPdfGenerator();
+          _ = pdfFichasTecnicasTodasPdfGenerator.Compose(context4);
+        // mostrar la ruta donde se guarda el pdf en caso de que haya sido creado
+        var ruta4 = Path.Combine(Directory.GetCurrentDirectory(), $"Fichas_Tecnicas_Todos.pdf");
+        Console.WriteLine($"✅ PDF generado en: {ruta4}");
+        // abrir el pdf en el explorador de archivos
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+          FileName = ruta4,
+          UseShellExecute = true
+        });
         Console.ReadKey(true);
         return Task.FromResult(true);
       case 4:
-        // var context5 = DbContextFactory.Create();
-        // VariedadResumidaPdfGenerator variedadResumidaPdfGenerator = new VariedadResumidaPdfGenerator();
-        // variedadResumidaPdfGenerator.Compose(context5);
+        var context5 = DbContextFactory.Create();
+      // convoa el pdf de los administradores
+        var reporteAdminPdfGenerator = new ReporteAdminPdfGenerator();
+          _ = reporteAdminPdfGenerator.Compose(context5);
+        // mostrar la ruta donde se guarda el pdf en caso de que haya sido creado
+        var ruta5 = Path.Combine(Directory.GetCurrentDirectory(), $"ReporteAdmin.pdf");
+        Console.WriteLine($"✅ PDF generado en: {ruta5}");
+        // abrir el pdf en el explorador de archivos
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+          FileName = ruta5,
+          UseShellExecute = true
+        });
         Console.ReadKey(true);
         return Task.FromResult(true);
-      case 5: // UsuarioPdf
-        var create_context = DbContextFactory.Create();
-        // que muestra la lista de usuarios en la base de datos
-        Console.WriteLine("Usuarios en BD:");
-        foreach (var u in create_context.Usuarios)
+      case 5:
+        var context6 = DbContextFactory.Create();
+        // convoca el pdf de los usuarios 
+        var reporteUsuarioPdfGenerator = new ReporteUsuarioPdfGenerator();
+          _ = reporteUsuarioPdfGenerator.Compose(context6);
+        // mostrar la ruta donde se guarda el pdf en caso de que haya sido creado
+        var ruta6 = Path.Combine(Directory.GetCurrentDirectory(), $"Usuarios.pdf");
+        Console.WriteLine($"✅ PDF generado en: {ruta6}");
+        // abrir el pdf en el explorador de archivos
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
         {
-            Console.WriteLine($"{u.Id}. {u.Nombre} {u.Apellido}");
-        }
-        Console.WriteLine("Ingrese el ID del usuario: ");
-        if (!int.TryParse(Console.ReadLine(), out var userId))
-        {
-            Console.WriteLine("❌ Entrada inválida. Debe ingresar un número.");
-            return Task.FromResult(true);
-        }
-        var usuario = create_context.Usuarios.FirstOrDefault(u => u.Id == userId);
-
-        if (usuario != null)
-        {
-          var pdfUsuario = new UsuarioPdfGenerator(usuario).Generate();
-          File.WriteAllBytes("Usuario.pdf", pdfUsuario);
-          Console.WriteLine("✅ PDF de usuario generado con éxito.");
-          // muestra la ruta donde se guarda el pdf en caso de que haya sido creado
-          var ruta = Path.Combine(Directory.GetCurrentDirectory(), "Usuario.pdf");
-          File.WriteAllBytes(ruta, pdfUsuario);
-          Console.WriteLine($"✅ PDF generado en: {ruta}");
-          System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-          {
-            FileName = ruta,
-            UseShellExecute = true
-          });
-        }
-        else
-        {
-          Console.WriteLine("❌ Usuario no encontrado.");
-        }
+          FileName = ruta6,
+          UseShellExecute = true
+        });
         Console.ReadKey(true);
         return Task.FromResult(true);
-
-      case 6: // ReporteAdminPdf
-        var ctxR = DbContextFactory.Create();
-        var usuarios = ctxR.Usuarios.ToList();
-        var pdfReporte = new ReporteAdminPdfGenerator(usuarios).Generate();
-        File.WriteAllBytes("ReporteUsuarios.pdf", pdfReporte);
-        Console.WriteLine("✅ Reporte administrativo generado con éxito.");
-        Console.ReadKey(true);
-        return Task.FromResult(true);
-
-      case 7:
+      case 6: // Regresar
         return Task.FromResult(false);
       default:
         Console.Clear();
