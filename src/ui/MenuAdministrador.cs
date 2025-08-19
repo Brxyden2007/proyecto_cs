@@ -107,21 +107,26 @@ public class MenuAdministrador
         switch (opcion)
         {
             case 0: // CRUD variedad completa
+                Console.Clear();
                 await MostrarMenuVariedades();
                 break;
                 
             case 1: // CRUD usuarios
+                Console.Clear();
                 await MostrarMenuUsuarios();
                 break;
                 
             case 2: // CRUD administradores
+                Console.Clear();
                 await MostrarMenuAdministradores();
                 break;
                 
             case 3: // Salir/Cerrar sesión
+                Console.Clear();
                 return false;
                 
             default:
+                Console.Clear();
                 Console.WriteLine("Opción no válida");
                 Console.ReadKey();
                 break;
@@ -194,18 +199,23 @@ public class MenuAdministrador
             switch (opcion)
             {
                 case 0: // Crear variedad
+                    Console.Clear();
                     await CrearVariedad();
                     break;
                 case 1: // Actualizar variedad
+                    Console.Clear();
                     await ActualizarVariedad();
                     break;
                 case 2: // Eliminar variedad
+                    Console.Clear();
                     await EliminarVariedad();
                     break;
                 case 3: // Mostrar todas
+                    Console.Clear();
                     await MostrarTodasLasVariedades();
                     break;
                 case 4: // Volver
+                    Console.Clear();
                     return false;
             }
         }
@@ -451,7 +461,7 @@ public class MenuAdministrador
         Console.WriteLine("╔══════════════════════════════════════╗");
         Console.WriteLine("║ -------------------------------------║");
         Console.WriteLine("║     🌱  TODAS LAS VARIEDADES  🌱    ║");
-        Console.WriteLine("║ -------------------------------------║");           
+        Console.WriteLine("║ -------------------------------------║");
         Console.WriteLine("╚══════════════════════════════════════╝");
 
         try
@@ -489,6 +499,7 @@ public class MenuAdministrador
 
         Console.WriteLine("\nPresiona cualquier tecla para continuar...");
         Console.ReadKey();
+        Console.Clear();
     }
 
     private async Task MostrarMenuUsuarios()
@@ -638,11 +649,10 @@ public class MenuAdministrador
             var usuarios = await _context.Usuarios.Include(u => u.Persona).ToListAsync();
             
             Console.WriteLine("\nUsuarios existentes:");
-            for (int i = 0; i < Math.Min(usuarios.Count, 10); i++)
+            foreach (var usuario in usuarios)  
             {
-                Console.WriteLine($"{usuarios[i].Id}. {usuarios[i].Nombre} {usuarios[i].Apellido} - {usuarios[i].Email}");
+                Console.WriteLine($"{usuario.Id}. {usuario.Nombre} {usuario.Apellido} - {usuario.Email}");
             }
-
             Console.Write("\nIngrese el ID del usuario a actualizar: ");
             if (int.TryParse(Console.ReadLine(), out int id))
             {
@@ -704,11 +714,10 @@ public class MenuAdministrador
             var usuarios = await _context.Usuarios.Include(u => u.Persona).ToListAsync();
             
             Console.WriteLine("\nUsuarios existentes:");
-            for (int i = 0; i < Math.Min(usuarios.Count, 10); i++)
+            foreach (var usuario in usuarios)  
             {
-                Console.WriteLine($"{usuarios[i].Id}. {usuarios[i].Nombre} {usuarios[i].Apellido} - {usuarios[i].Email}");
+                Console.WriteLine($"{usuario.Id}. {usuario.Nombre} {usuario.Apellido} - {usuario.Email}");
             }
-
             Console.Write("\nIngrese el ID del usuario a eliminar: ");
             if (int.TryParse(Console.ReadLine(), out int id))
             {
@@ -789,6 +798,7 @@ public class MenuAdministrador
 
         Console.WriteLine("\nPresiona cualquier tecla para continuar...");
         Console.ReadKey();
+        Console.Clear();
     }
 
     private async Task MostrarMenuAdministradores()
@@ -806,8 +816,8 @@ public class MenuAdministrador
 
         while (continuarAdmins)
         {
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine("╔══════════════════════════════════════╗");
         Console.WriteLine("║ -------------------------------------║");
         Console.WriteLine("║   👑  GESTION DE ADMINISTRADOR  👑  ║");
@@ -854,18 +864,23 @@ public class MenuAdministrador
             switch (opcion)
             {
                 case 0: // Crear administrador
+                    Console.Clear();
                     await CrearAdministrador();
                     break;
                 case 1: // Actualizar administrador
+                    Console.Clear();
                     await ActualizarAdministrador();
                     break;
                 case 2: // Eliminar administrador
+                    Console.Clear();
                     await EliminarAdministrador();
                     break;
                 case 3: // Mostrar todos
+                    Console.Clear();
                     await MostrarTodosLosAdministradores();
                     break;
                 case 4: // Volver
+                    Console.Clear();
                     return false;
             }
         }
@@ -938,11 +953,10 @@ public class MenuAdministrador
             var administradores = await _context.Administradors.Include(a => a.Persona).ToListAsync();
             
             Console.WriteLine("\nAdministradores existentes:");
-            for (int i = 0; i < Math.Min(administradores.Count, 10); i++)
+            foreach (var administrador in administradores)  
             {
-                Console.WriteLine($"{administradores[i].Id}. {administradores[i].Nombre} {administradores[i].Apellido} - {administradores[i].Email}");
+                Console.WriteLine($"{administrador.Id}. {administrador.Nombre} {administrador.Apellido} - {administrador.Email}");
             }
-
             Console.Write("\nIngrese el ID del administrador a actualizar: ");
             if (int.TryParse(Console.ReadLine(), out int id))
             {
@@ -1004,11 +1018,10 @@ public class MenuAdministrador
             var administradores = await _context.Administradors.Include(a => a.Persona).ToListAsync();
             
             Console.WriteLine("\nAdministradores existentes:");
-            for (int i = 0; i < Math.Min(administradores.Count, 10); i++)
+            foreach (var administrador in administradores)  
             {
-                Console.WriteLine($"{administradores[i].Id}. {administradores[i].Nombre} {administradores[i].Apellido} - {administradores[i].Email}");
+                Console.WriteLine($"{administrador.Id}. {administrador.Nombre} {administrador.Apellido} - {administrador.Email}");
             }
-
             Console.Write("\nIngrese el ID del administrador a eliminar: ");
             if (int.TryParse(Console.ReadLine(), out int id))
             {
