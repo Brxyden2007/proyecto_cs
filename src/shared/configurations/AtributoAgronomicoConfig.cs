@@ -13,33 +13,37 @@ public class AtributoAgronomicoConfig : IEntityTypeConfiguration<AtributoAgronom
     {
         builder.ToTable("atributos_agronomicos");
 
-        builder.HasKey(a => a.IdAtributo);
+        builder.HasKey(ag => ag.IdAtributo);
 
-        builder.Property(a => a.IdAtributo)
+        builder.Property(ag => ag.IdAtributo)
+            .HasColumnName("id_atributo")
             .IsRequired()
             .ValueGeneratedOnAdd();
 
-        builder.Property(a => a.IdVariedad)
+        builder.Property(ag => ag.IdVariedad)
+            .HasColumnName("id_variedad")
             .IsRequired();
 
-        builder.Property(a => a.TiempoCosecha)
+        builder.Property(ag => ag.TiempoCosecha)
+            .HasColumnName("tiempo_cosecha")
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.Property(a => a.Maduracion)
+        builder.Property(ag => ag.Maduracion)
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.Property(a => a.Nutricion)
+        builder.Property(ag => ag.Nutricion)
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.Property(a => a.DensidadSiembra)
+        builder.Property(ag => ag.DensidadSiembra)
+            .HasColumnName("densidad_siembra")
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.HasOne(a => a.Variedad)
+        builder.HasOne(ag => ag.Variedad)
             .WithMany(v => v.AtributosAgronomicos)
-            .HasForeignKey(a => a.IdVariedad);
+            .HasForeignKey(ag => ag.IdVariedad);
     }
 }

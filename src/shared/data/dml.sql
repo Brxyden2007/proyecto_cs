@@ -38,7 +38,7 @@ INSERT INTO resistencias (enfermedad, nivel) VALUES
 ('Nemátodos', 'Media');
 
 INSERT INTO personas (nombre, apellido, edad, nacionalidad, documento_identidad, genero) VALUES
-('Juan', 'Pérez', 30, 'Colombiana', 101010101, 'Masculino'),
+('Juan', 'Pérez', 30, 'Colombiana', 101020202, 'Masculino'),
 ('María', 'García', 25, 'Colombiana', 102020202, 'Femenino'),
 ('Carlos', 'López', 45, 'Ecuatoriana', 103030303, 'Masculino'),
 ('Ana', 'Rodríguez', 35, 'Venezolana', 104040404, 'Femenino'),
@@ -155,30 +155,30 @@ INSERT INTO administradores (id_administradores, nombre, apellido, email, passwo
 
 
 INSERT INTO usuarios (id_usuario, nombre, apellido, email, password_hash) VALUES
-(2, 'María', 'García', 'maria.garcia@user.com', 'f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a1b2c3d4e5'),
-(4, 'Ana', 'Rodríguez', 'ana.rodriguez@user.com', 'g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a1b2c3d4e5f6'),
-(6, 'Pedro', 'Díaz', 'pedro.diaz@user.com', 'h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a1b2c3d4e5f6g7'),
-(8, 'Andrés', 'Fernández', 'andres.fernandez@user.com', 'i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a1b2c3d4e5f6g7h8'),
-(10, 'Javier', 'Silva', 'javier.silva@user.com', 'j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a1b2c3d4e5f6g7h8i9'),
-(11, 'Valentina', 'Torres', 'valentina.torres@user.com', 'k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a1b2c3d4e5f6g7h8i9j0'),
-(12, 'Felipe', 'Ruiz', 'felipe.ruiz@user.com', 'l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a1b2c3d4e5f6g7h8i9j0k1'),
-(13, 'Camila', 'Vargas', 'camila.vargas@user.com', 'm3n4o5p6q7r8s9t0u1v2w3x4y5z6a1b2c3d4e5f6g7h8i9j0k1l2'),
-(14, 'Daniel', 'Cabrera', 'daniel.cabrera@user.com', 'n4o5p6q7r8s9t0u1v2w3x4y5z6a1b2c3d4e5f6g7h8i9j0k1l2m3'),
-(15, 'Lucía', 'Herrera', 'lucia.herrera@user.com', 'o5p6q7r8s9t0u1v2w3x4y5z6a1b2c3d4e5f6g7h8i9j0k1l2m3n4'),
-(16, 'Ricardo', 'Pinto', 'ricardo.pinto@user.com', 'p6q7r8s9t0u1v2w3x4y5z6a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5'),
-(17, 'Elena', 'Castro', 'elena.castro@user.com', 'q7r8s9t0u1v2w3x4y5z6a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'),
-(18, 'Miguel', 'Rojas', 'miguel.rojas@user.com', 'r8s9t0u1v2w3x4y5z6a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7'),
-(19, 'Patricia', 'Ortega', 'patricia.ortega@user.com', 's9t0u1v2w3x4y5z6a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8'),
-(20, 'Fernando', 'Soto', 'fernando.soto@user.com', 't0u1v2w3x4y5z6a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9'),
-(21, 'Silvia', 'Luna', 'silvia.luna@user.com', 'u1v2w3x4y5z6a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0'),
-(22, 'David', 'Mendoza', 'david.mendoza@user.com', 'v2w3x4y5z6a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1'),
-(23, 'Diana', 'Navarro', 'diana.navarro@user.com', 'w3x4y5z6a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2'),
-(24, 'Esteban', 'Blanco', 'esteban.blanco@user.com', 'x4y5z6a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3'),
-(25, 'Sara', 'Ochoa', 'sara.ochoa@user.com', 'y5z6a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4'),
-(26, 'Gabriel', 'Salazar', 'gabriel.salazar@user.com', 'z6a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5');
+(2, 'María', 'García', 'maria.garcia@user.com', '12345'),
+(4, 'Ana', 'Rodríguez', 'ana.rodriguez@user.com', '12345'),
+(6, 'Pedro', 'Díaz', 'pedro.diaz@user.com', '12345'),
+(8, 'Andrés', 'Fernández', 'andres.fernandez@user.com', '12345'),
+(10, 'Javier', 'Silva', 'javier.silva@user.com', '12345'),
+(11, 'Valentina', 'Torres', 'valentina.torres@user.com', '12345'),
+(12, 'Felipe', 'Ruiz', 'felipe.ruiz@user.com', '12345'),
+(13, 'Camila', 'Vargas', 'camila.vargas@user.com', '12345'),
+(14, 'Daniel', 'Cabrera', 'daniel.cabrera@user.com', '12345'),
+(15, 'Lucía', 'Herrera', 'lucia.herrera@user.com', '12345'),
+(16, 'Ricardo', 'Pinto', 'ricardo.pinto@user.com', '12345'),
+(17, 'Elena', 'Castro', 'elena.castro@user.com', '12345'),
+(18, 'Miguel', 'Rojas', 'miguel.rojas@user.com', '12345'),
+(19, 'Patricia', 'Ortega', 'patricia.ortega@user.com', '12345'),
+(20, 'Fernando', 'Soto', 'fernando.soto@user.com', '12345'),
+(21, 'Silvia', 'Luna', 'silvia.luna@user.com', '12345'),
+(22, 'David', 'Mendoza', 'david.mendoza@user.com', '12345'),
+(23, 'Diana', 'Navarro', 'diana.navarro@user.com', '12345'),
+(24, 'Esteban', 'Blanco', 'esteban.blanco@user.com', '12345'),
+(25, 'Sara', 'Ochoa', 'sara.ochoa@user.com', '12345'),
+(26, 'Gabriel', 'Salazar', 'gabriel.salazar@user.com', '12345');
 
 
-INSERT INTO variedades (nombre_comun, nombre_cientifico, descripcion, imagen_url, id_porte, id_tamanio, id_altitud, IdRendimiento, id_calidad) VALUES
+INSERT INTO variedades (nombre_comun, nombre_cientifico, descripcion, imagen_url, id_porte, id_tamanio, id_altitud, id_rendimiento, id_calidad) VALUES
 ('Caturra', 'Coffea arabica var. Caturra', 'Una mutación natural del Bourbon, conocida por su alta producción y sabor afrutado. De porte bajo, lo que facilita la recolección.', './src/shared/utils/pdf/images/caturra.jpeg', 1, 2, 2, 3, 3),
 ('Castillo', 'Híbrido Castillo', 'Híbrido colombiano desarrollado para ser resistente a la roya del café. Tiene una taza limpia y equilibrada.', './src/shared/utils/pdf/images/castillo.jpeg', 2, 2, 2, 4, 2),
 ('Geisha', 'Coffea arabica var. Geisha', 'Variedad muy apreciada por su perfil de taza floral y complejo. Exige condiciones específicas de cultivo.', './src/shared/utils/pdf/images/geisha.jpeg', 3, 3, 3, 1, 4),

@@ -1,175 +1,181 @@
 using System;
-using System.Collections.Generic;
-using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using proyecto_cs.src.modules.variedades.domain.models;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using proyecto_cs.src.modules.variedades.domain.models;
 
 namespace proyecto_cs.src.shared.utils.pdf;
-
 public class VariedadPdfGenerator
 {
-  
-  private readonly Variedad _variedad;
-  public VariedadPdfGenerator(Variedad variedad) =>_variedad = variedad;
+  public VariedadPdfGenerator() {}
+
+  // === Helpers de estilos ===
+  private IContainer CellStyle(IContainer container) =>
+    container.BorderBottom(1).BorderColor(Colors.Grey.Lighten1).Padding(5).Background(Colors.White);
+
+  private IContainer CellStyleHeader(IContainer container) =>
+    container.Background(Colors.Green.Lighten1).Padding(5).Border(1)
+      .BorderColor(Colors.Green.Medium).DefaultTextStyle(x => x.Bold().FontColor(Colors.White));
+
   public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
-  public Task Compose(AppDbContext context)
+
+  public Task Compose(AppDbContext context, int idVariedad)
   {
     var variedad = context.Variedades
-        .Include(v => v.Rendimiento)
-        .Include(v => v.TamanioGrano)
-        .Include(v => v.Porte)
-        .Include(v => v.Altitud)
-        .Include(v => v.CalidadAltitud)
-        .FirstOrDefault(v => v.IdVariedad == 1);
-        
+      .Include(v => v.Rendimiento)
+      .Include(v => v.TamanioGrano)
+      .Include(v => v.Porte)
+      .Include(v => v.Altitud)
+      .Include(v => v.CalidadAltitud)
+      .FirstOrDefault(v => v.IdVariedad == idVariedad);
+
+    if (variedad == null)
+      throw new Exception($"No se encontró la variedad con ID {idVariedad}");
+
     QuestPDF.Settings.License = LicenseType.Community;
+
     Document.Create(container =>
+    {
+      container.Page(page =>
       {
-        container.Page(page =>
+        // === Configuración base ===
+        page.Size(PageSizes.A4);
+        page.Margin(30);
+        page.DefaultTextStyle(x => x.FontSize(12));
+        page.PageColor("#F1f1f1");
+
+        // ===== ENCABEZADO =====
+        page.Header().Column(col =>
         {
-          // esta parte es para definir la parte del diseño del pdf
-          page.Size(PageSizes.A4);
-          // pixeles de magin como si fuera un css
-          page.Margin(20);
-          // definir fuente 
-          page.DefaultTextStyle(x => x.FontSize(12));
-          page.Background();
-          // bacground de la pagina
-          page.PageColor("#F1f1f1");
-
-          page.Content().Row(row =>
+          col.Item().Background(Colors.Green.Medium).Padding(15).Row(row =>
           {
-            // ======= LADO IZQUIERDO =======
-            row.RelativeItem(1).Column(col =>
+            row.RelativeItem().Text($"Variedad - {variedad.NombreComun}")
+              .FontSize(22).Bold().FontColor(Colors.White);
+
+            row.ConstantItem(60).Height(60).Background(Colors.White).AlignCenter().AlignMiddle()
+              .Text("PDF").FontColor(Colors.Green.Medium).Bold();
+          });
+
+          // Espacio inferior para que no se pegue al contenido
+          col.Item().Height(20).Background("#F1f1f1");
+        });
+
+        // ===== CONTENIDO =====
+        page.Content().Column(col =>
+        {
+          // Imagen
+          col.Item().Border(1).Background(Colors.White).CornerRadius(15).Padding(10).Column(c =>
+          {
+            if (!string.IsNullOrWhiteSpace(variedad.ImagenUrl) && File.Exists(variedad.ImagenUrl))
             {
-              // Caja de encabezado con nombre, descripción e imagen
-              col.Item().Border(1).Background(Colors.Green.Medium)
-                .Padding(15)
-                .Column(c =>
-                {
-                  c.Item().Text(_variedad.NombreComun)
-                    .FontSize(28)
-                    .Bold()
-                    .FontColor(Colors.White);
+              var bytes = File.ReadAllBytes(variedad.ImagenUrl);
+              c.Item().Image(bytes).FitWidth();
+            }
+            else
+            {
+              c.Item().Text("[Sin imagen disponible]").Italic().FontColor(Colors.Grey.Medium);
+            }
+          });
 
-                  c.Item().Text(_variedad.Descripcion)
-                    .FontColor(Colors.White)
-                    .FontSize(12);
-                });
+          col.Spacing(20);
 
-              col.Spacing(10);
+          // ===== INFORMACIÓN GENERAL =====
+          col.Item().PaddingBottom(5)
+            .Text("Información General")
+            .FontSize(18).Bold().FontColor(Colors.Green.Darken2);
 
-              // Yield potential
-              col.Item().Column(c =>
-              {
-                c.Item().Text("YIELD POTENTIAL").Bold().FontColor(Colors.Green.Medium);
-                c.Item().Text($"{_variedad.Rendimiento?.Nivel}").FontSize(14);
-              });
-
-              col.Spacing(5);
-
-              // Bean size
-              col.Item().Column(c =>
-              {
-                c.Item().Text("BEAN SIZE").Bold().FontColor(Colors.Green.Medium);
-                c.Item().Text($"{_variedad.TamanioGrano?.Nombre.Clone()}");
-              });
-
-              // Coffee leaf rust
-              col.Item().Column(c =>
-              {
-                c.Item().Text("COFFEE LEAF RUST").Bold().FontColor(Colors.Green.Medium);
-                c.Item().Text("Resistant");
-                c.Item().Border(1).Background(Colors.Green.Medium).Height(10);
-              });
-
-              // Nematode
-              col.Item().Column(c =>
-              {
-                c.Item().Text("NEMATODE").Bold().FontColor(Colors.Green.Medium);
-                c.Item().Text("Resistant");
-                c.Item().Border(1).Background(Colors.Green.Medium).Height(10);
-              });
-
-              // Coffee berry borer
-              col.Item().Column(c =>
-              {
-                c.Item().Text("COFFEE BERRY BORER").Bold().FontColor(Colors.Green.Medium);
-                c.Item().Text("Susceptible");
-                c.Item().Border(1).Background(Colors.Grey.Medium).Height(10);
-              });
+          col.Item().Table(table =>
+          {
+            table.ColumnsDefinition(columns =>
+            {
+              columns.RelativeColumn();
+              columns.RelativeColumn();
             });
 
-            // ======= LADO DERECHO =======
-            row.RelativeItem(1.2f).Column(col =>
+            table.Header(header =>
             {
-              // Imagen principal
-              // col.Item().Image(_variedad.ImagenUrl, ImageScaling.FitArea);
-              col.Item().Image(Image.FromFile(_variedad.ImagenUrl));
-
-              // Características
-              col.Item().PaddingTop(10).Text("CHARACTERISTICS")
-                .FontSize(18)
-                .Bold()
-                .FontColor(Colors.White)
-                .BackgroundColor(Colors.Green.Medium);
-              // .Padding(5);
-
-              col.Item().Column(c =>
-              {
-                AddCharacteristic(c, "YIELD POTENTIAL", $"{_variedad.Rendimiento?.Nivel}");
-                AddCharacteristic(c, "COUNTRY OF RELEASE", "Indonesia");
-                AddCharacteristic(c, "CONTENTS OF MUCILAGE IN THE CHERRY", "Average");
-                AddCharacteristic(c, "COFFEE BERRY DISEASE", "Tolerant");
-                AddCharacteristic(c, "SHOOT HOLE BORER", "Susceptible");
-              });
-
-              // Agronomía
-              col.Item().PaddingTop(10).Text("AGRONOMICS")
-                .FontSize(18)
-                .Bold()
-                .FontColor(Colors.Green.Medium);
-
-              col.Item().Table(table =>
-              {
-                table.ColumnsDefinition(columns =>
-                {
-                  columns.RelativeColumn();
-                });
-
-                table.Cell().Text("Stature");
-                table.Cell().Text("Year of first production");
-                table.Cell().Text("Nutrition requirement");
-                table.Cell().Text("Ripening of fruit");
-                table.Cell().Text("Cherry to green bean outrun");
-              });
+              header.Cell().Element(CellStyleHeader).Text("Campo");
+              header.Cell().Element(CellStyleHeader).Text("Valor");
             });
+
+            table.Cell().Element(CellStyle).Text("ID");
+            table.Cell().Element(CellStyle).Text(variedad.IdVariedad.ToString());
+
+            table.Cell().Element(CellStyle).Text("Nombre Común");
+            table.Cell().Element(CellStyle).Text(variedad.NombreComun);
+
+            table.Cell().Element(CellStyle).Text("Nombre Científico");
+            table.Cell().Element(CellStyle).Text(variedad.NombreCientifico ?? "-");
+
+            table.Cell().Element(CellStyle).Text("Descripción");
+            table.Cell().Element(CellStyle).Text(variedad.Descripcion ?? "-");
+
+          });
+
+          col.Spacing(20);
+
+          // ===== CARACTERÍSTICAS AGRONÓMICAS =====
+          col.Item().PaddingBottom(5)
+            .Text("Características de la variedad")
+            .FontSize(18).Bold().FontColor(Colors.Green.Darken2);
+
+          col.Item().Table(table =>
+          {
+            table.ColumnsDefinition(columns =>
+            {
+              columns.RelativeColumn();
+              columns.RelativeColumn();
+            });
+
+            table.Header(header =>
+            {
+              header.Cell().Element(CellStyleHeader).Text("Parámetro");
+              header.Cell().Element(CellStyleHeader).Text("Valor");
+            });
+
+            if (variedad.Rendimiento != null)
+            {
+              table.Cell().Element(CellStyle).Text("Rendimiento");
+              table.Cell().Element(CellStyle).Text(variedad.Rendimiento.Nivel);
+            }
+
+            if (variedad.TamanioGrano != null)
+            {
+              table.Cell().Element(CellStyle).Text("Tamaño de grano");
+              table.Cell().Element(CellStyle).Text(variedad.TamanioGrano.Nombre);
+            }
+
+            if (variedad.Porte != null)
+            {
+              table.Cell().Element(CellStyle).Text("Porte");
+              table.Cell().Element(CellStyle).Text(variedad.Porte.Nombre);
+            }
+
+            if (variedad.Altitud != null)
+            {
+              table.Cell().Element(CellStyle).Text("Altitud");
+              table.Cell().Element(CellStyle).Text(variedad.Altitud.Rango);
+            }
+
+            if (variedad.CalidadAltitud != null)
+            {
+              table.Cell().Element(CellStyle).Text("Calidad por altitud");
+              table.Cell().Element(CellStyle).Text(variedad.CalidadAltitud.Nivel);
+            }
           });
         });
-      })
-    .GeneratePdf($"Variedad_{_variedad.IdVariedad}.pdf");
+
+        // ===== PIE DE PÁGINA =====
+        page.Footer().AlignCenter().Text($"Generado el {DateTime.Now:dd/MM/yyyy}")
+          .FontSize(10).FontColor(Colors.Grey.Medium);
+      });
+    })
+    .GeneratePdf($"Variedad_{variedad?.IdVariedad}.pdf");
+
     return Task.CompletedTask;
   }
-
-  private void AddCharacteristic(ColumnDescriptor col, string title, string value)
-  {
-    col.Item().Row(r =>
-    {
-      r.RelativeItem().Text(title).Bold();
-      r.RelativeItem().Text(value);
-    });
-  }
 }
-
-
-
-// container
-//     .Background(Colors.Grey.Lighten2)
-//     .CornerRadius(25)
-//     .Padding(25)
-//     .Text("Content with rounded corners");

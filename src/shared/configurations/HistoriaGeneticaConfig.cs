@@ -15,13 +15,25 @@ public class HistoriaGeneticaConfig : IEntityTypeConfiguration<HistoriaGenetica>
         builder.ToTable("historias_geneticas");
         // establece el id autoincrement
         builder.HasKey(hg => hg.IdHistoria);
-        builder.Property(hg => hg.IdHistoria).ValueGeneratedOnAdd();
+        builder.Property(hg => hg.IdHistoria)
+            .HasColumnName("id_historia")
+            .ValueGeneratedOnAdd();
 
-        builder.Property(hg => hg.IdVariedad).IsRequired();
-        builder.Property(hg => hg.Obtentor).IsRequired();
-        builder.Property(hg => hg.Familia).IsRequired();
-        builder.Property(hg => hg.Grupo).IsRequired();
-        builder.Property(hg => hg.Descripcion).IsRequired();
+        builder.Property(hg => hg.IdVariedad)
+            .HasColumnName("id_variedad")
+            .IsRequired();
+        
+        builder.Property(hg => hg.Obtentor)
+            .IsRequired();
+        
+        builder.Property(hg => hg.Familia)
+            .IsRequired();
+        
+        builder.Property(hg => hg.Grupo)
+            .IsRequired();
+        
+        builder.Property(hg => hg.Descripcion)
+            .IsRequired();
 
         // relaciones
         builder.HasOne(hg => hg.Variedad)

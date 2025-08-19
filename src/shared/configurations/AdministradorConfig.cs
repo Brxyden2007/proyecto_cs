@@ -13,35 +13,35 @@ public class AdministradorConfig : IEntityTypeConfiguration<Administrador>
     {
         builder.ToTable("administradores");
 
-        builder.HasKey(a => a.Id);
+        builder.HasKey(ad => ad.Id);
 
-        builder.Property(a => a.Id)
+        builder.Property(ad => ad.Id)
         .HasColumnName("id_administradores") // nombre real en MySQL
         .ValueGeneratedOnAdd();
 
-        builder.Property(a => a.Nombre)
+        builder.Property(ad => ad.Nombre)
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(a => a.Apellido)
+        builder.Property(ad => ad.Apellido)
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(a => a.Email)
+        builder.Property(ad => ad.Email)
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(a => a.PasswordHash)
+        builder.Property(ad => ad.PasswordHash)
             .HasColumnName("password_hash")
             .IsRequired()
             .HasMaxLength(255);
 
-        builder.Property(a => a.CreatedAt)
+        builder.Property(ad => ad.CreatedAt)
             .IsRequired()
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
         
-        builder.HasOne(a => a.Persona)
-            .WithOne(p => p.Administrador)
-            .HasForeignKey<Administrador>(a => a.Id);
+        builder.HasOne(ad => ad.Persona)
+            .WithOne(pe => pe.Administrador)
+            .HasForeignKey<Administrador>(ad => ad.Id);
     }
 }

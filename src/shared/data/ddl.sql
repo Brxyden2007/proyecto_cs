@@ -36,39 +36,39 @@ CREATE TABLE IF NOT EXISTS usuarios (
 ) ENGINE=INNODB;
 
 -- esto corresponde a las entidades de catalogos y sus respectivos atibutos
-CREATE TABLE portes (
+CREATE TABLE IF NOT EXISTS portes (
     id_porte INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(50) NOT NULL
-);
+) ENGINE=INNODB;
 
-CREATE TABLE tamanios_grano (
+CREATE TABLE IF NOT EXISTS tamanios_grano (
     id_tamanio INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(50) NOT NULL
-);
+) ENGINE=INNODB;
 
-CREATE TABLE altitudes (
+CREATE TABLE IF NOT EXISTS altitudes (
     id_altitud INT PRIMARY KEY AUTO_INCREMENT,
     rango VARCHAR(100) NOT NULL
-);
+) ENGINE=INNODB;
 
-CREATE TABLE rendimientos (
-    IdRendimiento INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS rendimientos (
+    id_rendimiento INT PRIMARY KEY AUTO_INCREMENT,
     nivel VARCHAR(50) NOT NULL
-);
+) ENGINE=INNODB;
 
-CREATE TABLE calidades_altitudes (
+CREATE TABLE IF NOT EXISTS calidades_altitudes (
     id_calidad INT PRIMARY KEY AUTO_INCREMENT,
     nivel VARCHAR(50) NOT NULL
-);
+) ENGINE=INNODB;
 
-CREATE TABLE resistencias (
+CREATE TABLE IF NOT EXISTS resistencias (
     id_resistencia INT PRIMARY KEY AUTO_INCREMENT,
     enfermedad VARCHAR(50) NOT NULL,
     nivel VARCHAR(50) NOT NULL
-);
+) ENGINE=INNODB;
 
 -- tabla de variedades, esto se podria considerar la entidad principal
-CREATE TABLE variedades (
+CREATE TABLE IF NOT EXISTS variedades (
     id_variedad INT PRIMARY KEY AUTO_INCREMENT,
     nombre_comun VARCHAR(100) NOT NULL,
     nombre_cientifico VARCHAR(150),
@@ -77,26 +77,26 @@ CREATE TABLE variedades (
     id_porte INT,
     id_tamanio INT,
     id_altitud INT,
-    IdRendimiento INT,
+    id_rendimiento INT,
     id_calidad INT,
     FOREIGN KEY (id_porte) REFERENCES portes(id_porte),
     FOREIGN KEY (id_tamanio) REFERENCES tamanios_grano(id_tamanio),
     FOREIGN KEY (id_altitud) REFERENCES altitudes(id_altitud),
-    FOREIGN KEY (IdRendimiento) REFERENCES rendimientos(IdRendimiento),
+    FOREIGN KEY (id_rendimiento) REFERENCES rendimientos(id_rendimiento),
     FOREIGN KEY (id_calidad) REFERENCES calidades_altitudes(id_calidad)
-);
+) ENGINE=INNODB;
 
 -- Relación de variedades con resistencias (N:M)
-CREATE TABLE variedad_resistencia (
+CREATE TABLE IF NOT EXISTS variedad_resistencia (
     id_variedad INT,
     id_resistencia INT,
     PRIMARY KEY (id_variedad, id_resistencia),
     FOREIGN KEY (id_variedad) REFERENCES variedades(id_variedad) ON DELETE CASCADE,
     FOREIGN KEY (id_resistencia) REFERENCES resistencias(id_resistencia) ON DELETE CASCADE
-);
+) ENGINE=INNODB;
 
 -- Información agronómica complementaria
-CREATE TABLE atributos_agronomicos (
+CREATE TABLE IF NOT EXISTS atributos_agronomicos (
     id_atributo INT PRIMARY KEY AUTO_INCREMENT,
     id_variedad INT NOT NULL,
     tiempo_cosecha VARCHAR(50),
@@ -104,10 +104,10 @@ CREATE TABLE atributos_agronomicos (
     nutricion TEXT,
     densidad_siembra VARCHAR(50),
     FOREIGN KEY (id_variedad) REFERENCES variedades(id_variedad) ON DELETE CASCADE
-);
+) ENGINE=INNODB;
 
 -- Historia y linaje genético
-CREATE TABLE historias_geneticas (
+CREATE TABLE IF NOT EXISTS historias_geneticas (
     id_historia INT PRIMARY KEY AUTO_INCREMENT,
     id_variedad INT NOT NULL,
     obtentor VARCHAR(80),
@@ -115,4 +115,4 @@ CREATE TABLE historias_geneticas (
     grupo VARCHAR(80),
     descripcion TEXT,
     FOREIGN KEY (id_variedad) REFERENCES variedades(id_variedad) ON DELETE CASCADE
-);
+) ENGINE=INNODB;
