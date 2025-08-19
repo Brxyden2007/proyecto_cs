@@ -191,18 +191,18 @@ public class MenuPdf
         return Task.FromResult(true);
       case 5:
         var context6 = DbContextFactory.Create();
-        // // convoca el pdf de los usuarios 
-        // var usuarioPdfGenerator = new UsuarioPdfGenerator();
-        //   _ = usuarioPdfGenerator.Compose(context6);
-        // // mostrar la ruta donde se guarda el pdf en caso de que haya sido creado
-        // var ruta6 = Path.Combine(Directory.GetCurrentDirectory(), $"Usuarios.pdf");
-        // Console.WriteLine($"✅ PDF generado en: {ruta6}");
-        // // abrir el pdf en el explorador de archivos
-        // System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-        // {
-        //   FileName = ruta6,
-        //   UseShellExecute = true
-        // });
+        // convoca el pdf de los usuarios 
+        var reporteUsuarioPdfGenerator = new ReporteUsuarioPdfGenerator();
+          _ = reporteUsuarioPdfGenerator.Compose(context6);
+        // mostrar la ruta donde se guarda el pdf en caso de que haya sido creado
+        var ruta6 = Path.Combine(Directory.GetCurrentDirectory(), $"Usuarios.pdf");
+        Console.WriteLine($"✅ PDF generado en: {ruta6}");
+        // abrir el pdf en el explorador de archivos
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+          FileName = ruta6,
+          UseShellExecute = true
+        });
         Console.ReadKey(true);
         return Task.FromResult(true);
       case 6: // Regresar
