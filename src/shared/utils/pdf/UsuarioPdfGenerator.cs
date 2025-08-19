@@ -1,44 +1,93 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using proyecto_cs.src.modules.usuarios.domain.models;
 
-namespace proyecto_cs;
-
-public class UsuarioPdfGenerator
+namespace proyecto_cs.src.shared.utils.pdf
 {
-    private readonly Usuario usuario;
-
-    public UsuarioPdfGenerator(Usuario usuario)
+    public class UsuarioPdfGenerator
     {
-        this.usuario = usuario;
-    }
+        private readonly IEnumerable<Usuario> _usuarios;
 
-    public byte[] Generate()
-    {
-        return Document.Create(container =>
+        public UsuarioPdfGenerator(IEnumerable<Usuario> usuarios)
         {
-            container.Page(page =>
-            {
-                page.Margin(40);
-                page.Header().Row(row =>
-                {
-                    row.RelativeItem().Text("Ficha de Usuario").Style(TextStyle.Default.FontSize(20).Bold().FontColor(Colors.Blue.Medium));
-                    row.RelativeItem(60).Height(40).Background(Colors.Blue.Lighten1);
-                });
+            _usuarios = usuarios;
+        }
 
-                page.Content().Column(col =>
+        public void GenerarPdf(string filePath)
+        {
+            Document.Create(container =>
+            {
+                container.Page(page =>
                 {
-                    col.Item().Text($"ID: {usuario.Id}").FontSize(12);
-                    col.Item().Text($"Nombre: {usuario.Nombre} {usuario.Apellido}").FontSize(12);
-                    col.Item().Text($"Email: {usuario.Email}").FontSize(12);
-                    col.Item().Text($"Fecha de creación: {usuario.CreatedAt:dd/MM/yyyy}").FontSize(12);
+                    // Configuración de la página
+                    page.Margin(30);
+                    page.Size(PageSizes.A4);
+                    page.DefaultTextStyle(x => x.FontSize(11));
+
+                    // Encabezado
+                    page.Header().Row(row =>
+                    {
+                        row.RelativeItem().Text("Reporte de Usuarios")
+                            .FontSize(18).Bold().FontColor(Colors.Green.Darken2);
+                        row.ConstantItem(50).Height(40).Image(Placeholders.Image(50, 40));
+                    });
+
+                    // Contenido
+                    page.Content().PaddingVertical(15).Column(column =>
+                    {
+                        column.Spacing(10);
+
+                        column.Item().Text($"Total de Usuarios: {_usuarios.Count()}")
+                            .Bold().FontSize(12).FontColor(Colors.Grey.Darken1);
+
+                        // Tabla de usuarios
+                        column.Item().Table(table =>
+                        {
+                            // Definir columnas
+                            table.ColumnsDefinition(columns =>
+                            {
+                                columns.RelativeColumn(1); // ID
+                                columns.RelativeColumn(2); // Nombre
+                                columns.RelativeColumn(2); // Apellido
+                                columns.RelativeColumn(3); // Email
+                                columns.RelativeColumn(3); // Persona (Documento)
+                                columns.RelativeColumn(3); // Fecha creación
+                            });
+
+                            // Encabezados
+                            table.Header(header =>
+                            {
+                                header.Cell().Text("ID").Bold();
+                                header.Cell().Text("Nombre").Bold();
+                                header.Cell().Text("Apellido").Bold();
+                                header.Cell().Text("Email").Bold();
+                                header.Cell().Text("Documento").Bold();
+                                header.Cell().Text("Creado").Bold();
+                            });
+
+                            // Filas dinámicas
+                            foreach (var usuario in _usuarios)
+                            {
+                                table.Cell().Text(usuario.Id.ToString());
+                                table.Cell().Text(usuario.Nombre ?? "-");
+                                table.Cell().Text(usuario.Apellido ?? "-");
+                                table.Cell().Text(usuario.Email ?? "-");
+                                table.Cell().Text(usuario.Persona?.DocumentoIdentidad.ToString() ?? "-");
+                                table.Cell().Text(usuario.CreatedAt.ToString("dd/MM/yyyy"));
+                            }
+                        });
+                    });
+
+                    // Pie de página
+                    page.Footer().AlignCenter().Text(txt =>
+                    {
+                        txt.Span("Generado automáticamente con QuestPDF | ").FontSize(9);
+                        txt.Span($"{DateTime.Now:dd/MM/yyyy HH:mm}").FontSize(9).Italic();
+                    });
                 });
-            });
-        }).GeneratePdf();
+            }).GeneratePdf(filePath);
+        }
     }
 }
