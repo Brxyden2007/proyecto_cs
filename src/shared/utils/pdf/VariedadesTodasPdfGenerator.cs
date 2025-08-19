@@ -69,7 +69,7 @@ public class VariedadesTodasPdfGenerator
 
     foreach (var variedad in variedades)
     {
-      var doc = new VariedadPdfGenerator(variedad).Compose(_context);      
+      // var doc = new VariedadPdfGenerator(variedad).Compose(_context);      
     }
   }
 }
